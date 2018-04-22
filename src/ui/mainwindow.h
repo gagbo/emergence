@@ -27,25 +27,25 @@
 #define WINDOW_DEFAULT_WIDTH 640
 #define WINDOW_DEFAULT_HEIGHT 480
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
-  public:
-    MainWindow(qint32 win_wid = WINDOW_DEFAULT_WIDTH, qint32 win_hei = WINDOW_DEFAULT_HEIGHT);
+ public:
+    MainWindow(qint32 win_wid = WINDOW_DEFAULT_WIDTH,
+               qint32 win_hei = WINDOW_DEFAULT_HEIGHT);
 
-  protected:
+ protected:
     void closeEvent(QCloseEvent *event) override;
     QSharedPointer<QGraphicsView> main_view;
 
-  public slots:
+ public slots:
     //! Show message in status bar
     void showMessage(QString message);
 
-  private slots:
+ private slots:
 
-  private:
+ private:
     void createActions();
     void createStatusBar();
 };
-#endif // _UI_MAINWINDOW_H_
+#endif  // _UI_MAINWINDOW_H_

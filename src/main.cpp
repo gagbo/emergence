@@ -28,8 +28,7 @@
 #include "ui/mainwindow.h"
 
 int
-main(int argc, char *argv[])
-{
+main(int argc, char *argv[]) {
     std::cout << argv[0] << " Version " << EMERGENCE_VERSION_MAJOR << "."
               << EMERGENCE_VERSION_MINOR << std::endl;
 
@@ -37,14 +36,14 @@ main(int argc, char *argv[])
 
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("Gerry Agbobada");
-    QCoreApplication::setApplicationName("emergence - Flocking Autonomous Agents");
+    QCoreApplication::setApplicationName(
+        "emergence - Flocking Autonomous Agents");
     QCoreApplication::setApplicationVersion(QT_VERSION_STR);
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::applicationName());
     parser.addHelpOption();
     parser.addVersionOption();
-    parser.addPositionalArgument("dummy",
-                                 "Test the command line parser");
+    parser.addPositionalArgument("dummy", "Test the command line parser");
     parser.process(app);
 
     MainWindow mainWin;

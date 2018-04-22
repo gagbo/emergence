@@ -20,8 +20,8 @@
 
 #include "mainwindow.h"
 
-MainWindow::MainWindow(qint32 win_wid, qint32 win_hei) : main_view(new QGraphicsView())
-{
+MainWindow::MainWindow(qint32 win_wid, qint32 win_hei)
+    : main_view(new QGraphicsView()) {
     main_view->setRenderHint(QPainter::Antialiasing);
     main_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     main_view->setDragMode(QGraphicsView::ScrollHandDrag);
@@ -31,22 +31,19 @@ MainWindow::MainWindow(qint32 win_wid, qint32 win_hei) : main_view(new QGraphics
     createActions();
     createStatusBar();
     resize(win_wid, win_hei);
-    move((win_wid - width()) / 2,
-         (win_hei - height()) / 2);
+    move((win_wid - width()) / 2, (win_hei - height()) / 2);
 
     setUnifiedTitleAndToolBarOnMac(true);
 }
 
 void
-MainWindow::closeEvent(QCloseEvent *event)
-{
+MainWindow::closeEvent(QCloseEvent *event) {
     event->accept();
     // event->ignore();
 }
 
 void
-MainWindow::createActions()
-{
+MainWindow::createActions() {
     menuBar()->addMenu("&File");
     menuBar()->addMenu("&Edit");
     menuBar()->addMenu("&View");
@@ -55,14 +52,12 @@ MainWindow::createActions()
 }
 
 void
-MainWindow::createStatusBar()
-{
+MainWindow::createStatusBar() {
     statusBar()->showMessage(tr("Ready"));
 }
 
 void
-MainWindow::showMessage(QString msg)
-{
+MainWindow::showMessage(QString msg) {
     // display message on main window status bar
     statusBar()->showMessage(msg);
 }
