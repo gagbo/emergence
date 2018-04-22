@@ -1,0 +1,8 @@
+#ifndef _EMERGENCE_CONFIG_H_
+#define _EMERGENCE_CONFIG_H_
+
+#define EMERGENCE_VERSION_MAJOR @emergence_VERSION_MAJOR@
+#define EMERGENCE_VERSION_MINOR @emergence_VERSION_MINOR@
+#define DATA_DIR @Install_data_dir@
+
+#endif // _EMERGENCE_CONFIG_H_

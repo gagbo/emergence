@@ -1,0 +1,33 @@
+#+TITLE: Autonomous agents using Qt5, revisited
+
+#+CAPTION: Build Status
+#+NAME: travis-ci-build
+[[https://travis-ci.org/gagbo/emergence][https://travis-ci.org/gagbo/emergence.svg?branch=master]]
+#+CAPTION: Code Coverage
+#+NAME: codecov
+[[https://codecov.io/gh/gagbo/emergence][https://codecov.io/gh/gagbo/emergence/branch/master/graph/badge.svg]]
+
+* What is this ?
+This is a revisit of the [[https://github.com/gagbo/Flocking][Flocking project]]
+I started in Qt. After playing with [[https://github.com/gagbo/flocking_sdl][SDL]], and
+choosing that Qt is better for UI, I come back to Qt with the intent of making
+a better architecture that will allow better maintainability.
+
+The project is also quite "dirty" as I use this as a playground while
+discovering design patterns and Qt possibilities. As such, for the time being
+issues and PR I did not author will be ignored, and pushes will be made to
+master until a working version of the project is reached
+
+* Dependencies
+  - Qt5
+
+* How to play with it
+The current CMake configuration overrides the default install location,
+so there are no system implications about making the install target.
+
+#+BEGIN_SRC bash
+mkdir build && cd build
+cmake ..
+make install
+./install/bin/emergence
+#+END_SRC
