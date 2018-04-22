@@ -36,7 +36,7 @@ class MainWindow : public QMainWindow
 
   protected:
     void closeEvent(QCloseEvent *event) override;
-    std::shared_ptr<QGraphicsView> main_view;
+    QSharedPointer<QGraphicsView> main_view;
 
   public slots:
     //! Show message in status bar

@@ -26,7 +26,7 @@ MainWindow::MainWindow(qint32 win_wid, qint32 win_hei) : main_view(new QGraphics
     main_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     main_view->setDragMode(QGraphicsView::ScrollHandDrag);
 
-    setCentralWidget(main_view.get());
+    setCentralWidget(main_view.data());
 
     createActions();
     createStatusBar();
