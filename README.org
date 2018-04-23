@@ -50,3 +50,7 @@ cmake ..
 make install
 ./install/bin/emergence
 #+END_SRC
+
+* Acknowledgements
+I would like to thank Jesus Alvarez (@demizer) for providing an easy to find
+specifications template.
