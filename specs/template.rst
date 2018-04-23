@@ -1,14 +1,14 @@
 .. -*- coding: utf-8 -*-
 
 ========================================
-Requirements Specification for <project>
+Requirements Specification for emergence
 ========================================
 
-:Contributors: Jesus Alvarez (github.com/demizer)
-:Created: Tue Jul 17 12:00:00 PDT 2012
-:Modified: Mon Sep 17 01:00:46 PDT 2012
+:Contributors: Gerry Agbobada (github.com/gagbo)
+:Created: Mon Apr 23 10:58:00 CET 2018
+:Modified: Mon Apr 23 10:58:00 CET 2018
 :Copyright: This document has been placed in the public domain.
-:Revision: 1.0.0
+:Revision: 0.1.1
 
 .. contents::
 
