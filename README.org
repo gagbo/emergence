@@ -8,18 +8,37 @@
 [[https://codecov.io/gh/gagbo/emergence][https://codecov.io/gh/gagbo/emergence/branch/master/graph/badge.svg]]
 
 * What is this ?
+** Purpose
 This is a revisit of the [[https://github.com/gagbo/Flocking][Flocking project]]
 I started in Qt. After playing with [[https://github.com/gagbo/flocking_sdl][SDL]], and
 choosing that Qt is better for UI, I come back to Qt with the intent of making
-a better architecture that will allow better maintainability.
+a better architecture, with tried and true design patterns learned during
+[[https://github.com/ossu/computer-science][OSSU-sanctioned courses]].
+The ultimate goal is to allow better maintainability and upgrade
+possibilities.
 
-The project is also quite "dirty" as I use this as a playground while
-discovering design patterns and Qt possibilities. As such, for the time being
+** Progress
+For the time being there is not much to do with it. I am learning how to
+design properly software, therefore I am still working on paper to write the
+best specifications and class architecture I can to make this as clean as
+possible.
+
+It means that the repository is only a small stub for now, with basic
+CMakeLists and a little file organisation taken from earlier projects.
+
+As such, for the time being
 issues and PR I did not author will be ignored, and pushes will be made to
-master until a working version of the project is reached
+master until a working version of the project is reached. "Working" means
+taking at least 1 command line argument for the count of agents the
+world should start with, and proper simulation afterwards.
+
 
 * Dependencies
-  - Qt5
+  These dependencies are "minimal" mostly because they correspond to my
+  environment and the CI env :
+  - Qt 5.10.1
+  - CMake 3.8
+
 
 * How to play with it
 The current CMake configuration overrides the default install location,
