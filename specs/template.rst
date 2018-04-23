@@ -6,9 +6,9 @@ Requirements Specification for emergence
 
 :Contributors: Gerry Agbobada (github.com/gagbo)
 :Created: Mon Apr 23 10:58:00 CET 2018
-:Modified: Mon Apr 23 10:58:00 CET 2018
+:Modified: Mon Apr 23 18:51:19 CET 2018
 :Copyright: This document has been placed in the public domain.
-:Revision: 0.1.1
+:Revision: 0.1.2
 
 .. contents::
 
@@ -16,24 +16,22 @@ Requirements Specification for emergence
 1. Introduction
 ---------------
 
-This is an example SRS document following the IEEE STD 830-1998 standard. This
-document is meant to be used as guideline describing what the application or
-system will do and is not meant for the actual design. This introduction
-section should be one paragraph long at most and should detail the intent of
-this document.
+emergence is an autonomous agent simulation engine/viewer. This
+project will hopefully be the ultimate version of my flocking/emergence behaviour,
+as design patters are better known now, in order to help me extract meaningful
+interactions from the editor.
+This document describes the specifications of the emergence program, to help
+implementing a working product.
 
-
-.. Note:: This document was pulled together from many google searches and
-          primarily comes from one University template that can't be found
-          anymore and contained no references to its original author. So
-          whomever you are, thank you.
+.. Note:: This document was pulled together from a unique google search
+          thanks to the work of Jesus Alvarez (@demizer). Many thanks !
 
 
 1.1 Purpose
 ===========
 
-Identify the purpose of this SRS and its intended audience. This audience could
-be made up of project managers, designers (architecture, UI), or customers.
+This document (named *SRS* after this) is intended for the the architecture designer
+and main developper, to help prioritize tasks and keep a clean Roadmap.
 
 1.2 Scope of Project
 ====================
@@ -41,14 +39,11 @@ be made up of project managers, designers (architecture, UI), or customers.
 Use this section to give a brief overview of the project. This should be an
 overview and not a definitive explanation.
 
-A. Identify the software project to be produced by name.
+A. emergence is the name of the project and of the executable
 
-#. Explain what the software project will do, and, if necessary, will not do.
+#. emergence is an engine simulating the evolution of Entities within a World
 
-#. Describe the application of the software being specified, including relevant
-   benefits, objectives, and goals.
-
-#. Be consistent with similar statements in higher-level specifications.
+#. emergence aims to be a light, care-free "ant colony" project
 
 1.3 Glossary
 ============
@@ -65,8 +60,18 @@ SRS
 IEEE
     Institute of Electrical ond Electronics Engineers
 
-Customer
+User
     The user of the application.
+
+World
+    An instance of the world the Entities live in
+
+Entity
+    An Entity is an object living in a World.
+
+Agent
+    An Agent is an autonomous Entity living in the World. It can move by itself
+    according to decisions made thanks to vision of its surroundings.
 
 1.4 References
 ==============
