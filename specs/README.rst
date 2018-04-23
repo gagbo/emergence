@@ -26,11 +26,15 @@ User needs
 ==========
 
 - User can run emergence from the command line
+
   * User can set a count of Agents to populate the World
 
 - User can interact with the simulation through menus
+
   * User can do what they want at the moment they want
+
     + Triggering a menu pauses the simulation
+
     + Finishing the menu continues the simulation
 
   * User can pause/continue/restart simulation through menu
@@ -38,12 +42,17 @@ User needs
   * User can add Entity through menu
 
 - User can interact with the simultion through the viewing panel
+
   * User can do what they want at the moment they want
+
     + Triggering a menu pauses the simulation
+
     + Finishing the menu continues the simulation
 
   * User can do everything that's possible through menu via clicking on the map
+
     + All actions that need a position have default fields to the position of the click
+
     + All actions that need an Entity have default fields to one of the entity under cursor
 
 World specifications
@@ -55,6 +64,7 @@ Entity specifications
 =====================
 Should definitely be part of a Model, probably derived from
 QGraphicsItem.
+
 Should support position and how to render
 
 Agent specifications
