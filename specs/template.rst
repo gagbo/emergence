@@ -6,7 +6,7 @@ Requirements Specification for emergence
 
 :Contributors: Gerry Agbobada (github.com/gagbo)
 :Created: Mon Apr 23 10:58:00 CET 2018
-:Modified: Mon Apr 23 18:51:19 CET 2018
+:Modified: Tue Apr 24 09:33:58 CET 2018
 :Copyright: This document has been placed in the public domain.
 :Revision: 0.1.2
 
@@ -30,8 +30,8 @@ implementing a working product.
 1.1 Purpose
 ===========
 
-This document (named *SRS* after this) is intended for the the architecture designer
-and main developper, to help prioritize tasks and keep a clean Roadmap.
+This document (named *SRS* after this) is intended for the architecture designer
+and main developer, to help prioritize tasks and keep a clean Roadmap.
 
 1.2 Scope of Project
 ====================
@@ -57,9 +57,6 @@ GUI
 SRS
     Software Requirements Specification
 
-IEEE
-    Institute of Electrical ond Electronics Engineers
-
 User
     The user of the application.
 
@@ -76,18 +73,16 @@ Agent
 1.4 References
 ==============
 
-Provide a list of all documents referenced in this SRS and how to obtain them.
-Identify each document by title, date, and organization.
+The idea to run flocking/experiments for a serious program came from a small
+presentation seen on Tech.io_ named `Flocking Autonomous Agents`_.
+
+.. _Flocking Autonomous Agents: https://www.tech.io/playgrounds/1003/flocking-autonomous-agents/introduction
+.. _Tech.io: https://www.tech.io/
 
 1.5 How to Use This Document
 ============================
 
-Explain how the SRS is organized and what sections particular groups should
-read.
-
-If you are just using this document as a template for your own SRS, don't just
-delete sections that are not applicable. Simply state that the section does not
-apply to the project.
+The SRS is giving broad guidelines and objectives of the software.
 
 ----------------------
 2. General Description
@@ -101,18 +96,9 @@ section 3 and also outlines requirements in English for the customer.
 2.1 Project Perspective
 =======================
 
-This subsection of the SRS should put the project into perspective with other
-related projects. If the project is independent and totally self-contained, it
-should be so stated here. If the SRS defines a project that is a component of a
-larger system, as frequently occurs, then this subsection should relate the
-requirements of that larger system to functionality of the software and should
-identify interfaces between that system and the software.
-
-A block diagram showing the major components of the larger system,
-interconnections, and external inter-faces can be helpful.
-
-This subsection should also describe how the software operates inside various
-constraints. For example, these constraints could include
+This project is really independent from any other effort, meaning
+that emergence is *not* built to be used by other programs later,
+only to be used by Users.
 
 A. System interfaces
 
@@ -153,7 +139,7 @@ accomplish software requirements.
 
 #. *All the aspects of optimizing the interface with the person who must use
    the system* Will there be any special considerations to be made to make the
-   software accessable to the disabled? or to clients in far reaches of the
+   software accessible to the disabled? or to clients in far reaches of the
    earth?
 
 2.1.3 Hardware Interfaces
