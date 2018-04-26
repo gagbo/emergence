@@ -6,7 +6,7 @@ Requirements Specification for emergence
 
 :Contributors: Gerry Agbobada (github.com/gagbo)
 :Created: Mon Apr 23 10:58:00 CET 2018
-:Modified: Tue Apr 24 09:33:58 CET 2018
+:Modified: Thu Apr 26 09:25:41 CET 2018
 :Copyright: This document has been placed in the public domain.
 :Revision: 0.1.2
 
