@@ -85,13 +85,13 @@ class Entity : public QGraphicsItem {
  protected:
     void advance(int phase) override;
 
-    int _id{-1};                   //!< Global Entity Id
+    int _id{-1};                      //!< Global Entity Id
     QVector2D _pos{0, 0};             //!< Position
     QVector2D _vel{0, 0};             //!< Velocity
     QVector2D _acc{0, 0};             //!< Acceleration
-    float _vel_angle{0};             //!< Current angle of the velocity
-    float _mass{1};                  //!< Mass of the Entity
-    float _max_force{1e-2};          //!< Maximum force the
+    float _vel_angle{0};              //!< Current angle of the velocity
+    float _mass{1};                   //!< Mass of the Entity
+    float _max_force{1e-2};           //!< Maximum force the
                                       //!< Entity can apply to move itself
     QColor _color{200, 80, 25, 255};  //!< Color
     float _life{100};

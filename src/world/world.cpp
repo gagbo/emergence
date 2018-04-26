@@ -19,3 +19,8 @@
  */
 
 #include "world.h"
+
+float
+World::time_step() const {
+    return _time_step;
+}

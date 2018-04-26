@@ -55,6 +55,8 @@ class World : public QGraphicsScene {
     //! update the world state, advancing _time_step in _time_step
     void update();
 
+    float time_step() const;
+
  signals:
     //! Emit a message to be read and/or printed by MainWindow
     void message(QString);

@@ -22,11 +22,11 @@
 
 float
 Entity::x() const {
-    return _pos[0];
+    return _pos.x();
 }
 float
 Entity::y() const {
-    return _pos[1];
+    return _pos.y();
 }
 QVector2D
 Entity::position() const {
@@ -77,4 +77,17 @@ Entity::visible_neigbours() const {
 QWeakPointer<World>
 Entity::parent_world() const {
     return _parent_world;
+}
+
+void
+Entity::tock() {
+    QSharedPointer<World> p_world = _parent_world.lock();
+    if (p_world.isNull()) {
+        // TODO : throw QException named EntityHasNoParentWorld
+        return;
+    }
+    float time_step = p_world->time_step();
+    _vel += _acc * time_step;
+    _pos += _vel * time_step;
+    _acc = QVector2D(0, 0);
 }
