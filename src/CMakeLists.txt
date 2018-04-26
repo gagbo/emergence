@@ -9,9 +9,7 @@ configure_file (
     "${PROJECT_SOURCE_DIR}/src/emergenceConfig.h"
     )
 
-# add the binary tree to the search path for include files
-# so that we will find emergenceConfig.h
-include_directories ("${PROJECT_BINARY_DIR}/src")
+include_directories ("${PROJECT_SOURCE_DIR}/src")
 
 add_subdirectory (ui)
 add_subdirectory (world)
@@ -20,6 +18,8 @@ add_subdirectory (entity)
 add_executable (emergence main.cpp)
 target_link_libraries (emergence Qt5::Widgets)
 target_link_libraries (emergence ${PROJECT_NAME}_ui)
+target_link_libraries (emergence ${PROJECT_NAME}_entity)
+target_link_libraries (emergence ${PROJECT_NAME}_world)
 
 install (TARGETS emergence DESTINATION bin)
 install (FILES "${PROJECT_SOURCE_DIR}/src/emergenceConfig.h"

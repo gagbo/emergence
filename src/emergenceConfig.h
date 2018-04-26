@@ -5,4 +5,4 @@
 #define EMERGENCE_VERSION_MINOR 1
 #define DATA_DIR "/home/gagbo/projects/emergence/build/install/data/"
 
-#endif  // _EMERGENCE_CONFIG_H_
+#endif // _EMERGENCE_CONFIG_H_

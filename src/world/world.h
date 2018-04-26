@@ -22,18 +22,23 @@
 #define _WORLD_WORLD_H_
 
 #include <QGraphicsScene>
+#include <QVector2D>
+#include "entity/factory/entity_factory.h"
 
 #define DEFAULT_TIMESTEP 1
 #define DEFAULT_BORDER_COLOR "limegreen"
 
 class QGraphicsSceneMouseEvent;
 
+class Entity;
+class EntityFactory;
+
 class World : public QGraphicsScene {
     Q_OBJECT
 
  public:
     //! Default Constructor
-    World = default;
+    World() = default;
 
     //! Destructor
     ~World();
@@ -45,7 +50,7 @@ class World : public QGraphicsScene {
     void add_entity();
 
     //! Get the friction coefficient for a position in the world
-    QFloat get_friction(QVector2D position);
+    float get_friction(QVector2D position);
 
     //! update the world state, advancing _time_step in _time_step
     void update();
@@ -61,15 +66,15 @@ class World : public QGraphicsScene {
     void scale_reset(void);
 
  protected:
-    QFloat _time_step{DEFAULT_TIMESTEP};  //!< Time step of the physics engine
-    QColor _border_color{DEFAULT_BORDER_COLOR};  //!< Color of the border to draw
-                                                 //!< where the scene wraps
+    float _time_step{DEFAULT_TIMESTEP};  //!< Time step of the physics engine
+    QColor _border_color{DEFAULT_BORDER_COLOR};  //!< Color of the border to
+                                                 //!< draw where the scene wraps
                                                  //!< around
 
     bool _wraps_around{false};
-    QFloat _time{0};
+    float _time{0};
     QVector<QSharedPointer<Entity>> _agents{};
-    QUniquePointer<EntityFactory> _ent_factory{nullptr};
+    QSharedPointer<EntityFactory> _ent_factory{nullptr};
 
     //! Draw a border around the World rectangle
     /*! This is an overloaded method, the second parameter is not used.
