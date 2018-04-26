@@ -77,13 +77,13 @@ The idea to run flocking/experiments for a serious program came from a small
 presentation seen on Tech.io_ named `Flocking Autonomous Agents`_.
 
 The user interface is done thanks to Qt_, and the handling of objects in the
-simulated world uses their `Graphical View Framework`_
+simulated world uses their `Graphics View Framework`_
 
 
 .. _Flocking Autonomous Agents: https://www.tech.io/playgrounds/1003/flocking-autonomous-agents/introduction
 .. _Tech.io: https://www.tech.io/
 .. _Qt: https://www.qt.io/
-.. _Graphical View Framework: http://doc.qt.io/qt-5/graphicsview.html
+.. _Graphics View Framework: http://doc.qt.io/qt-5/graphicsview.html
 
 1.5 How to Use This Document
 ============================
