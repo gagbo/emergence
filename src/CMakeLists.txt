@@ -10,13 +10,14 @@ configure_file (
     )
 
 # add the binary tree to the search path for include files
-# so that we will find FlockingConfig.h
+# so that we will find emergenceConfig.h
 include_directories ("${PROJECT_BINARY_DIR}/src")
 
 add_subdirectory (ui)
+add_subdirectory (world)
+add_subdirectory (entity)
 
 add_executable (emergence main.cpp)
-# Maybe linking SDL2 is not necessary since it should be ui
 target_link_libraries (emergence Qt5::Widgets)
 target_link_libraries (emergence ${PROJECT_NAME}_ui)
 
