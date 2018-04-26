@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 Gerry Agbobada
+/* Copyright (c) 2018 Gerry Agbobada
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -21,7 +21,7 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(qint32 win_wid, qint32 win_hei)
-    : main_view(new QGraphicsView()) {
+    : main_view(new WorldView()) {
     main_view->setRenderHint(QPainter::Antialiasing);
     main_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     main_view->setDragMode(QGraphicsView::ScrollHandDrag);

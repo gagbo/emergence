@@ -1,4 +1,4 @@
-/* Copyright (c) 2017 Gerry Agbobada
+/* Copyright (c) 2018 Gerry Agbobada
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -23,6 +23,7 @@
 
 #include <QtWidgets>
 #include <memory>
+#include "world_view.h"
 
 #define WINDOW_DEFAULT_WIDTH 640
 #define WINDOW_DEFAULT_HEIGHT 480
@@ -36,7 +37,7 @@ class MainWindow : public QMainWindow {
 
  protected:
     void closeEvent(QCloseEvent *event) override;
-    QSharedPointer<QGraphicsView> main_view;
+    QSharedPointer<WorldView> main_view;
 
  public slots:
     //! Show message in status bar
