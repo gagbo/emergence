@@ -56,12 +56,13 @@ class Entity : public QGraphicsItem {
                        QWidget *widget) override;
 
     //! Set the acceleration according to the surrounding of the Entity
-    virtual void tick();
+    virtual void decide_acceleration();
 
-    //! Update the position of the Entity according to acceleration and
-    //! World time step
+    //! Update the position of the Entity according to acceleration, _dt
+    //! and set the position in World
     virtual void update();
 
+    //! Set the position and rotation in the parent World
     void update_scene_pos();
 
     /////////////// Accessors and output

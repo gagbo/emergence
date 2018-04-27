@@ -92,7 +92,7 @@ Entity::dt() const {
 }
 
 void
-Entity::tick() {
+Entity::decide_acceleration() {
     _acc = QVector2D(0, 0);
 }
 
@@ -106,9 +106,8 @@ Entity::update() {
 void
 Entity::advance(int phase) {
     if (phase == 0) {
-        tick();
+        decide_acceleration();
     }
-    tick();
     update();
 }
 
