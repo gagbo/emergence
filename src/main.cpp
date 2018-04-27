@@ -48,15 +48,19 @@ main(int argc, char *argv[]) {
     parser.process(app);
 
     World basic_world;
+    basic_world.set_time_step(0.1);
     basic_world.enable_wrap_around();
+    if (!basic_world.add_entity("inert", "food")) {
+        std::cerr << "Did not create the entity\n";
+    }
     MainWindow mainWin(basic_world);
     mainWin.show();
 
     // Timer to trigger update, disabled for now
-    // QTimer timer;
-    // QObject::connect(&timer, SIGNAL(timeout()), mainWin.getScene(),
-    //                  SLOT(advance()));
-    // timer.start(time_step);
+    QTimer timer;
+    QObject::connect(&timer, SIGNAL(timeout()), mainWin.get_view()->get_scene(),
+                     SLOT(advance()));
+    timer.start(mainWin.get_view()->get_scene()->time_step());
 
     return app.exec();
 }

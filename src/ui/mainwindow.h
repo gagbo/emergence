@@ -33,13 +33,18 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
  public:
-        /* We decide to have only 1 World per MainWindow and 1 MainWindow per
-         * instance of the application.
-         * Still, the Singleton pattern will not be applied either on World or
-         * on MainWindow because the design could change.
-         */
+    /* We decide to have only 1 World per MainWindow and 1 MainWindow per
+     * instance of the application.
+     * Still, the Singleton pattern will not be applied either on World or
+     * on MainWindow because the design could change.
+     */
     MainWindow(World& app_world, qint32 win_wid = WINDOW_DEFAULT_WIDTH,
                qint32 win_hei = WINDOW_DEFAULT_HEIGHT);
+
+    inline WorldView*
+    get_view() const {
+        return _main_view.data();
+    }
 
  protected:
     //! Override the close event of the MainWindow

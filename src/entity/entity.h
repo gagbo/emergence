@@ -24,7 +24,6 @@
 #include <QGraphicsItem>
 #include <QVector2D>
 #include <iostream>
-#include "world/world.h"
 
 class World;
 
@@ -57,11 +56,13 @@ class Entity : public QGraphicsItem {
                        QWidget *widget) override;
 
     //! Set the acceleration according to the surrounding of the Entity
-    virtual void tick() = 0;
+    virtual void tick();
 
     //! Update the position of the Entity according to acceleration and
     //! World time step
-    virtual void tock();
+    virtual void update();
+
+    void update_scene_pos();
 
     /////////////// Accessors and output
 
@@ -76,11 +77,12 @@ class Entity : public QGraphicsItem {
     QColor color() const;
     float life() const;
     QVector2D size() const;
+    float dt() const;
 
     QList<QWeakPointer<Entity>> neigbours() const;
     QList<QWeakPointer<Entity>> visible_neigbours() const;
 
-    QWeakPointer<World> parent_world() const;
+    void set_time_step(float dt);
 
  protected:
     void advance(int phase) override;
@@ -93,12 +95,12 @@ class Entity : public QGraphicsItem {
     float _mass{1};                   //!< Mass of the Entity
     float _max_force{1e-2};           //!< Maximum force the
                                       //!< Entity can apply to move itself
-    QColor _color{200, 80, 25, 255};  //!< Color
+    QColor _color{200, 0, 0, 255};  //!< Color
     float _life{100};
-    QVector2D _size{3, 3};
+    QVector2D _size{20, 20};
     QList<QWeakPointer<Entity>> _neighbours{};
     QList<QWeakPointer<Entity>> _visible_neighbours{};
 
-    QWeakPointer<World> _parent_world{nullptr};
+    float _dt{1}; //<! Time-step given by World
 };
 #endif  // _ENTITY_ENTITY_H_

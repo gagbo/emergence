@@ -25,7 +25,7 @@
 #include <QVector2D>
 #include "entity/factory/entity_factory.h"
 
-#define DEFAULT_TIMESTEP 1
+#define DEFAULT_TIMESTEP 0.5
 #define DEFAULT_BORDER_COLOR "limegreen"
 #define DEFAULT_WORLD_WIDTH 640
 #define DEFAULT_WORLD_HEIGHT 480
@@ -65,7 +65,7 @@ class World : public QGraphicsScene {
     //! Get the friction coefficient for a position in the world
     float get_friction(QVector2D position);
 
-    //! update the world state, advancing _time_step in _time_step
+    //! update the world state, advancing _time_step in _time
     void update();
 
     //! Enable wraps_around and return the new current value
@@ -78,6 +78,7 @@ class World : public QGraphicsScene {
     bool toggle_wrap_around();
 
     float time_step() const;
+    void set_time_step(float dt);
 
  signals:
     //! Emit a message to be read and/or printed by MainWindow

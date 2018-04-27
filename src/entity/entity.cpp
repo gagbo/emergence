@@ -18,7 +18,14 @@
  * SOFTWARE.
  */
 
+#include <QPainter>
+#include <QtMath>
 #include "entity.h"
+
+Entity::~Entity() {
+    _visible_neighbours.clear();
+    _neighbours.clear();
+}
 
 float
 Entity::x() const {
@@ -74,20 +81,62 @@ Entity::visible_neigbours() const {
     return _visible_neighbours;
 }
 
-QWeakPointer<World>
-Entity::parent_world() const {
-    return _parent_world;
+void
+Entity::set_time_step(float dt) {
+    _dt = dt;
+}
+
+float
+Entity::dt() const {
+    return _dt;
 }
 
 void
-Entity::tock() {
-    QSharedPointer<World> p_world = _parent_world.lock();
-    if (p_world.isNull()) {
-        // TODO : throw QException named EntityHasNoParentWorld
-        return;
-    }
-    float time_step = p_world->time_step();
-    _vel += _acc * time_step;
-    _pos += _vel * time_step;
+Entity::tick() {
     _acc = QVector2D(0, 0);
+}
+
+void
+Entity::update() {
+    _vel += _acc * _dt;
+    _pos += _vel * _dt;
+    update_scene_pos();
+}
+
+void
+Entity::advance(int phase) {
+    if (phase == 0) {
+        tick();
+    }
+    tick();
+    update();
+}
+
+void Entity::update_scene_pos() {
+    float vel_angle = 180 - qRadiansToDegrees(qAtan2(_vel.x(), _vel.y()));
+    setRotation(vel_angle);
+    setPos(_pos.x(), _pos.y());
+}
+
+QRectF
+Entity::boundingRect() const {
+    return QRectF(-_size.x() / 2, -_size.y() / 2, _size.x(), _size.y());
+}
+
+QPainterPath
+Entity::shape() const {
+    QPainterPath path;
+    path.addRect(-_size.x() / 2, -_size.y() / 2, _size.x(), _size.y());
+    return path;
+}
+
+void
+Entity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+              QWidget *widget) {
+    (void)option;  // Unused inherited param
+    (void)widget;  // Unused inherited param
+    // Simple ellipse
+    painter->setBrush(_color);
+    painter->drawEllipse(boundingRect());
+    return;
 }

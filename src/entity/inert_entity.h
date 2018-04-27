@@ -27,7 +27,7 @@ class InertEntity : public Entity {
  public:
     void tick();
 
-    virtual ~InertEntity();
+    virtual ~InertEntity(){};
 };
 
 #endif  // _ENTITY_INERT_ENTITY_H_

@@ -16,10 +16,8 @@ add_subdirectory (world)
 add_subdirectory (entity)
 
 add_executable (emergence main.cpp)
-target_link_libraries (emergence Qt5::Widgets)
 target_link_libraries (emergence ${PROJECT_NAME}_ui)
-target_link_libraries (emergence ${PROJECT_NAME}_entity)
-target_link_libraries (emergence ${PROJECT_NAME}_world)
+target_link_libraries (emergence Qt5::Widgets)
 
 install (TARGETS emergence DESTINATION bin)
 install (FILES "${PROJECT_SOURCE_DIR}/src/emergenceConfig.h"

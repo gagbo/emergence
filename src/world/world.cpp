@@ -84,3 +84,8 @@ World::wheelEvent(QGraphicsSceneWheelEvent *event) {
 
     emit scale_change(scale_factor);
 }
+
+void
+World::set_time_step(float dt) {
+    _time_step = dt;
+}
