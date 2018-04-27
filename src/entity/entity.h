@@ -34,6 +34,13 @@ class Entity : public QGraphicsItem {
     //! Construct a new Entity
     Entity() = default;
 
+    //! Copy Constructor
+    // TODO : decide what to do with _neighbours and _visible_neighbours
+    Entity(const Entity& other);
+
+    //! Default move Constructor
+    Entity(Entity&& other) = default;
+
     //! Construct a new Ant at position with inital velocity
     Entity(const QVector2D &position,
            const QVector2D &init_speed = QVector2D(0, 0));
@@ -51,6 +58,9 @@ class Entity : public QGraphicsItem {
     virtual void paint(QPainter *painter,
                        const QStyleOptionGraphicsItem *option,
                        QWidget *widget) override;
+
+    //! Override called by World to update the entity
+    void advance(int phase) override;
 
     //! Set the acceleration according to the surrounding of the Entity
     virtual void decide_acceleration();
@@ -112,7 +122,6 @@ class Entity : public QGraphicsItem {
     void set_size(QVector2D new_size);
 
  protected:
-    void advance(int phase) override;
 
     int _id{-1};                    //!< Global Entity Id
     QVector2D _pos{0, 0};           //!< Position

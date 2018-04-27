@@ -27,6 +27,22 @@ Entity::~Entity() {
     _neighbours.clear();
 }
 
+Entity::Entity(const Entity& other) {
+    _id = other._id;
+    _pos = other._pos;
+    _vel = other._vel;
+    _acc = other._acc;
+    _vel_angle = other._vel_angle;
+    _mass = other._mass;
+    _max_force = other._max_force;
+    _color = other._color;
+    _life = other._life;
+    _size = other._size;
+    _dt = other._dt;
+    _super_type = other._super_type;
+    _type = other._type;
+}
+
 Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {
     _pos = position;
     _vel = init_speed;
@@ -210,4 +226,6 @@ Entity::set_life(float new_life) {
 void
 Entity::set_size(QVector2D new_size) {
     _size = new_size;
+    _size.setX(qFabs(_size.x()));
+    _size.setY(qFabs(_size.y()));
 }
