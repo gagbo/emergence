@@ -33,11 +33,26 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
  public:
+        /* We decide to have only 1 World per MainWindow and 1 MainWindow per
+         * instance of the application.
+         * Still, the Singleton pattern will not be applied either on World or
+         * on MainWindow because the design could change.
+         */
     MainWindow(World& app_world, qint32 win_wid = WINDOW_DEFAULT_WIDTH,
                qint32 win_hei = WINDOW_DEFAULT_HEIGHT);
 
  protected:
+    //! Override the close event of the MainWindow
+    /*! This method should either call
+     * event->accept() or event->ignore()
+     */
     void closeEvent(QCloseEvent* event) override;
+    /* For the time being, there is only 1 WorldView per MainWindow. This
+     * is the part that is most likely to change later, but the whole UI
+     * will be redesigned and made either in QML or with Qt Designer so
+     * the current 1 View per Window is only a quick way to visually test
+     * the WorldView widget
+     */
     QSharedPointer<WorldView> _main_view;
 
  public slots:
