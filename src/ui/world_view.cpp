@@ -22,6 +22,7 @@
 #include <QtGui/QPainter>
 #include <QtWidgets>
 #include "world/world.h"
+
 #include "world_view.h"
 
 WorldView::WorldView(World& shown_world) {
