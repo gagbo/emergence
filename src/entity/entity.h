@@ -43,7 +43,7 @@ class Entity : public QGraphicsItem {
            const QVector2D &init_speed = QVector2D(0, 0));
 
     /////////////// Destructor
-    ~Entity();
+    virtual ~Entity();
 
     /////////////// Misc. Methods
 
