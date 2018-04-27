@@ -36,6 +36,7 @@ QString
 Entity::super_type_name() const {
     return _super_type;
 }
+
 QString
 Entity::type_name() const {
     return _type;
@@ -45,42 +46,52 @@ float
 Entity::x() const {
     return _pos.x();
 }
+
 float
 Entity::y() const {
     return _pos.y();
 }
+
 QVector2D
 Entity::position() const {
     return _pos;
 }
+
 QVector2D
 Entity::velocity() const {
     return _vel;
 }
+
 QVector2D
 Entity::acceleration() const {
     return _acc;
 }
+
 int
 Entity::id() const {
     return _id;
 }
+
 float
 Entity::mass() const {
     return _mass;
 }
+
 float
 Entity::max_force() const {
     return _max_force;
 }
+
 QColor
 Entity::color() const {
     return _color;
 }
+
 float
 Entity::life() const {
     return _life;
 }
+
 QVector2D
 Entity::size() const {
     return _size;
@@ -90,6 +101,7 @@ QList<QWeakPointer<Entity>>
 Entity::neigbours() const {
     return _neighbours;
 }
+
 QList<QWeakPointer<Entity>>
 Entity::visible_neigbours() const {
     return _visible_neighbours;
