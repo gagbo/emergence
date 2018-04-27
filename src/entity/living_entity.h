@@ -30,6 +30,8 @@ class LivingEntity : public Entity {
     LivingEntity(const QVector2D &position,
                  const QVector2D &init_speed = QVector2D(0, 0));
 
+    virtual void decide_acceleration();
+
     virtual ~LivingEntity();
 };
 

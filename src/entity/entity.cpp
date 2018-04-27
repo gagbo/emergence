@@ -18,9 +18,9 @@
  * SOFTWARE.
  */
 
-#include "entity.h"
 #include <QPainter>
 #include <QtMath>
+#include "entity.h"
 
 Entity::~Entity() {
     _visible_neighbours.clear();
@@ -30,6 +30,15 @@ Entity::~Entity() {
 Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {
     _pos = position;
     _vel = init_speed;
+}
+
+QString
+Entity::super_type_name() const {
+    return _super_type;
+}
+QString
+Entity::type_name() const {
+    return _type;
 }
 
 float
@@ -144,4 +153,49 @@ Entity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->setBrush(_color);
     painter->drawEllipse(boundingRect());
     return;
+}
+
+void
+Entity::set_position(QVector2D new_pos) {
+    _pos = new_pos;
+}
+
+void
+Entity::set_velocity(QVector2D new_vel) {
+    _vel = new_vel;
+}
+
+void
+Entity::set_acceleration(QVector2D new_acc) {
+    _acc = new_acc;
+}
+
+void
+Entity::set_color(QColor new_color) {
+    _color = new_color;
+}
+
+void
+Entity::set_mass(float new_mass) {
+    _mass = new_mass;
+}
+
+void
+Entity::set_max_force(float new_max_force) {
+    _max_force = new_max_force;
+}
+
+void
+Entity::set_id(int new_id) {
+    _id = new_id;
+}
+
+void
+Entity::set_life(float new_life) {
+    _life = new_life;
+}
+
+void
+Entity::set_size(QVector2D new_size) {
+    _size = new_size;
 }

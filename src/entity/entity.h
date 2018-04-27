@@ -76,11 +76,40 @@ class Entity : public QGraphicsItem {
     float life() const;
     QVector2D size() const;
     float dt() const;
+    QString type_name() const;
+    QString super_type_name() const;
 
     QList<QWeakPointer<Entity>> neigbours() const;
     QList<QWeakPointer<Entity>> visible_neigbours() const;
 
     void set_time_step(float dt);
+
+    //! Arbitrarily set position of entity
+    void set_position(QVector2D new_pos);
+
+    //! Arbitrarily set velocity of entity
+    void set_velocity(QVector2D new_vel);
+
+    //! Arbitrarily set position of entity
+    void set_acceleration(QVector2D new_acc);
+
+    //! Arbitrarily set color of entity
+    void set_color(QColor new_color);
+
+    //! Arbitrarily set mass of entity
+    void set_mass(float new_mass);
+
+    //! Arbitrarily set max_force of entity
+    void set_max_force(float new_max_force);
+
+    //! Arbitrarily set id of entity
+    void set_id(int new_id);
+
+    //! Arbitrarily set life of entity
+    void set_life(float new_life);
+
+    //! Arbitrarily set size of entity
+    void set_size(QVector2D new_size);
 
  protected:
     void advance(int phase) override;
@@ -100,5 +129,8 @@ class Entity : public QGraphicsItem {
     QList<QWeakPointer<Entity>> _visible_neighbours{};
 
     float _dt{1};  //<! Time-step given by World
+
+    QString _super_type{""};
+    QString _type{""};
 };
 #endif  // _ENTITY_ENTITY_H_

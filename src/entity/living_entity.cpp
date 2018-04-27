@@ -20,8 +20,10 @@
 
 #include "living_entity.h"
 
-LivingEntity::LivingEntity() : Entity() {}
+LivingEntity::LivingEntity() : Entity() { _super_type = "Living"; }
 
 LivingEntity::LivingEntity(const QVector2D &position,
                            const QVector2D &init_speed)
-    : Entity(position, init_speed) {}
+    : Entity(position, init_speed) {
+    _super_type = "Living";
+}

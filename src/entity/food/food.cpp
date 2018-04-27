@@ -20,7 +20,9 @@
 
 #include "food.h"
 
-Food::Food() : InertEntity() {}
+Food::Food() : InertEntity() { _type = "Food"; }
 
 Food::Food(const QVector2D &position, const QVector2D &init_speed)
-    : InertEntity(position, init_speed) {}
+    : InertEntity(position, init_speed) {
+    _type = "Food";
+}

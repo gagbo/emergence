@@ -20,13 +20,15 @@
 
 #include "inert_entity.h"
 
-InertEntity::InertEntity() : Entity() {}
+InertEntity::InertEntity() : Entity() { _super_type = "Inert"; }
 
 InertEntity::InertEntity(const QVector2D &position, const QVector2D &init_speed)
-    : Entity(position, init_speed) {}
+    : Entity(position, init_speed) {
+    _super_type = "Inert";
+}
 
 void
-InertEntity::tick() {
+InertEntity::decide_acceleration() {
     _acc = QVector2D(0, 0);
     return;
 }
