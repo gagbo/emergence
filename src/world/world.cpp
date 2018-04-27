@@ -18,10 +18,10 @@
  * SOFTWARE.
  */
 
+#include "world.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsView>
 #include <QPainter>
-#include "world.h"
 
 World::World() { setItemIndexMethod(QGraphicsScene::BspTreeIndex); }
 

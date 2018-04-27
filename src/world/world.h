@@ -51,7 +51,7 @@ class World : public QGraphicsScene {
     template <typename... Ts>
     bool
     add_entity(QString super_type, QString type, Ts &&... params) {
-        Entity* p_entity = EntityFactory::make_entity(
+        Entity *p_entity = EntityFactory::make_entity(
             super_type, type, std::forward<Ts>(params)...);
         if (p_entity == nullptr) {
             return false;
