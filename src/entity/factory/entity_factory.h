@@ -32,7 +32,7 @@ class InertEntityFactory {
  public:
     template <typename... Ts>
     static InertEntity*
-    make_entity(QString type, Ts &&... params) {
+    make_entity(QString type, Ts&&... params) {
         if (QString::compare(type, "food", Qt::CaseInsensitive) == 0) {
             return new Food(std::forward<Ts>(params)...);
         } else {
@@ -46,7 +46,7 @@ class LivingEntityFactory {
  public:
     template <typename... Ts>
     static LivingEntity*
-    make_entity(QString type, Ts &&... params) {
+    make_entity(QString type, Ts&&... params) {
         if (QString::compare(type, "ant", Qt::CaseInsensitive) == 0) {
             // TODO Throw TypeUnsupported
             return nullptr;
@@ -65,12 +65,13 @@ class EntityFactory {
  public:
     template <typename... Ts>
     static Entity*
-    make_entity(QString super_type, QString type, Ts &&... params) {
+    make_entity(QString super_type, QString type, Ts&&... params) {
         if (QString::compare(super_type, "living", Qt::CaseInsensitive) == 0) {
             // TODO Catch TypeUnknown
             return LivingEntityFactory::make_entity(
                 type, std::forward<Ts>(params)...);
-        } else if (QString::compare(super_type, "inert", Qt::CaseInsensitive) == 0) {
+        } else if (QString::compare(super_type, "inert", Qt::CaseInsensitive) ==
+                   0) {
             // TODO Catch TypeUnknown
             return InertEntityFactory::make_entity(type,
                                                    std::forward<Ts>(params)...);

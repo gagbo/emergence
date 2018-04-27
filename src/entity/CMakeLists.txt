@@ -1,4 +1,5 @@
-add_library (${PROJECT_NAME}_entity entity.cpp inert_entity.cpp)
+add_library (${PROJECT_NAME}_entity entity.cpp inert_entity.cpp /
+    living_entity.cpp)
 
 add_subdirectory (factory)
 
@@ -7,6 +8,7 @@ add_subdirectory (velocity_strategy)
 add_subdirectory (ant)
 add_subdirectory (food)
 
+target_link_libraries (${PROJECT_NAME}_entity Qt5::Widgets)
 target_link_libraries (${PROJECT_NAME}_entity ${PROJECT_NAME}_food)
 
 install (TARGETS ${PROJECT_NAME}_entity DESTINATION lib)

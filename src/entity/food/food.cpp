@@ -20,4 +20,7 @@
 
 #include "food.h"
 
-// TODO : Implement the paint() method
+Food::Food() : InertEntity() {}
+
+Food::Food(const QVector2D &position, const QVector2D &init_speed)
+    : InertEntity(position, init_speed) {}

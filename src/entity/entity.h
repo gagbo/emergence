@@ -31,11 +31,8 @@ class Entity : public QGraphicsItem {
  public:
     /////////////// Constructors
 
-    //! Construct a new Ant to move in d dimensions (default 2)
+    //! Construct a new Entity
     Entity() = default;
-
-    //! Construct a new Ant at position
-    Entity(const QVector2D &position);
 
     //! Construct a new Ant at position with inital velocity
     Entity(const QVector2D &position,
@@ -88,20 +85,20 @@ class Entity : public QGraphicsItem {
  protected:
     void advance(int phase) override;
 
-    int _id{-1};                      //!< Global Entity Id
-    QVector2D _pos{0, 0};             //!< Position
-    QVector2D _vel{0, 0};             //!< Velocity
-    QVector2D _acc{0, 0};             //!< Acceleration
-    float _vel_angle{0};              //!< Current angle of the velocity
-    float _mass{1};                   //!< Mass of the Entity
-    float _max_force{1e-2};           //!< Maximum force the
-                                      //!< Entity can apply to move itself
+    int _id{-1};                    //!< Global Entity Id
+    QVector2D _pos{0, 0};           //!< Position
+    QVector2D _vel{0, 0};           //!< Velocity
+    QVector2D _acc{0, 0};           //!< Acceleration
+    float _vel_angle{0};            //!< Current angle of the velocity
+    float _mass{1};                 //!< Mass of the Entity
+    float _max_force{1e-2};         //!< Maximum force the
+                                    //!< Entity can apply to move itself
     QColor _color{200, 0, 0, 255};  //!< Color
     float _life{100};
     QVector2D _size{20, 20};
     QList<QWeakPointer<Entity>> _neighbours{};
     QList<QWeakPointer<Entity>> _visible_neighbours{};
 
-    float _dt{1}; //<! Time-step given by World
+    float _dt{1};  //<! Time-step given by World
 };
 #endif  // _ENTITY_ENTITY_H_

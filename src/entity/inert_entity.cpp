@@ -20,6 +20,11 @@
 
 #include "inert_entity.h"
 
+InertEntity::InertEntity() : Entity() {}
+
+InertEntity::InertEntity(const QVector2D &position, const QVector2D &init_speed)
+    : Entity(position, init_speed) {}
+
 void
 InertEntity::tick() {
     _acc = QVector2D(0, 0);

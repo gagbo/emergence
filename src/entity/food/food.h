@@ -25,8 +25,10 @@
 
 class Food : public InertEntity {
  public:
-    Food() = default;
-    // TODO : Make a proper constructor for Food that takes arguments
+    Food();
+
+    Food(const QVector2D &position,
+         const QVector2D &init_speed = QVector2D(0, 0));
 };
 
 #endif  // _ENTITY_FOOD_FOOD_H_

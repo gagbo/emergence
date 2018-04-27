@@ -53,6 +53,9 @@ main(int argc, char *argv[]) {
     if (!basic_world.add_entity("inert", "food")) {
         std::cerr << "Did not create the entity\n";
     }
+    if (!basic_world.add_entity("inert", "food", QVector2D(25, 90))) {
+        std::cerr << "Did not create the entity\n";
+    }
     MainWindow mainWin(basic_world);
     mainWin.show();
 

@@ -24,9 +24,11 @@
 #include "entity.h"
 
 class LivingEntity : public Entity {
-  // TODO STUB
  public:
-    void tick();
+    LivingEntity();
+    //! Construct a new Entity at position with initial velocity
+    LivingEntity(const QVector2D &position,
+                 const QVector2D &init_speed = QVector2D(0, 0));
 
     virtual ~LivingEntity();
 };

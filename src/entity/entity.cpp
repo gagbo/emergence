@@ -18,13 +18,18 @@
  * SOFTWARE.
  */
 
+#include "entity.h"
 #include <QPainter>
 #include <QtMath>
-#include "entity.h"
 
 Entity::~Entity() {
     _visible_neighbours.clear();
     _neighbours.clear();
+}
+
+Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {
+    _pos = position;
+    _vel = init_speed;
 }
 
 float
@@ -111,7 +116,8 @@ Entity::advance(int phase) {
     update();
 }
 
-void Entity::update_scene_pos() {
+void
+Entity::update_scene_pos() {
     float vel_angle = 180 - qRadiansToDegrees(qAtan2(_vel.x(), _vel.y()));
     setRotation(vel_angle);
     setPos(_pos.x(), _pos.y());
