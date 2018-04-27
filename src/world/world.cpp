@@ -18,9 +18,72 @@
  * SOFTWARE.
  */
 
+#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsView>
+#include <QPainter>
 #include "world.h"
+
+World::World() { setItemIndexMethod(QGraphicsScene::BspTreeIndex); }
+
+World::~World() {
+    _agents.clear();
+    _ent_factory.clear();
+}
 
 float
 World::time_step() const {
     return _time_step;
+}
+
+bool
+World::toggle_wrap_around() {
+    return (_wraps_around = !_wraps_around);
+}
+bool
+World::disable_wrap_around() {
+    return (_wraps_around = false);
+}
+bool
+World::enable_wrap_around() {
+    return (_wraps_around = true);
+}
+
+void
+World::drawForeground(QPainter *painter, const QRectF &rect) {
+    if (!_wraps_around) {
+        return;
+    }
+    (void)rect;  // We are not using the inherited parameter
+
+    painter->setBrush(Qt::NoBrush);
+    QPen pen(_border_color, 3, Qt::DashDotLine, Qt::RoundCap, Qt::RoundJoin);
+    painter->setPen(pen);
+
+    float wid = _size.x();
+    float hei = _size.y();
+    painter->drawRect(QRectF(-wid / 2.0, -hei / 2.0, wid, hei));
+}
+
+void
+World::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    Qt::MouseButton pressed_button = event->button();
+    if (pressed_button == Qt::LeftButton) {
+        float x = event->scenePos().x();
+        float y = event->scenePos().y();
+        emit message(QString("Clicked at (%1,%2)").arg(x).arg(y));
+    } else if (pressed_button == Qt::MiddleButton) {
+        emit scale_reset();
+    }
+    return;
+}
+
+void
+World::wheelEvent(QGraphicsSceneWheelEvent *event) {
+    int eighths_deg = event->delta();  // >0 means scrolling up
+    int direction = eighths_deg > 0 ? 1 : -1;
+    float scale_factor = 1;
+
+    scale_factor += 0.2 * direction;
+
+    emit scale_change(scale_factor);
 }

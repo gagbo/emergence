@@ -26,6 +26,7 @@
 
 #include "emergenceConfig.h"
 #include "ui/mainwindow.h"
+#include "world/world.h"
 
 int
 main(int argc, char *argv[]) {
@@ -46,7 +47,9 @@ main(int argc, char *argv[]) {
     parser.addPositionalArgument("dummy", "Test the command line parser");
     parser.process(app);
 
-    MainWindow mainWin;
+    World basic_world;
+    basic_world.enable_wrap_around();
+    MainWindow mainWin(basic_world);
     mainWin.show();
 
     // Timer to trigger update, disabled for now

@@ -20,13 +20,14 @@
 
 #include "mainwindow.h"
 
-MainWindow::MainWindow(qint32 win_wid, qint32 win_hei)
-    : main_view(new WorldView()) {
-    main_view->setRenderHint(QPainter::Antialiasing);
-    main_view->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-    main_view->setDragMode(QGraphicsView::ScrollHandDrag);
+MainWindow::MainWindow(World& app_world, qint32 win_wid, qint32 win_hei)
+    : _main_view(new WorldView(app_world)) {
+    _main_view->setRenderHint(QPainter::Antialiasing);
+    _main_view->setViewportUpdateMode(
+        QGraphicsView::BoundingRectViewportUpdate);
+    _main_view->setDragMode(QGraphicsView::ScrollHandDrag);
 
-    setCentralWidget(main_view.data());
+    setCentralWidget(_main_view.data());
 
     createActions();
     createStatusBar();
@@ -34,10 +35,13 @@ MainWindow::MainWindow(qint32 win_wid, qint32 win_hei)
     move((win_wid - width()) / 2, (win_hei - height()) / 2);
 
     setUnifiedTitleAndToolBarOnMac(true);
+
+    connect(_main_view->get_scene(), SIGNAL(message(QString)), this,
+            SLOT(showMessage(QString)));
 }
 
 void
-MainWindow::closeEvent(QCloseEvent *event) {
+MainWindow::closeEvent(QCloseEvent* event) {
     event->accept();
     // event->ignore();
 }

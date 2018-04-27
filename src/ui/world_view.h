@@ -21,10 +21,41 @@
 #ifndef _UI_WORLD_VIEW_H_
 #define _UI_WORLD_VIEW_H_
 
+#include <QGraphicsView>
+#include <QString>
 #include <QtWidgets>
+#include <iostream>
+
+class QPaintEvent;
 
 class WorldView : public QGraphicsView {
     Q_OBJECT
+
+ public:
+    WorldView() = default;
+    WorldView(World& shown_world);
+    virtual ~WorldView();
+
+    inline World*
+    get_scene() const {
+        return dynamic_cast<World*>(this->scene());
+    }
+    // TODO : Should perfect forward params
+    void add_entity(QString super_type, QString type);
+
+ public slots:
+    void change_scale(float scale_factor);
+    inline void
+    reset_scale() {
+        scale(1 / xy_scale, 1 / xy_scale);
+        xy_scale = 1.0;
+        return;
+    }
+
+ protected:
+ private:
+    QBrush background{};
+    float xy_scale{1.0};
 };
 
 #endif  // _UI_WORLD_VIEW_H_

@@ -27,6 +27,8 @@
 
 #define DEFAULT_TIMESTEP 1
 #define DEFAULT_BORDER_COLOR "limegreen"
+#define DEFAULT_WORLD_WIDTH 640
+#define DEFAULT_WORLD_HEIGHT 480
 
 class QGraphicsSceneMouseEvent;
 
@@ -38,7 +40,7 @@ class World : public QGraphicsScene {
 
  public:
     //! Default Constructor
-    World() = default;
+    World();
 
     //! Destructor
     ~World();
@@ -47,13 +49,23 @@ class World : public QGraphicsScene {
     void render();
 
     //! Add an entity to the World
-    void add_entity();
+    // TODO : Perfect forward params
+    bool add_entity(QString super_type, QString type);
 
     //! Get the friction coefficient for a position in the world
     float get_friction(QVector2D position);
 
     //! update the world state, advancing _time_step in _time_step
     void update();
+
+    //! Enable wraps_around and return the new current value
+    bool enable_wrap_around();
+
+    //! Disable wraps_around and return the new current value
+    bool disable_wrap_around();
+
+    //! Toggle wraps_around and return the new current value
+    bool toggle_wrap_around();
 
     float time_step() const;
 
@@ -74,11 +86,12 @@ class World : public QGraphicsScene {
                                                  //!< around
 
     bool _wraps_around{false};
+    QVector2D _size{DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT};
     float _time{0};
     QVector<QSharedPointer<Entity>> _agents{};
     QSharedPointer<EntityFactory> _ent_factory{nullptr};
 
-    //! Draw a border around the World rectangle
+    //! Draw a border around the World rectangle if the world wraps around
     /*! This is an overloaded method, the second parameter is not used.
      */
     void drawForeground(QPainter *, const QRectF &);

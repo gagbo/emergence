@@ -23,6 +23,7 @@
 
 #include <QtWidgets>
 #include <memory>
+#include "world/world.h"
 #include "world_view.h"
 
 #define WINDOW_DEFAULT_WIDTH 640
@@ -32,12 +33,12 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
  public:
-    MainWindow(qint32 win_wid = WINDOW_DEFAULT_WIDTH,
+    MainWindow(World& app_world, qint32 win_wid = WINDOW_DEFAULT_WIDTH,
                qint32 win_hei = WINDOW_DEFAULT_HEIGHT);
 
  protected:
-    void closeEvent(QCloseEvent *event) override;
-    QSharedPointer<WorldView> main_view;
+    void closeEvent(QCloseEvent* event) override;
+    QSharedPointer<WorldView> _main_view;
 
  public slots:
     //! Show message in status bar

@@ -18,4 +18,33 @@
  * SOFTWARE.
  */
 
+#include <QGraphicsScene>
+#include <QtGui/QPainter>
+#include <QtWidgets>
+#include "world/world.h"
 #include "world_view.h"
+
+WorldView::WorldView(World& shown_world) {
+    setScene(&shown_world);
+    setRenderHint(QPainter::Antialiasing);
+    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    setDragMode(QGraphicsView::ScrollHandDrag);
+
+    background = QBrush(QColor(64, 32, 64));
+    setBackgroundBrush(background);
+
+    xy_scale = 1;
+    connect(get_scene(), SIGNAL(scale_change(float)), this,
+            SLOT(change_scale(float)));
+    connect(get_scene(), SIGNAL(scale_reset(void)), this,
+            SLOT(reset_scale(void)));
+}
+
+WorldView::~WorldView() {}
+
+void
+WorldView::change_scale(float scale_factor) {
+    xy_scale *= scale_factor;
+    scale(scale_factor, scale_factor);
+    return;
+}
