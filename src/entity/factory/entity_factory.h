@@ -21,9 +21,9 @@
 #ifndef _ENTITY_FACTORY_ENTITYFACTORY_H_
 #define _ENTITY_FACTORY_ENTITYFACTORY_H_
 #include "entity/entity.h"
-#include "entity/living_entity.h"
-#include "entity/inert_entity.h"
 #include "entity/food/food.h"
+#include "entity/inert_entity.h"
+#include "entity/living_entity.h"
 
 #include <QSharedPointer>
 #include <QString>
@@ -31,10 +31,10 @@
 class InertEntityFactory {
  public:
     template <typename... Ts>
-    static QSharedPointer<InertEntity>
+    static InertEntity*
     make_entity(QString type, Ts &&... params) {
         if (QString::compare(type, "food", Qt::CaseInsensitive) == 0) {
-            return QSharedPointer<Food>::create(std::forward<Ts>(params)...);
+            return new Food(std::forward<Ts>(params)...);
         } else {
             // TODO Throw TypeUnknown
             return nullptr;
@@ -45,7 +45,7 @@ class InertEntityFactory {
 class LivingEntityFactory {
  public:
     template <typename... Ts>
-    static QSharedPointer<LivingEntity>
+    static LivingEntity*
     make_entity(QString type, Ts &&... params) {
         if (QString::compare(type, "ant", Qt::CaseInsensitive) == 0) {
             // TODO Throw TypeUnsupported
@@ -64,13 +64,13 @@ class LivingEntityFactory {
 class EntityFactory {
  public:
     template <typename... Ts>
-    static QSharedPointer<Entity>
+    static Entity*
     make_entity(QString super_type, QString type, Ts &&... params) {
         if (QString::compare(super_type, "living", Qt::CaseInsensitive) == 0) {
             // TODO Catch TypeUnknown
             return LivingEntityFactory::make_entity(
                 type, std::forward<Ts>(params)...);
-        } else if (QString::compare(type, "inert", Qt::CaseInsensitive) == 0) {
+        } else if (QString::compare(super_type, "inert", Qt::CaseInsensitive) == 0) {
             // TODO Catch TypeUnknown
             return InertEntityFactory::make_entity(type,
                                                    std::forward<Ts>(params)...);

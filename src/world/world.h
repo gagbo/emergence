@@ -33,7 +33,6 @@
 class QGraphicsSceneMouseEvent;
 
 class Entity;
-class EntityFactory;
 
 class World : public QGraphicsScene {
     Q_OBJECT
@@ -49,8 +48,19 @@ class World : public QGraphicsScene {
     void render();
 
     //! Add an entity to the World
-    // TODO : Perfect forward params
-    bool add_entity(QString super_type, QString type);
+    template <typename... Ts>
+    bool
+    add_entity(QString super_type, QString type, Ts &&... params) {
+        Entity* p_entity = EntityFactory::make_entity(
+            super_type, type, std::forward<Ts>(params)...);
+        if (p_entity == nullptr) {
+            return false;
+        }
+        addItem(p_entity);
+        p_entity->set_time_step(_time_step);
+        p_entity->update();
+        return true;
+    }
 
     //! Get the friction coefficient for a position in the world
     float get_friction(QVector2D position);
@@ -89,7 +99,6 @@ class World : public QGraphicsScene {
     QVector2D _size{DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT};
     float _time{0};
     QVector<QSharedPointer<Entity>> _agents{};
-    QSharedPointer<EntityFactory> _ent_factory{nullptr};
 
     //! Draw a border around the World rectangle if the world wraps around
     /*! This is an overloaded method, the second parameter is not used.

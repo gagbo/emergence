@@ -25,10 +25,7 @@
 
 World::World() { setItemIndexMethod(QGraphicsScene::BspTreeIndex); }
 
-World::~World() {
-    _agents.clear();
-    _ent_factory.clear();
-}
+World::~World() { _agents.clear(); }
 
 float
 World::time_step() const {
