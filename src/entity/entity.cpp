@@ -149,6 +149,7 @@ void
 Entity::advance(int phase) {
     if (phase == 0) {
         decide_acceleration();
+        return;
     }
     update();
 }
