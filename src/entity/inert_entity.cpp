@@ -20,11 +20,13 @@
 
 #include "inert_entity.h"
 
-InertEntity::InertEntity() : Entity() { _super_type = "Inert"; }
+QString InertEntity::super_type_string = "Inert";
+
+InertEntity::InertEntity() : Entity() { _super_type = super_type_string; }
 
 InertEntity::InertEntity(const QVector2D &position, const QVector2D &init_speed)
     : Entity(position, init_speed) {
-    _super_type = "Inert";
+    _super_type = super_type_string;
 }
 
 void

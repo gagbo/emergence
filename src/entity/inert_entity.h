@@ -25,6 +25,8 @@
 
 class InertEntity : public Entity {
  public:
+    static QString super_type_string;
+
     InertEntity();
     //! Construct a new Ant at position with inital velocity
     InertEntity(const QVector2D &position,

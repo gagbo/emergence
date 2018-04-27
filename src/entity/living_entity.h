@@ -25,6 +25,8 @@
 
 class LivingEntity : public Entity {
  public:
+    static QString super_type_string;
+
     LivingEntity();
     //! Construct a new Entity at position with initial velocity
     LivingEntity(const QVector2D &position,
@@ -32,7 +34,7 @@ class LivingEntity : public Entity {
 
     virtual void decide_acceleration();
 
-    virtual ~LivingEntity();
+    virtual ~LivingEntity(){};
 };
 
 #endif  // _ENTITY_LIVING_ENTITY_H_

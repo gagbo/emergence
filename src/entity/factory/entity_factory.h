@@ -66,12 +66,13 @@ class EntityFactory {
     template <typename... Ts>
     static Entity*
     make_entity(QString super_type, QString type, Ts&&... params) {
-        if (QString::compare(super_type, "living", Qt::CaseInsensitive) == 0) {
+        if (QString::compare(super_type, LivingEntity::super_type_string,
+                             Qt::CaseInsensitive) == 0) {
             // TODO Catch TypeUnknown
             return LivingEntityFactory::make_entity(
                 type, std::forward<Ts>(params)...);
-        } else if (QString::compare(super_type, "inert", Qt::CaseInsensitive) ==
-                   0) {
+        } else if (QString::compare(super_type, InertEntity::super_type_string,
+                                    Qt::CaseInsensitive) == 0) {
             // TODO Catch TypeUnknown
             return InertEntityFactory::make_entity(type,
                                                    std::forward<Ts>(params)...);
