@@ -33,7 +33,7 @@ main(int argc, char *argv[]) {
     std::cout << argv[0] << " Version " << EMERGENCE_VERSION_MAJOR << "."
               << EMERGENCE_VERSION_MINOR << std::endl;
 
-    srand(static_cast<unsigned>(time(NULL)));
+    srand(static_cast<unsigned>(time(nullptr)));
 
     QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("Gerry Agbobada");
