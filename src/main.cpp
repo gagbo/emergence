@@ -29,7 +29,7 @@
 #include "world/world.h"
 
 int
-main(int argc, char *argv[]) {
+main(int argc, char* argv[]) {
     std::cout << argv[0] << " Version " << EMERGENCE_VERSION_MAJOR << "."
               << EMERGENCE_VERSION_MINOR << std::endl;
 
@@ -50,15 +50,40 @@ main(int argc, char *argv[]) {
     World basic_world;
     basic_world.set_time_step(0.1);
     basic_world.enable_wrap_around();
-    if (!basic_world.add_entity("inert", "food")) {
-        std::cerr << "Did not create the entity\n";
+    
+    // Small test code of the World API. This will be moved after LivingEntities
+    // are developed
+    try {
+        basic_world.add_entity("inert", "food");
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
     }
-    if (!basic_world.add_entity("inert", "food", QVector2D(25, 90))) {
-        std::cerr << "Did not create the entity\n";
+
+    try {
+        basic_world.add_entity("inert", "food", QVector2D(25, 90));
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
     }
-    if (!basic_world.add_entity("inert", "food", QVector2D(-21, -45))) {
-        std::cerr << "Did not create the entity\n";
+
+    try {
+        basic_world.add_entity("inert", "food", QVector2D(-21, -45));
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
     }
+
+    // TODO : Move this code to the (future) test for the Factory
+    try {
+        basic_world.add_entity("inert", "foofdasfed");
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
+    }
+
+    try {
+        basic_world.add_entity("oops", "food");
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
+    }
+
     MainWindow mainWin(basic_world);
     mainWin.show();
 

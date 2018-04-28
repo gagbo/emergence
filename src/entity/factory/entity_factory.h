@@ -27,19 +27,66 @@
 
 #include "entity/entity.h"
 
+#include <QException>
 #include <QSharedPointer>
 #include <QString>
+
+class TypeUnknown : public QException {
+ public:
+    void
+    raise() const {
+        throw *this;
+    }
+    TypeUnknown*
+    clone() const {
+        return new TypeUnknown(*this);
+    }
+};
+
+class SuperTypeUnknown : public QException {
+ public:
+    void
+    raise() const {
+        throw *this;
+    }
+    SuperTypeUnknown*
+    clone() const {
+        return new SuperTypeUnknown(*this);
+    }
+};
+
+class FactoryFailure : public QException {
+ public:
+    FactoryFailure(QString mess, QString super, QString norm)
+        : message(mess), super_type(super), type(norm) {}
+    void
+    raise() const {
+        throw *this;
+    }
+    FactoryFailure*
+    clone() const {
+        return new FactoryFailure(*this);
+    }
+    QString message;
+    QString super_type;
+    QString type;
+    QString
+    qwhat() const {
+        return "EntityFactory failed to create an entity ( " + super_type +
+               "->" + type + " ) : " + message;
+    }
+};
 
 class InertEntityFactory {
  public:
     template <typename... Ts>
     static InertEntity*
     make_entity(QString type, Ts&&... params) {
-        if (QString::compare(type, Food::type_string, Qt::CaseInsensitive) == 0) {
+        if (QString::compare(type, Food::type_string, Qt::CaseInsensitive) ==
+            0) {
             return new Food(std::forward<Ts>(params)...);
         } else {
-            // TODO Throw TypeUnknown
-            return nullptr;
+            throw TypeUnknown();
         }
     }
 };
@@ -50,15 +97,12 @@ class LivingEntityFactory {
     static LivingEntity*
     make_entity(QString type, Ts&&... params) {
         if (QString::compare(type, "ant", Qt::CaseInsensitive) == 0) {
-            // TODO Throw TypeUnsupported
-            return nullptr;
+            throw TypeUnknown();
         } else if (QString::compare(type, "predator", Qt::CaseInsensitive) ==
                    0) {
-            // TODO Throw TypeUnsupported
-            return nullptr;
+            throw TypeUnknown();
         } else {
-            // TODO Throw TypeUnknown
-            return nullptr;
+            throw TypeUnknown();
         }
     }
 };
@@ -70,17 +114,25 @@ class EntityFactory {
     make_entity(QString super_type, QString type, Ts&&... params) {
         if (QString::compare(super_type, LivingEntity::super_type_string,
                              Qt::CaseInsensitive) == 0) {
-            // TODO Catch TypeUnknown
-            return LivingEntityFactory::make_entity(
-                type, std::forward<Ts>(params)...);
+            try {
+                return LivingEntityFactory::make_entity(
+                    type, std::forward<Ts>(params)...);
+            } catch (TypeUnknown& e) {
+                throw FactoryFailure("The type " + type + " is not in " +
+                                     super_type + " SuperType", super_type, type);
+            }
         } else if (QString::compare(super_type, InertEntity::super_type_string,
                                     Qt::CaseInsensitive) == 0) {
-            // TODO Catch TypeUnknown
-            return InertEntityFactory::make_entity(type,
-                                                   std::forward<Ts>(params)...);
+            try {
+                return InertEntityFactory::make_entity(
+                    type, std::forward<Ts>(params)...);
+            } catch (TypeUnknown& e) {
+                throw FactoryFailure("The type " + type + " is not in " +
+                                     super_type + " SuperType", super_type, type);
+            }
         } else {
-            // TODO Throw SupertypeUnknown
-            return nullptr;
+            throw FactoryFailure("The SuperType " + super_type +
+                                 " is unknown.", super_type, type);
         }
     }
 };
