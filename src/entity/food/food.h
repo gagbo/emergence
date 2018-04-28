@@ -25,6 +25,8 @@
 
 class Food : public InertEntity {
  public:
+    static QString type_string;
+
     Food();
 
     Food(const QVector2D &position,

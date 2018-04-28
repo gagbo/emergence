@@ -29,6 +29,8 @@ class World;
 
 class Entity : public QGraphicsItem {
  public:
+    static QString super_type_string;
+    static QString type_string;
     /////////////// Constructors
 
     //! Construct a new Entity

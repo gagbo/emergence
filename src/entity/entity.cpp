@@ -22,6 +22,9 @@
 #include <QtMath>
 #include "entity.h"
 
+QString Entity::super_type_string = "Undefined";
+QString Entity::type_string = "Undefined";
+
 Entity::~Entity() {
     _visible_neighbours.clear();
     _neighbours.clear();

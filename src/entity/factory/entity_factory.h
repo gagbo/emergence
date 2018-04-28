@@ -20,10 +20,12 @@
 
 #ifndef _ENTITY_FACTORY_ENTITYFACTORY_H_
 #define _ENTITY_FACTORY_ENTITYFACTORY_H_
-#include "entity/entity.h"
 #include "entity/food/food.h"
+
 #include "entity/inert_entity.h"
 #include "entity/living_entity.h"
+
+#include "entity/entity.h"
 
 #include <QSharedPointer>
 #include <QString>
@@ -33,7 +35,7 @@ class InertEntityFactory {
     template <typename... Ts>
     static InertEntity*
     make_entity(QString type, Ts&&... params) {
-        if (QString::compare(type, "food", Qt::CaseInsensitive) == 0) {
+        if (QString::compare(type, Food::type_string, Qt::CaseInsensitive) == 0) {
             return new Food(std::forward<Ts>(params)...);
         } else {
             // TODO Throw TypeUnknown
