@@ -26,8 +26,11 @@ QString Entity::super_type_string = "Undefined";
 QString Entity::type_string = "Undefined";
 
 Entity::~Entity() {
-    _visible_neighbours.clear();
-    _neighbours.clear();
+    _visible_neighbours->clear();
+    _neighbours->clear();
+
+    delete _visible_neighbours;
+    delete _neighbours;
 }
 
 Entity::Entity(const Entity& other) {
@@ -116,13 +119,13 @@ Entity::size() const {
     return _size;
 }
 
-QList<QWeakPointer<Entity>>
-Entity::neigbours() const {
+QList<QWeakPointer<Entity>> *
+Entity::neighbours() const {
     return _neighbours;
 }
 
-QList<QWeakPointer<Entity>>
-Entity::visible_neigbours() const {
+QList<QWeakPointer<Entity>> *
+Entity::visible_neighbours() const {
     return _visible_neighbours;
 }
 
