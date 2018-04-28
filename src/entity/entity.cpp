@@ -33,7 +33,7 @@ Entity::~Entity() {
     delete _neighbours;
 }
 
-Entity::Entity(const Entity& other) {
+Entity::Entity(const Entity &other) {
     _id = other._id;
     _pos = other._pos;
     _vel = other._vel;
@@ -47,6 +47,8 @@ Entity::Entity(const Entity& other) {
     _dt = other._dt;
     _super_type = other._super_type;
     _type = other._type;
+    _neighbours = new QList<QWeakPointer<Entity>>;
+    _visible_neighbours = new QList<QWeakPointer<Entity>>;
 }
 
 Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {

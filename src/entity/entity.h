@@ -135,8 +135,8 @@ class Entity : public QGraphicsItem {
     QColor _color{200, 0, 0, 255};  //!< Color
     float _life{100};
     QVector2D _size{20, 20};
-    QList<QWeakPointer<Entity>> *_neighbours{nullptr};
-    QList<QWeakPointer<Entity>> *_visible_neighbours{nullptr};
+    QList<QWeakPointer<Entity>> *_neighbours{new QList<QWeakPointer<Entity>>};
+    QList<QWeakPointer<Entity>> *_visible_neighbours{new QList<QWeakPointer<Entity>>};
 
     float _dt{1};  //<! Time-step given by World
 
