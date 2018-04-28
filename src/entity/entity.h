@@ -37,7 +37,6 @@ class Entity : public QGraphicsItem {
     Entity() = default;
 
     //! Copy Constructor
-    // TODO : decide what to do with _neighbours and _visible_neighbours
     Entity(const Entity& other);
 
     //! Default move Constructor
@@ -91,8 +90,8 @@ class Entity : public QGraphicsItem {
     QString type_name() const;
     QString super_type_name() const;
 
-    QList<QWeakPointer<Entity>> neigbours() const;
-    QList<QWeakPointer<Entity>> visible_neigbours() const;
+    QList<QWeakPointer<Entity>> *neighbours() const;
+    QList<QWeakPointer<Entity>> *visible_neighbours() const;
 
     void set_time_step(float dt);
 
@@ -136,8 +135,8 @@ class Entity : public QGraphicsItem {
     QColor _color{200, 0, 0, 255};  //!< Color
     float _life{100};
     QVector2D _size{20, 20};
-    QList<QWeakPointer<Entity>> _neighbours{};
-    QList<QWeakPointer<Entity>> _visible_neighbours{};
+    QList<QWeakPointer<Entity>> *_neighbours{new QList<QWeakPointer<Entity>>};
+    QList<QWeakPointer<Entity>> *_visible_neighbours{new QList<QWeakPointer<Entity>>};
 
     float _dt{1};  //<! Time-step given by World
 

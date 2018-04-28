@@ -26,11 +26,14 @@ QString Entity::super_type_string = "Undefined";
 QString Entity::type_string = "Undefined";
 
 Entity::~Entity() {
-    _visible_neighbours.clear();
-    _neighbours.clear();
+    _visible_neighbours->clear();
+    _neighbours->clear();
+
+    delete _visible_neighbours;
+    delete _neighbours;
 }
 
-Entity::Entity(const Entity& other) {
+Entity::Entity(const Entity &other) {
     _id = other._id;
     _pos = other._pos;
     _vel = other._vel;
@@ -44,6 +47,8 @@ Entity::Entity(const Entity& other) {
     _dt = other._dt;
     _super_type = other._super_type;
     _type = other._type;
+    _neighbours = new QList<QWeakPointer<Entity>>;
+    _visible_neighbours = new QList<QWeakPointer<Entity>>;
 }
 
 Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {
@@ -116,13 +121,13 @@ Entity::size() const {
     return _size;
 }
 
-QList<QWeakPointer<Entity>>
-Entity::neigbours() const {
+QList<QWeakPointer<Entity>> *
+Entity::neighbours() const {
     return _neighbours;
 }
 
-QList<QWeakPointer<Entity>>
-Entity::visible_neigbours() const {
+QList<QWeakPointer<Entity>> *
+Entity::visible_neighbours() const {
     return _visible_neighbours;
 }
 
