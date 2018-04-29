@@ -34,7 +34,7 @@ class LivingEntity : public Entity {
 
     QPolygonF vision() const;
     //! Return true if this world_pos is visible by LivingEntity
-    bool is_visible(const QVector2D& world_pos) const;
+    bool is_visible(const QVector2D &world_pos) const;
 
     virtual void decide_acceleration();
 
@@ -42,6 +42,9 @@ class LivingEntity : public Entity {
 
  protected:
     //! Vision polygon in Item coord
+    /*! We look forward in the -y direction
+     *  all Entities must be centered on (0,0) for _vision to work
+     */
     QPolygonF _vision{};
 };
 
