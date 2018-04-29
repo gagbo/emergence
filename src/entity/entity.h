@@ -151,9 +151,9 @@ class Entity : public QGraphicsItem {
     QVector2D _acc{0, 0};                //!< Acceleration
     float _vel_angle{0};                 //!< Current angle of the velocity
     float _mass{1};                      //!< Mass of the Entity
-    float _max_force{1e-2};              //!< Maximum force the
+    float _max_force{4};                 //!< Maximum force the
                                          //!< Entity can apply to move itself
-    float _linear_vel_friction_coef{1};  //!< friction coefficient
+    float _linear_vel_friction_coef{10};  //!< friction coefficient
                                          //!< for linear velocity
     QColor _color{200, 0, 0, 255};       //!< Color
     float _life{100};

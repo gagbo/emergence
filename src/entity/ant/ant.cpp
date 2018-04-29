@@ -87,7 +87,10 @@ Ant::is_visible(const QPointF& world_pos) const {
 QRectF
 Ant::boundingRect() const {
     if (!_current_role->vision().isEmpty()) {
-        return _current_role->vision().boundingRect();
+        // We add margins to the bounding Rect of Vision so it extends behind
+        // itself, theoretically covering the back of the Ant
+        return _current_role->vision().boundingRect().marginsAdded(QMarginsF(
+            0, 0, 0, _current_role->vision().boundingRect().height()));
     }
     return Entity::boundingRect();
 }

@@ -25,6 +25,7 @@
 #include <QException>
 #include <QHash>
 #include "entity/ant/ant.h"
+#include "entity/movement_strategy/movement_strategy.h"
 
 class Ant;
 
@@ -51,11 +52,18 @@ class RoleAnt {
     //! Return vision of the current State
     const QPolygonF vision() const;
 
+    virtual ~RoleAnt() {
+        if (_role_move_strategy) {
+            delete _role_move_strategy;
+        }
+    }
+
  protected:
     static RoleAnt* lookup(QString name);
 
     QColor _role_color{Qt::lightGray};
     QPolygonF _role_vision{QRectF(-30, 0, 60, -60)};
+    MovementStrategy* _role_move_strategy{nullptr};
 
  private:
     static RoleAnt* _instance;

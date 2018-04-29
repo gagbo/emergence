@@ -19,17 +19,22 @@
  */
 
 #include "role_ant_explorer.h"
+#include "entity/movement_strategy/movement_strategy_base.h"
+#include "entity/movement_strategy/movement_strategy_cohesion.h"
 
 RoleAntExplorer* RoleAntExplorer::_instance = nullptr;
 
-RoleAntExplorer::RoleAntExplorer() {
+RoleAntExplorer::RoleAntExplorer() : RoleAnt() {
     _role_color = Qt::yellow;
     RoleAnt::register_name("Explorer", this);
+    delete _role_move_strategy;
+    _role_move_strategy =
+        new MovementStrategyCohesion(0.5, new MovementStrategyBase());
 }
 
 void
 RoleAntExplorer::decide_acceleration(Ant* context) {
-    context->set_acceleration(QVector2D(0.1, 0.1));
+    _role_move_strategy->apply_force(context);
 }
 
 RoleAnt*
