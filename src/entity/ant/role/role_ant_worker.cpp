@@ -21,7 +21,6 @@
 #include "role_ant_worker.h"
 
 RoleAntWorker* RoleAntWorker::_instance = nullptr;
-QColor RoleAntWorker::_role_color = QColor(Qt::magenta);
 
 RoleAntWorker::RoleAntWorker() { RoleAnt::register_name("Worker", this); }
 
@@ -36,9 +35,4 @@ RoleAntWorker::instance() {
         _instance = new RoleAntWorker();
     }
     return _instance;
-}
-
-QColor
-RoleAntWorker::color() const {
-    return _role_color;
 }

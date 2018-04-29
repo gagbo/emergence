@@ -38,14 +38,18 @@ class LivingEntity : public Entity {
 
     virtual void decide_acceleration();
 
-    virtual ~LivingEntity(){};
+    virtual ~LivingEntity() {
+        if (_vision) {
+            delete _vision;
+        }
+    };
 
  protected:
     //! Vision polygon in Item coord
     /*! We look forward in the -y direction
      *  all Entities must be centered on (0,0) for _vision to work
      */
-    QPolygonF _vision{};
+    QPolygonF *_vision{nullptr};
 };
 
 #endif  // _ENTITY_LIVING_ENTITY_H_

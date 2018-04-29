@@ -21,9 +21,9 @@
 #ifndef _ENTITY_ANT_ROLE_ROLEANT_H_
 #define _ENTITY_ANT_ROLE_ROLEANT_H_
 
+#include <QDebug>
 #include <QException>
 #include <QHash>
-#include <QDebug>
 #include "entity/ant/ant.h"
 
 class Ant;
@@ -46,10 +46,16 @@ class RoleAnt {
     void set_role(Ant* context, QString name);
 
     //! Return color of the current State
-    virtual QColor color() const = 0;
+    const QColor& color() const;
+
+    //! Return vision of the current State
+    const QPolygonF& vision() const;
 
  protected:
     static RoleAnt* lookup(QString name);
+
+    QColor _role_color;
+    QPolygonF _role_vision;
 
  private:
     static RoleAnt* _instance;
