@@ -18,26 +18,21 @@
  * SOFTWARE.
  */
 
-#ifndef _ENTITY_ANT_ROLE_ROLEANT_EXPLORER_H_
-#define _ENTITY_ANT_ROLE_ROLEANT_EXPLORER_H_
+#ifndef _ENTITY_MOVEMENT_STRATEGY_MOVEMENT_STRATEGY_H_
+#define _ENTITY_MOVEMENT_STRATEGY_MOVEMENT_STRATEGY_H_
+#include <QVector2D>
+class Ant;
 
-#include "role_ant.h"
-
-//! A State for Ant responsible of setting the acceleration
-class RoleAntExplorer : public RoleAnt {
+class MovementStrategy {
  public:
-    //! Return a pointer to the Singleton instance
-    static RoleAnt* instance();
+    MovementStrategy(){}
+    virtual void compute_force(Ant* context) = 0;
 
-    //! TODO : This computation needs to take the VelocityStrategy decorators
-    //! into account
-    void decide_acceleration(Ant* context) override;
+    virtual ~MovementStrategy(){}
+
+    void apply_force(Ant* context);
 
  protected:
-    RoleAntExplorer();
-    static RoleAntExplorer* _instance;
-
- private:
+    QVector2D _applied_force{0, 0};
 };
-
-#endif  // _ENTITY_ANT_ROLE_ROLEANT_EXPLORER_H_
+#endif  // _ENTITY_MOVEMENT_STRATEGY_MOVEMENT_STRATEGY_H_

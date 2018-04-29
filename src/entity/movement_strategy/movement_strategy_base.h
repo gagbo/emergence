@@ -18,26 +18,15 @@
  * SOFTWARE.
  */
 
-#ifndef _ENTITY_ANT_ROLE_ROLEANT_EXPLORER_H_
-#define _ENTITY_ANT_ROLE_ROLEANT_EXPLORER_H_
+#ifndef _ENTITY_MOVEMENT_STRATEGY_MOVEMENT_STRATEGY_BASE_H_
+#define _ENTITY_MOVEMENT_STRATEGY_MOVEMENT_STRATEGY_BASE_H_
+#include "entity/ant/ant.h"
+#include "movement_strategy.h"
 
-#include "role_ant.h"
-
-//! A State for Ant responsible of setting the acceleration
-class RoleAntExplorer : public RoleAnt {
+class MovementStrategyBase : public MovementStrategy {
  public:
-    //! Return a pointer to the Singleton instance
-    static RoleAnt* instance();
-
-    //! TODO : This computation needs to take the VelocityStrategy decorators
-    //! into account
-    void decide_acceleration(Ant* context) override;
-
- protected:
-    RoleAntExplorer();
-    static RoleAntExplorer* _instance;
-
- private:
+    MovementStrategyBase() : MovementStrategy() {}
+    ~MovementStrategyBase() {}
+    void compute_force(Ant* context) override;
 };
-
-#endif  // _ENTITY_ANT_ROLE_ROLEANT_EXPLORER_H_
+#endif  // _ENTITY_MOVEMENT_STRATEGY_MOVEMENT_STRATEGY_BASE_H_

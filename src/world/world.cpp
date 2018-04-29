@@ -89,3 +89,10 @@ void
 World::set_time_step(float dt) {
     _time_step = dt;
 }
+
+float
+World::get_friction(QVector2D position) {
+    // TODO Make a proper law one day that really depends on a map
+    (void)position;
+    return 2.0f;
+}

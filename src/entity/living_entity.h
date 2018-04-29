@@ -32,9 +32,42 @@ class LivingEntity : public Entity {
     LivingEntity(const QVector2D &position,
                  const QVector2D &init_speed = QVector2D(0, 0));
 
+    //! Override necessary because of _vision
+    void update_neighbourhood() override;
+
+    //! Override necessary because of _vision
+    virtual QRectF boundingRect() const override;
+
+    QPolygonF vision() const;
+    //! Return true if this world_pos is visible by LivingEntity
+    virtual bool is_visible(const QPointF &world_pos) const;
+
     virtual void decide_acceleration();
 
-    virtual ~LivingEntity(){};
+    inline void toggle_show_vision() {
+        _show_vision = !_show_vision;
+    }
+    inline void disable_show_vision() {
+        _show_vision = false;
+    }
+    inline void enable_show_vision() {
+        _show_vision = true;
+    }
+
+    virtual ~LivingEntity() {
+        if (_vision) {
+            delete _vision;
+        }
+    };
+
+ protected:
+    //! Vision polygon in Item coord
+    /*! We look forward in the -y direction
+     *  all Entities must be centered on (0,0) for _vision to work
+     */
+    QPolygonF *_vision{nullptr};
+
+    bool _show_vision{true};
 };
 
 #endif  // _ENTITY_LIVING_ENTITY_H_

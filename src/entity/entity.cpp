@@ -20,6 +20,9 @@
 
 #include <QPainter>
 #include <QtMath>
+
+#include "world/world.h"
+
 #include "entity.h"
 
 QString Entity::super_type_string = "Undefined";
@@ -44,11 +47,10 @@ Entity::Entity(const Entity &other) {
     _color = other._color;
     _life = other._life;
     _size = other._size;
-    _dt = other._dt;
     _super_type = other._super_type;
     _type = other._type;
-    _neighbours = new QList<QWeakPointer<Entity>>;
-    _visible_neighbours = new QList<QWeakPointer<Entity>>;
+    _neighbours = new QList<const Entity*>;
+    _visible_neighbours = new QList<const Entity*>;
 }
 
 Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {
@@ -121,24 +123,14 @@ Entity::size() const {
     return _size;
 }
 
-QList<QWeakPointer<Entity>> *
+QList<const Entity*> *
 Entity::neighbours() const {
     return _neighbours;
 }
 
-QList<QWeakPointer<Entity>> *
+QList<const Entity*> *
 Entity::visible_neighbours() const {
     return _visible_neighbours;
-}
-
-void
-Entity::set_time_step(float dt) {
-    _dt = dt;
-}
-
-float
-Entity::dt() const {
-    return _dt;
 }
 
 void
@@ -146,20 +138,62 @@ Entity::decide_acceleration() {
     _acc = QVector2D(0, 0);
 }
 
+QVector2D
+Entity::get_friction_force() {
+    if (_vel.lengthSquared() < 1e-2) {
+        return QVector2D(0, 0);
+    }
+
+    // Solid friction with World tile
+    QVector2D linear_friction_force(_vel);
+    linear_friction_force.normalize();
+    float solid_friction = parent_world()->get_friction(_pos);
+    linear_friction_force *= -1 * solid_friction;
+    if (linear_friction_force.lengthSquared() > _mass * _mass * _acc.lengthSquared()) {
+        return -1 * _mass * _acc;
+    }
+
+    // Add Linear velocity friction
+    linear_friction_force += -1 * _linear_vel_friction_coef * _vel;
+    return linear_friction_force;
+}
+
+World *
+Entity::parent_world() const {
+    return dynamic_cast<World *>(scene());
+}
+
 void
 Entity::update() {
-    _vel += _acc * _dt;
-    _pos += _vel * _dt;
+    _vel += _acc * parent_world()->time_step();
+    _pos += _vel * parent_world()->time_step();
     update_scene_pos();
+}
+
+void
+Entity::apply_friction_to_acceleration() {
+    _acc += get_friction_force() / _mass;
 }
 
 void
 Entity::advance(int phase) {
     if (phase == 0) {
+        update_neighbourhood();
         decide_acceleration();
+        apply_friction_to_acceleration();
         return;
     }
     update();
+}
+
+void
+Entity::update_neighbourhood() {
+   _visible_neighbours->clear();
+   _neighbours->clear();
+
+   for (auto&& item : parent_world()->items()){
+       _neighbours->append(dynamic_cast<const Entity*>(item));
+   }
 }
 
 void
@@ -188,6 +222,7 @@ Entity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     (void)widget;  // Unused inherited param
     // Simple ellipse
     painter->setBrush(_color);
+    painter->setPen(Qt::NoPen);
     painter->drawEllipse(boundingRect());
     return;
 }

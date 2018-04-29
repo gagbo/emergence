@@ -18,26 +18,22 @@
  * SOFTWARE.
  */
 
-#ifndef _ENTITY_ANT_ROLE_ROLEANT_EXPLORER_H_
-#define _ENTITY_ANT_ROLE_ROLEANT_EXPLORER_H_
+#include "movement_strategy_cohesion.h"
+#include "entity/ant/ant.h"
 
-#include "role_ant.h"
+void
+MovementStrategyCohesion::compute_force(Ant* context) {
+    QVector2D mean_position(0, 0);
+    int entity_count = context->neighbours()->size();
+    for (auto&& item : *context->neighbours()) {
+        mean_position += QVector2D(item->pos());
+    }
+    mean_position /= entity_count;
+    QVector2D target_delta_pos = mean_position - QVector2D(context->pos());
+    _applied_force += target_delta_pos.normalized() *
+                      _coef / context->max_force();
 
-//! A State for Ant responsible of setting the acceleration
-class RoleAntExplorer : public RoleAnt {
- public:
-    //! Return a pointer to the Singleton instance
-    static RoleAnt* instance();
+    // TODO : detect if context would reach objective in 1 time step, so it can slow down
 
-    //! TODO : This computation needs to take the VelocityStrategy decorators
-    //! into account
-    void decide_acceleration(Ant* context) override;
-
- protected:
-    RoleAntExplorer();
-    static RoleAntExplorer* _instance;
-
- private:
-};
-
-#endif  // _ENTITY_ANT_ROLE_ROLEANT_EXPLORER_H_
+    _wrappee->compute_force(context);
+}

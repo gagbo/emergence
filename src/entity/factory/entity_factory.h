@@ -21,6 +21,7 @@
 #ifndef _ENTITY_FACTORY_ENTITYFACTORY_H_
 #define _ENTITY_FACTORY_ENTITYFACTORY_H_
 #include "entity/food/food.h"
+#include "entity/ant/ant.h"
 
 #include "entity/inert_entity.h"
 #include "entity/living_entity.h"
@@ -97,7 +98,7 @@ class LivingEntityFactory {
     static LivingEntity*
     make_entity(QString type, Ts&&... params) {
         if (QString::compare(type, "ant", Qt::CaseInsensitive) == 0) {
-            throw TypeUnknown();
+            return new Ant(std::forward<Ts>(params)...);
         } else if (QString::compare(type, "predator", Qt::CaseInsensitive) ==
                    0) {
             throw TypeUnknown();
