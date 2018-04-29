@@ -37,6 +37,10 @@ class Ant : public LivingEntity {
     Ant(const QVector2D& position,
         const QVector2D& init_speed = QVector2D(0, 0));
 
+    virtual void paint(QPainter *painter,
+                       const QStyleOptionGraphicsItem *option,
+                       QWidget *widget) override;
+
     //! Computation delegated to RoleAnt state
     void decide_acceleration();
 

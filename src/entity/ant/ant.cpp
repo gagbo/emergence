@@ -19,15 +19,19 @@
  */
 
 #include "ant.h"
+#include <QPainter>
 
 QString Ant::type_string = "Ant";
 
-Ant::Ant() : LivingEntity() { set_role(RoleAnt::get("Explorer")); }
+Ant::Ant() : LivingEntity() {
+    set_role(RoleAnt::get("Explorer"));
+    _color = Qt::darkBlue;
+}
 
-Ant::Ant(const QVector2D& position,
-         const QVector2D& init_speed)
+Ant::Ant(const QVector2D& position, const QVector2D& init_speed)
     : LivingEntity(position, init_speed) {
     set_role(RoleAnt::get("Explorer"));
+    _color = Qt::darkBlue;
 }
 
 void
@@ -38,4 +42,25 @@ Ant::decide_acceleration() {
 void
 Ant::set_role(RoleAnt* new_role) {
     _current_role.reset(new_role);
+}
+
+void
+Ant::paint(QPainter* painter, const QStyleOptionGraphicsItem* style_opt,
+           QWidget* widget) {
+    (void)style_opt;
+    (void)widget;
+    // Body
+    painter->setBrush(_color);
+    QPointF triangle_body[3] = {QPointF(-_size.x() / 2, _size.y() / 2),
+                                QPointF(_size.x() / 2, _size.y() / 2),
+                                QPointF(0, -_size.y() / 2)};
+    painter->drawPolygon(triangle_body, 3);
+
+    // Eyes
+    int eyes_size = 3;
+    int pos_left_x = -_size.x()/5 ;
+    int pos_eyes_y = -_size.y() + 2 * eyes_size;
+    painter->setBrush(Qt::white);
+    painter->drawEllipse(-pos_left_x, pos_eyes_y, eyes_size, eyes_size);
+    painter->drawEllipse(pos_left_x, pos_eyes_y, eyes_size, eyes_size);
 }
