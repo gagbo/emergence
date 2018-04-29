@@ -2,7 +2,7 @@ add_library (${PROJECT_NAME}_entity entity.cpp inert_entity.cpp living_entity.cp
 
 add_subdirectory (factory)
 
-add_subdirectory (velocity_strategy)
+add_subdirectory (movement_strategy)
 
 add_subdirectory (ant)
 add_subdirectory (food)
