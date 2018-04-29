@@ -54,8 +54,7 @@ RoleAnt::lookup(QString name) {
 void
 RoleAnt::set_role(Ant* context, QString name) {
     try {
-        RoleAnt* new_role = get(name);
-        context->set_role(new_role);
+        context->set_role(name);
     } catch (RoleNotFound& e) {
         qInfo() << e.qwhat() << "Role unchanged";
     }

@@ -22,8 +22,6 @@
 #include "entity/food/food.h"
 #include "world/world.h"
 
-Q_DECLARE_METATYPE(Food);
-
 class TestFood : public QObject {
     Q_OBJECT
  private slots:

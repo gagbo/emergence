@@ -45,7 +45,10 @@ class Ant : public LivingEntity {
     void decide_acceleration();
 
     //! Change the Role of an Ant
-    void set_role(RoleAnt* new_role);
+    void set_role(QString role_name);
+
+    //! See the current role of Ant
+    const RoleAnt* role() const;
 
  protected:
     RoleAnt* _current_role{nullptr};

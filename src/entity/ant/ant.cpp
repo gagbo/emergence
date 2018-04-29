@@ -24,13 +24,13 @@
 QString Ant::type_string = "Ant";
 
 Ant::Ant() : LivingEntity() {
-    set_role(RoleAnt::get("Explorer"));
+    set_role("Explorer");
     _color = Qt::darkBlue;
 }
 
 Ant::Ant(const QVector2D& position, const QVector2D& init_speed)
     : LivingEntity(position, init_speed) {
-    set_role(RoleAnt::get("Explorer"));
+    set_role("Explorer");
     _color = Qt::darkBlue;
 }
 
@@ -40,8 +40,13 @@ Ant::decide_acceleration() {
 }
 
 void
-Ant::set_role(RoleAnt* new_role) {
-    _current_role = new_role;
+Ant::set_role(QString role_name) {
+    _current_role = RoleAnt::get(role_name);
+}
+
+const RoleAnt*
+Ant::role() const {
+    return _current_role;
 }
 
 void
@@ -58,7 +63,7 @@ Ant::paint(QPainter* painter, const QStyleOptionGraphicsItem* style_opt,
 
     // Eyes
     int eyes_size = 3;
-    int pos_left_x = -_size.x()/5 ;
+    int pos_left_x = -_size.x() / 5;
     int pos_eyes_y = -_size.y() + 2 * eyes_size;
     painter->setBrush(Qt::white);
     painter->drawEllipse(-pos_left_x, pos_eyes_y, eyes_size, eyes_size);
