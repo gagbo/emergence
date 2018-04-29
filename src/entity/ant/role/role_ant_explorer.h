@@ -33,9 +33,13 @@ class RoleAntExplorer : public RoleAnt {
     //! into account
     void decide_acceleration(Ant* context) override;
 
+    //! Return color of the current State
+    virtual QColor color() const override;
+
  protected:
     RoleAntExplorer();
     static RoleAntExplorer* _instance;
+    static QColor _role_color;
 
  private:
 };

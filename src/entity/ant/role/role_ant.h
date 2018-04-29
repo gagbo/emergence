@@ -42,7 +42,11 @@ class RoleAnt {
     //! into account
     virtual void decide_acceleration(Ant* context) = 0;
 
+    //! Go to next role, registered by name
     void set_role(Ant* context, QString name);
+
+    //! Return color of the current State
+    virtual QColor color() const = 0;
 
  protected:
     static RoleAnt* lookup(QString name);

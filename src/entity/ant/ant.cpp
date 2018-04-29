@@ -55,7 +55,7 @@ Ant::paint(QPainter* painter, const QStyleOptionGraphicsItem* style_opt,
     (void)style_opt;
     (void)widget;
     // Body
-    painter->setBrush(_color);
+    painter->setBrush(_current_role->color());
     QPointF triangle_body[3] = {QPointF(-_size.x() / 2, _size.y() / 2),
                                 QPointF(_size.x() / 2, _size.y() / 2),
                                 QPointF(0, -_size.y() / 2)};

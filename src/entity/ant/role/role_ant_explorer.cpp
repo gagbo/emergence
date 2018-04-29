@@ -21,6 +21,7 @@
 #include "role_ant_explorer.h"
 
 RoleAntExplorer* RoleAntExplorer::_instance = nullptr;
+QColor RoleAntExplorer::_role_color = QColor(Qt::yellow);
 
 RoleAntExplorer::RoleAntExplorer() { RoleAnt::register_name("Explorer", this); }
 
@@ -35,4 +36,9 @@ RoleAntExplorer::instance() {
         _instance = new RoleAntExplorer();
     }
     return _instance;
+}
+
+QColor
+RoleAntExplorer::color() const {
+    return _role_color;
 }
