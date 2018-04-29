@@ -26,7 +26,7 @@ RoleAntExplorer::RoleAntExplorer() { RoleAnt::register_name("Explorer", this); }
 
 void
 RoleAntExplorer::decide_acceleration(Ant* context) {
-    context->_acc = QVector2D(0.1, 0.1);
+    context->set_acceleration(QVector2D(0.1, 0.1));
 }
 
 RoleAnt*

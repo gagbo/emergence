@@ -26,7 +26,7 @@ RoleAntWorker::RoleAntWorker() { RoleAnt::register_name("Worker", this); }
 
 void
 RoleAntWorker::decide_acceleration(Ant* context) {
-    context->_acc = QVector2D(0, 0);
+    context->set_acceleration(QVector2D(0, 0));
 }
 
 RoleAnt*

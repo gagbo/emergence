@@ -43,11 +43,6 @@ class Ant : public LivingEntity {
     //! Change the Role of an Ant
     void set_role(RoleAnt* new_role);
 
-    // TODO : Fix encapsulation so Roles can change acceleration or call methods
-    friend class RoleAnt;
-    friend class RoleAntExplorer;
-    friend class RoleAntWorker;
-
  protected:
     QSharedPointer<RoleAnt> _current_role{nullptr};
 };
