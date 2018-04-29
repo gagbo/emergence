@@ -32,9 +32,17 @@ class LivingEntity : public Entity {
     LivingEntity(const QVector2D &position,
                  const QVector2D &init_speed = QVector2D(0, 0));
 
+    QPolygonF vision() const;
+    //! Return true if this world_pos is visible by LivingEntity
+    bool is_visible(const QVector2D& world_pos) const;
+
     virtual void decide_acceleration();
 
     virtual ~LivingEntity(){};
+
+ protected:
+    //! Vision polygon in Item coord
+    QPolygonF _vision{};
 };
 
 #endif  // _ENTITY_LIVING_ENTITY_H_

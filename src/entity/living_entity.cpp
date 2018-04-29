@@ -34,6 +34,5 @@ LivingEntity::LivingEntity(const QVector2D &position,
 
 void
 LivingEntity::decide_acceleration() {
-    // TODO: Stub
     _acc = QVector2D(0.0f, 0.0f);
 }

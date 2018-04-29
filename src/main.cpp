@@ -71,6 +71,12 @@ main(int argc, char* argv[]) {
         qInfo() << e.qwhat();
     }
 
+    try {
+        basic_world.add_entity("living", "ant", QVector2D(-100, 28));
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
+    }
+
     // TODO : Move this code to the (future) test for the Factory
     try {
         basic_world.add_entity("inert", "foofdasfed");
