@@ -57,7 +57,6 @@ class World : public QGraphicsScene {
             return false;
         }
         addItem(p_entity);
-        p_entity->set_time_step(_time_step);
         p_entity->update();
         return true;
     }

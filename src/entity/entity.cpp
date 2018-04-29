@@ -47,7 +47,6 @@ Entity::Entity(const Entity &other) {
     _color = other._color;
     _life = other._life;
     _size = other._size;
-    _dt = other._dt;
     _super_type = other._super_type;
     _type = other._type;
     _neighbours = new QList<QWeakPointer<Entity>>;
@@ -135,16 +134,6 @@ Entity::visible_neighbours() const {
 }
 
 void
-Entity::set_time_step(float dt) {
-    _dt = dt;
-}
-
-float
-Entity::dt() const {
-    return _dt;
-}
-
-void
 Entity::decide_acceleration() {
     _acc = QVector2D(0, 0);
 }
@@ -158,19 +147,26 @@ Entity::get_friction_force() {
     // Solid friction with World tile
     QVector2D linear_friction_force(_vel);
     linear_friction_force.normalize();
-    float solid_friction = dynamic_cast<World *>(scene())->get_friction(_pos);
+    float solid_friction = parent_world()->get_friction(_pos);
     linear_friction_force *= -1 * solid_friction;
+    if (linear_friction_force.lengthSquared() > _mass * _mass * _acc.lengthSquared()) {
+        return -1 * _mass * _acc;
+    }
 
     // Add Linear velocity friction
     linear_friction_force += -1 * _linear_vel_friction_coef * _vel;
-
     return linear_friction_force;
+}
+
+World *
+Entity::parent_world() const {
+    return dynamic_cast<World *>(scene());
 }
 
 void
 Entity::update() {
-    _vel += _acc * _dt;
-    _pos += _vel * _dt;
+    _vel += _acc * parent_world()->time_step();
+    _pos += _vel * parent_world()->time_step();
     update_scene_pos();
 }
 

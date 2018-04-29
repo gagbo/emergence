@@ -60,6 +60,9 @@ class Entity : public QGraphicsItem {
                        const QStyleOptionGraphicsItem *option,
                        QWidget *widget) override;
 
+    //! Get a pointer to parent World
+    World *parent_world() const;
+
     //! Override called by World to update the entity
     void advance(int phase) override;
 
@@ -76,7 +79,7 @@ class Entity : public QGraphicsItem {
     //! Apply the Friction force to the decided acceleration
     void apply_friction_to_acceleration();
 
-    //! Update the position of the Entity according to acceleration, _dt
+    //! Update the position of the Entity according to acceleration, dt
     //! and set the position in World
     virtual void update();
 
@@ -97,14 +100,11 @@ class Entity : public QGraphicsItem {
     QColor color() const;
     float life() const;
     QVector2D size() const;
-    float dt() const;
     QString type_name() const;
     QString super_type_name() const;
 
     QList<QWeakPointer<Entity>> *neighbours() const;
     QList<QWeakPointer<Entity>> *visible_neighbours() const;
-
-    void set_time_step(float dt);
 
     //! Arbitrarily set position of entity
     void set_position(QVector2D new_pos);
@@ -153,8 +153,6 @@ class Entity : public QGraphicsItem {
     QList<QWeakPointer<Entity>> *_neighbours{new QList<QWeakPointer<Entity>>};
     QList<QWeakPointer<Entity>> *_visible_neighbours{
         new QList<QWeakPointer<Entity>>};
-
-    float _dt{1};  //!< Time-step given by World
 
     QString _super_type{""};
     QString _type{""};
