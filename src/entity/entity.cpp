@@ -49,8 +49,8 @@ Entity::Entity(const Entity &other) {
     _size = other._size;
     _super_type = other._super_type;
     _type = other._type;
-    _neighbours = new QList<QWeakPointer<Entity>>;
-    _visible_neighbours = new QList<QWeakPointer<Entity>>;
+    _neighbours = new QList<const Entity*>;
+    _visible_neighbours = new QList<const Entity*>;
 }
 
 Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {
@@ -123,12 +123,12 @@ Entity::size() const {
     return _size;
 }
 
-QList<QWeakPointer<Entity>> *
+QList<const Entity*> *
 Entity::neighbours() const {
     return _neighbours;
 }
 
-QList<QWeakPointer<Entity>> *
+QList<const Entity*> *
 Entity::visible_neighbours() const {
     return _visible_neighbours;
 }
@@ -178,11 +178,22 @@ Entity::apply_friction_to_acceleration() {
 void
 Entity::advance(int phase) {
     if (phase == 0) {
+        update_neighbourhood();
         decide_acceleration();
         apply_friction_to_acceleration();
         return;
     }
     update();
+}
+
+void
+Entity::update_neighbourhood() {
+   _visible_neighbours->clear();
+   _neighbours->clear();
+
+   for (auto&& item : parent_world()->items()){
+       _neighbours->append(dynamic_cast<const Entity*>(item));
+   }
 }
 
 void
@@ -211,6 +222,7 @@ Entity::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     (void)widget;  // Unused inherited param
     // Simple ellipse
     painter->setBrush(_color);
+    painter->setPen(Qt::NoPen);
     painter->drawEllipse(boundingRect());
     return;
 }

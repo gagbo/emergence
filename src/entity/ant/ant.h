@@ -41,6 +41,9 @@ class Ant : public LivingEntity {
                        const QStyleOptionGraphicsItem *option,
                        QWidget *widget) override;
 
+    //! Override necessary because of Role vision
+    virtual QRectF boundingRect() const override;
+
     //! Computation delegated to RoleAnt state
     void decide_acceleration();
 
@@ -49,6 +52,9 @@ class Ant : public LivingEntity {
 
     //! See the current role of Ant
     const RoleAnt* role() const;
+
+    //! Use the role to check for visible entities
+    bool is_visible(const QPointF &world_pos) const override;
 
  protected:
     RoleAnt* _current_role{nullptr};

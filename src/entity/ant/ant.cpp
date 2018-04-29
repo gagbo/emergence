@@ -56,6 +56,7 @@ Ant::paint(QPainter* painter, const QStyleOptionGraphicsItem* style_opt,
     (void)widget;
     // Body
     painter->setBrush(_current_role->color());
+    painter->setPen(Qt::NoPen);
     QPointF triangle_body[3] = {QPointF(-_size.x() / 2, _size.y() / 2),
                                 QPointF(_size.x() / 2, _size.y() / 2),
                                 QPointF(0, -_size.y() / 2)};
@@ -68,4 +69,25 @@ Ant::paint(QPainter* painter, const QStyleOptionGraphicsItem* style_opt,
     painter->setBrush(Qt::white);
     painter->drawEllipse(-pos_left_x, pos_eyes_y, eyes_size, eyes_size);
     painter->drawEllipse(pos_left_x, pos_eyes_y, eyes_size, eyes_size);
+
+    // Vision
+    if (_show_vision && !_current_role->vision().isEmpty()) {
+        painter->setPen(Qt::lightGray);
+        painter->setBrush(Qt::NoBrush);
+        painter->drawPolygon(_current_role->vision());
+    }
+}
+
+bool
+Ant::is_visible(const QPointF& world_pos) const {
+    return _current_role->vision().containsPoint(mapFromScene(world_pos),
+                                                 Qt::OddEvenFill);
+}
+
+QRectF
+Ant::boundingRect() const {
+    if (!_current_role->vision().isEmpty()) {
+        return _current_role->vision().boundingRect();
+    }
+    return Entity::boundingRect();
 }

@@ -22,7 +22,10 @@
 
 RoleAntExplorer* RoleAntExplorer::_instance = nullptr;
 
-RoleAntExplorer::RoleAntExplorer() { RoleAnt::register_name("Explorer", this); }
+RoleAntExplorer::RoleAntExplorer() {
+    _role_color = Qt::yellow;
+    RoleAnt::register_name("Explorer", this);
+}
 
 void
 RoleAntExplorer::decide_acceleration(Ant* context) {

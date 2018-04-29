@@ -36,8 +36,6 @@ class RoleAntExplorer : public RoleAnt {
  protected:
     RoleAntExplorer();
     static RoleAntExplorer* _instance;
-    QColor _role_color{Qt::yellow};
-    QPolygonF _role_vision{};
 
  private:
 };

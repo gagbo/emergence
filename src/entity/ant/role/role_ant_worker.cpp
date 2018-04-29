@@ -22,7 +22,10 @@
 
 RoleAntWorker* RoleAntWorker::_instance = nullptr;
 
-RoleAntWorker::RoleAntWorker() { RoleAnt::register_name("Worker", this); }
+RoleAntWorker::RoleAntWorker() {
+    _role_color = Qt::darkBlue;
+    RoleAnt::register_name("Worker", this);
+}
 
 void
 RoleAntWorker::decide_acceleration(Ant* context) {

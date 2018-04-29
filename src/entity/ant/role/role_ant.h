@@ -46,16 +46,16 @@ class RoleAnt {
     void set_role(Ant* context, QString name);
 
     //! Return color of the current State
-    const QColor& color() const;
+    const QColor color() const;
 
     //! Return vision of the current State
-    const QPolygonF& vision() const;
+    const QPolygonF vision() const;
 
  protected:
     static RoleAnt* lookup(QString name);
 
-    QColor _role_color;
-    QPolygonF _role_vision;
+    QColor _role_color{Qt::lightGray};
+    QPolygonF _role_vision{QRectF(-30, 0, 60, -60)};
 
  private:
     static RoleAnt* _instance;

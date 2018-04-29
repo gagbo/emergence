@@ -52,7 +52,7 @@ class Entity : public QGraphicsItem {
     /////////////// Misc. Methods
 
     //! Give an approximate bounding rectangle for the Ant
-    QRectF boundingRect() const override;
+    virtual QRectF boundingRect() const override;
 
     //! Give the shape of the Entity for collision detection
     virtual QPainterPath shape() const override;
@@ -65,6 +65,14 @@ class Entity : public QGraphicsItem {
 
     //! Override called by World to update the entity
     void advance(int phase) override;
+
+    //! Update the _neighbours and _visible_neighbours members
+    /*! For LivingEntity we use _vision to make the update
+     *  For InertEntity, no override necessary :
+     *     - _neighbours will have all Entities
+     *     - _visible_neighbours will be empty
+     */
+    virtual void update_neighbourhood();
 
     //! Set the acceleration according to the surrounding of the Entity
     virtual void decide_acceleration();
@@ -103,8 +111,8 @@ class Entity : public QGraphicsItem {
     QString type_name() const;
     QString super_type_name() const;
 
-    QList<QWeakPointer<Entity>> *neighbours() const;
-    QList<QWeakPointer<Entity>> *visible_neighbours() const;
+    QList<const Entity*> *neighbours() const;
+    QList<const Entity*> *visible_neighbours() const;
 
     //! Arbitrarily set position of entity
     void set_position(QVector2D new_pos);
@@ -150,9 +158,9 @@ class Entity : public QGraphicsItem {
     QColor _color{200, 0, 0, 255};       //!< Color
     float _life{100};
     QVector2D _size{20, 20};
-    QList<QWeakPointer<Entity>> *_neighbours{new QList<QWeakPointer<Entity>>};
-    QList<QWeakPointer<Entity>> *_visible_neighbours{
-        new QList<QWeakPointer<Entity>>};
+    QList<const Entity*> *_neighbours{new QList<const Entity*>};
+    QList<const Entity*> *_visible_neighbours{
+        new QList<const Entity*>};
 
     QString _super_type{""};
     QString _type{""};

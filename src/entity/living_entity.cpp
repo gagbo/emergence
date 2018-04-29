@@ -36,3 +36,31 @@ void
 LivingEntity::decide_acceleration() {
     _acc = QVector2D(0.0f, 0.0f);
 }
+
+void
+LivingEntity::update_neighbourhood() {
+    Entity::update_neighbourhood();
+
+    for (auto &&item : *_neighbours) {
+        if (is_visible(item->pos())) {
+            _visible_neighbours->append(item);
+        }
+    }
+}
+
+bool
+LivingEntity::is_visible(const QPointF &world_pos) const {
+    if (_vision == nullptr) {
+        return false;
+    }
+
+    return _vision->containsPoint(mapFromScene(world_pos), Qt::OddEvenFill);
+}
+
+QRectF
+LivingEntity::boundingRect() const {
+    if (_vision != nullptr && !_vision->isEmpty()) {
+        return _vision->boundingRect();
+    }
+    return Entity::boundingRect();
+}

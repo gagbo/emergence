@@ -65,12 +65,12 @@ RoleAnt::register_name(QString name, RoleAnt* concrete_instance) {
     _registry.insert(name.toLower(), concrete_instance);
 }
 
-const QColor&
+const QColor
 RoleAnt::color() const {
     return _role_color;
 }
 
-const QPolygonF&
+const QPolygonF
 RoleAnt::vision() const {
     return _role_vision;
 }
