@@ -9,6 +9,7 @@ add_subdirectory (food)
 
 target_link_libraries (${PROJECT_NAME}_entity Qt5::Widgets)
 target_link_libraries (${PROJECT_NAME}_entity ${PROJECT_NAME}_food ${PROJECT_NAME}_ant)
+target_link_libraries (${PROJECT_NAME}_entity ${PROJECT_NAME}_world)
 
 install (TARGETS ${PROJECT_NAME}_entity DESTINATION lib)
 install (FILES entity.h DESTINATION include/entity)

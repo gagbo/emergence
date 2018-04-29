@@ -37,10 +37,10 @@ class Entity : public QGraphicsItem {
     Entity() = default;
 
     //! Copy Constructor
-    Entity(const Entity& other);
+    Entity(const Entity &other);
 
     //! Default move Constructor
-    Entity(Entity&& other) = default;
+    Entity(Entity &&other) = default;
 
     //! Construct a new Ant at position with inital velocity
     Entity(const QVector2D &position,
@@ -66,6 +66,16 @@ class Entity : public QGraphicsItem {
     //! Set the acceleration according to the surrounding of the Entity
     virtual void decide_acceleration();
 
+    //! Computes the friction force the Entity undergoes given position,
+    //! velocity.
+    /*! Side effect : set _friction_force to the relevant value considering
+     * velocity of the Entity
+     */
+    virtual QVector2D get_friction_force();
+
+    //! Apply the Friction force to the decided acceleration
+    void apply_friction_to_acceleration();
+
     //! Update the position of the Entity according to acceleration, _dt
     //! and set the position in World
     virtual void update();
@@ -82,6 +92,7 @@ class Entity : public QGraphicsItem {
     QVector2D acceleration() const;
     int id() const;
     float mass() const;
+    float friction_coefficient() const;
     float max_force() const;
     QColor color() const;
     float life() const;
@@ -110,6 +121,9 @@ class Entity : public QGraphicsItem {
     //! Arbitrarily set mass of entity
     void set_mass(float new_mass);
 
+    //! Arbitrarily set friction coefficient of entity
+    void set_friction_coefficient(float new_friction_coef);
+
     //! Arbitrarily set max_force of entity
     void set_max_force(float new_max_force);
 
@@ -123,22 +137,24 @@ class Entity : public QGraphicsItem {
     void set_size(QVector2D new_size);
 
  protected:
-
-    int _id{-1};                    //!< Global Entity Id
-    QVector2D _pos{0, 0};           //!< Position
-    QVector2D _vel{0, 0};           //!< Velocity
-    QVector2D _acc{0, 0};           //!< Acceleration
-    float _vel_angle{0};            //!< Current angle of the velocity
-    float _mass{1};                 //!< Mass of the Entity
-    float _max_force{1e-2};         //!< Maximum force the
-                                    //!< Entity can apply to move itself
-    QColor _color{200, 0, 0, 255};  //!< Color
+    int _id{-1};                         //!< Global Entity Id
+    QVector2D _pos{0, 0};                //!< Position
+    QVector2D _vel{0, 0};                //!< Velocity
+    QVector2D _acc{0, 0};                //!< Acceleration
+    float _vel_angle{0};                 //!< Current angle of the velocity
+    float _mass{1};                      //!< Mass of the Entity
+    float _max_force{1e-2};              //!< Maximum force the
+                                         //!< Entity can apply to move itself
+    float _linear_vel_friction_coef{1};  //!< friction coefficient
+                                         //!< for linear velocity
+    QColor _color{200, 0, 0, 255};       //!< Color
     float _life{100};
     QVector2D _size{20, 20};
     QList<QWeakPointer<Entity>> *_neighbours{new QList<QWeakPointer<Entity>>};
-    QList<QWeakPointer<Entity>> *_visible_neighbours{new QList<QWeakPointer<Entity>>};
+    QList<QWeakPointer<Entity>> *_visible_neighbours{
+        new QList<QWeakPointer<Entity>>};
 
-    float _dt{1};  //<! Time-step given by World
+    float _dt{1};  //!< Time-step given by World
 
     QString _super_type{""};
     QString _type{""};

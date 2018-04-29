@@ -20,6 +20,9 @@
 
 #include <QPainter>
 #include <QtMath>
+
+#include "world/world.h"
+
 #include "entity.h"
 
 QString Entity::super_type_string = "Undefined";
@@ -146,6 +149,24 @@ Entity::decide_acceleration() {
     _acc = QVector2D(0, 0);
 }
 
+QVector2D
+Entity::get_friction_force() {
+    if (_vel.lengthSquared() < 1e-2) {
+        return QVector2D(0, 0);
+    }
+
+    // Solid friction with World tile
+    QVector2D linear_friction_force(_vel);
+    linear_friction_force.normalize();
+    float solid_friction = dynamic_cast<World *>(scene())->get_friction(_pos);
+    linear_friction_force *= -1 * solid_friction;
+
+    // Add Linear velocity friction
+    linear_friction_force += -1 * _linear_vel_friction_coef * _vel;
+
+    return linear_friction_force;
+}
+
 void
 Entity::update() {
     _vel += _acc * _dt;
@@ -154,9 +175,15 @@ Entity::update() {
 }
 
 void
+Entity::apply_friction_to_acceleration() {
+    _acc += get_friction_force() / _mass;
+}
+
+void
 Entity::advance(int phase) {
     if (phase == 0) {
         decide_acceleration();
+        apply_friction_to_acceleration();
         return;
     }
     update();
