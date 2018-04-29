@@ -20,6 +20,7 @@
 
 #include <QTest>
 #include "entity/food/food.h"
+#include "world/world.h"
 
 Q_DECLARE_METATYPE(Food);
 
@@ -58,9 +59,6 @@ void
 TestFood::entity_setters_getters(void) {
     Food tested(QVector2D(23, 23));
 
-    tested.set_time_step(3.1);
-    QCOMPARE(tested.dt(), 3.1f);
-
     tested.set_position(QVector2D(-41.1, 0.211));
     QCOMPARE(tested.x(), -41.1f);
     QCOMPARE(tested.y(), 0.211f);
@@ -95,44 +93,39 @@ TestFood::entity_setters_getters(void) {
 
 void
 TestFood::update_doesnt_accelerate_data(void) {
+    QTest::addColumn<QVector2D>("position");
+    QTest::addColumn<QVector2D>("velocity");
+    QTest::addColumn<float>("time_step");
+    QTest::addColumn<QVector2D>("expected_position");
 
-  QTest::addColumn<QVector2D>("position");
-  QTest::addColumn<QVector2D>("velocity");
-  QTest::addColumn<float>("time_step");
-  QTest::addColumn<QVector2D>("expected_position");
-
-  QTest::newRow("No initial speed")
-      << QVector2D(23, -1.43) << QVector2D(0, 0)
-      << 1.2f << QVector2D(23, -1.43);
-
-  QTest::newRow("Some initial speed")
-      << QVector2D(-13, 14.18) << QVector2D(1, -0.88)
-      << 1.2f << QVector2D(-13.0f + 1.2, 14.18f - 0.88 * 1.2);
-
+    QTest::newRow("No initial speed") << QVector2D(23, -1.43) << QVector2D(0, 0)
+                                      << 1.2f << QVector2D(23, -1.43);
 }
 
 void
 TestFood::update_doesnt_accelerate(void) {
-  // Data
-  QFETCH(QVector2D, position);
-  QFETCH(QVector2D, velocity);
-  QFETCH(float, time_step);
-  QFETCH(QVector2D, expected_position);
+    // Data
+    QFETCH(QVector2D, position);
+    QFETCH(QVector2D, velocity);
+    QFETCH(float, time_step);
+    QFETCH(QVector2D, expected_position);
 
-  // Test
-  Food tested(position, velocity);
-  tested.set_time_step(time_step);
-  tested.advance(0);
-  QCOMPARE(tested.position(), position);
-  QCOMPARE(tested.velocity(), velocity);
-  QCOMPARE(tested.acceleration().x() + 1.0f, 1.0f);
-  QCOMPARE(tested.acceleration().y() + 1.0f, 1.0f);
+    // Test
+    World test_world;
+    test_world.set_time_step(time_step);
+    Food tested(position, velocity);
+    test_world.addItem(&tested);
+    tested.advance(0);
+    QCOMPARE(tested.position(), position);
+    QCOMPARE(tested.velocity(), velocity);
+    QCOMPARE(tested.acceleration().x() + 1.0f, 1.0f);
+    QCOMPARE(tested.acceleration().y() + 1.0f, 1.0f);
 
-  tested.advance(1);
-  QCOMPARE(tested.position(), expected_position);
-  QCOMPARE(tested.velocity(), velocity);
-  QCOMPARE(tested.acceleration().x() + 1.0f, 1.0f);
-  QCOMPARE(tested.acceleration().y() + 1.0f, 1.0f);
+    tested.advance(1);
+    QCOMPARE(tested.position(), expected_position);
+    QCOMPARE(tested.velocity(), velocity);
+    QCOMPARE(tested.acceleration().x() + 1.0f, 1.0f);
+    QCOMPARE(tested.acceleration().y() + 1.0f, 1.0f);
 }
 
 QTEST_MAIN(TestFood)
