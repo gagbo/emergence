@@ -48,7 +48,7 @@ class Ant : public LivingEntity {
     void set_role(RoleAnt* new_role);
 
  protected:
-    QSharedPointer<RoleAnt> _current_role{nullptr};
+    RoleAnt* _current_role{nullptr};
 };
 
 #endif  // _ENTITY_ANT_ANT_H_

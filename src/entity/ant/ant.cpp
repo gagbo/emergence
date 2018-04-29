@@ -41,7 +41,7 @@ Ant::decide_acceleration() {
 
 void
 Ant::set_role(RoleAnt* new_role) {
-    _current_role.reset(new_role);
+    _current_role = new_role;
 }
 
 void
