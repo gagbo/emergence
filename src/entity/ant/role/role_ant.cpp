@@ -20,19 +20,31 @@
 
 #include "role_ant.h"
 
+#include "role_ant_explorer.h"
+#include "role_ant_worker.h"
+
 QHash<QString, RoleAnt*> RoleAnt::_registry = QHash<QString, RoleAnt*>();
 RoleAnt* RoleAnt::_instance = nullptr;
 
 RoleAnt*
-RoleAnt::instance(QString name) {
-    _instance = lookup(name.toLower());
-    return _instance;
+RoleAnt::instance() {
+    throw RoleNotFound("<Undefined> : tried to get _instance()");
+}
+
+RoleAnt*
+RoleAnt::get(QString name) {
+    return lookup(name.toLower());
 }
 
 RoleAnt*
 RoleAnt::lookup(QString name) {
     auto it = _registry.find(name);
     if (it == _registry.end()) {
+        if (QString::compare(name, "explorer", Qt::CaseInsensitive) == 0) {
+            return RoleAntExplorer::instance();
+        } else if (QString::compare(name, "worker", Qt::CaseInsensitive) == 0) {
+            return RoleAntWorker::instance();
+        }
         throw RoleNotFound(name);
     }
 
@@ -40,14 +52,9 @@ RoleAnt::lookup(QString name) {
 }
 
 void
-RoleAnt::decide_acceleration(Ant* context) {
-    context->_acc = QVector2D(0, 0);
-}
-
-void
 RoleAnt::set_role(Ant* context, QString name) {
     try {
-        RoleAnt* new_role = instance(name);
+        RoleAnt* new_role = get(name);
         context->set_role(new_role);
     } catch (RoleNotFound& e) {
         qInfo() << e.qwhat() << "Role unchanged";

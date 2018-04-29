@@ -26,17 +26,16 @@
 //! A State for Ant responsible of setting the acceleration
 class RoleAntWorker : public RoleAnt {
  public:
+    //! Return a pointer to the Singleton instance
+    static RoleAnt* instance();
 
     //! TODO : This computation needs to take the VelocityStrategy decorators
-    //! into
-    //  account
-    virtual void decide_acceleration(Ant* context);
-
-    // TODO : Should be protected, but it prevents the static instance creation
-    // for registration in RoleAnt::_registry
-    RoleAntWorker();
+    //! into account
+    void decide_acceleration(Ant* context) override;
 
  protected:
+    RoleAntWorker();
+    static RoleAntWorker* _instance;
 
  private:
 };

@@ -32,12 +32,15 @@ class Ant;
 class RoleAnt {
  public:
     static void register_name(QString name, RoleAnt* concrete_instance);
-    static RoleAnt* instance(QString name = "Default");
+    //! Return a pointer to a subclassed Singleton Role
+    static RoleAnt* get(QString name = "Default");
+
+    //! Pure virtual method to get the Singleton
+    static RoleAnt* instance();
 
     //! TODO : This computation needs to take the VelocityStrategy decorators
-    //! into
-    //  account
-    virtual void decide_acceleration(Ant* context);
+    //! into account
+    virtual void decide_acceleration(Ant* context) = 0;
 
     void set_role(Ant* context, QString name);
 

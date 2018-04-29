@@ -22,12 +22,12 @@
 
 QString Ant::type_string = "Ant";
 
-Ant::Ant() : LivingEntity() { set_role(RoleAnt::instance("Explorer")); }
+Ant::Ant() : LivingEntity() { set_role(RoleAnt::get("Explorer")); }
 
 Ant::Ant(const QVector2D& position,
          const QVector2D& init_speed)
     : LivingEntity(position, init_speed) {
-    set_role(RoleAnt::instance("Explorer"));
+    set_role(RoleAnt::get("Explorer"));
 }
 
 void

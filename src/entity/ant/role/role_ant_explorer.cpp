@@ -20,11 +20,19 @@
 
 #include "role_ant_explorer.h"
 
-static RoleAntExplorer role_ant_explorer_singleton;
+RoleAntExplorer* RoleAntExplorer::_instance = nullptr;
 
 RoleAntExplorer::RoleAntExplorer() { RoleAnt::register_name("Explorer", this); }
 
 void
 RoleAntExplorer::decide_acceleration(Ant* context) {
     context->_acc = QVector2D(0.1, 0.1);
+}
+
+RoleAnt*
+RoleAntExplorer::instance() {
+    if (_instance == nullptr) {
+        _instance = new RoleAntExplorer();
+    }
+    return _instance;
 }

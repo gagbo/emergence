@@ -20,11 +20,19 @@
 
 #include "role_ant_worker.h"
 
-static RoleAntWorker role_ant_worker_singleton;
+RoleAntWorker* RoleAntWorker::_instance = nullptr;
 
 RoleAntWorker::RoleAntWorker() { RoleAnt::register_name("Worker", this); }
 
 void
 RoleAntWorker::decide_acceleration(Ant* context) {
     context->_acc = QVector2D(0, 0);
+}
+
+RoleAnt*
+RoleAntWorker::instance() {
+    if (_instance == nullptr) {
+        _instance = new RoleAntWorker();
+    }
+    return _instance;
 }
