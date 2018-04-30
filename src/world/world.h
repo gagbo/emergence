@@ -103,17 +103,17 @@ class World : public QGraphicsScene {
     //! Draw a border around the World rectangle if the world wraps around
     /*! This is an overloaded method, the second parameter is not used.
      */
-    void drawForeground(QPainter *, const QRectF &);
+    void drawForeground(QPainter *, const QRectF &) override;
 
     //! Handle mouse button events to emit signals upwards
     /*! The Left button emits a message to tell where we clicked
      *  The middle button resets the scaling of the representation of the scene
      *  The right button pops a menu
      */
-    void mousePressEvent(QGraphicsSceneMouseEvent *);
+    void mousePressEvent(QGraphicsSceneMouseEvent *) override;
 
     //! Handle mouse scroll events to emit zoom signals to the containing view
-    void wheelEvent(QGraphicsSceneWheelEvent *);
+    void wheelEvent(QGraphicsSceneWheelEvent *) override;
 
     //! Tick the world state
     /*! Here ticking means

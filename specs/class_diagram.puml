@@ -1,0 +1,263 @@
+@startuml
+
+class Legend {
+-void private_method()
+#void protected_method()
+~void reserved_signals_slots()
++void public_method()
+
+-float private_attribute
+#float protected_attribute
+~float dummy_attribute
++float public_attribute
+}
+note top: Dummy class to show signs on UI
+
+class MainWindow {
+#QSharedPointer<WorldView> _main_view
+
++WorldView* get_view()
+~showMessage(QString message)
+-void createActions()
+-void createStatusBar()
+}
+
+class QMainWindow {
+#void closeEvent(...)
+}
+
+class QGraphicsView
+
+class QGraphicsScene {
+#void drawForeground(...)
+#void mousePressEvent(...)
+#void wheelEvent(...)
+}
+
+class QGraphicsItem {
++QRectF boundingRect()
++QPainterPath shape()
++void paint(...)
++void advance(int phase)
+}
+
+class WorldView {
+-QBrush background
+-float xy_scale
+
++World* get_scene()
++void add_entity(...)
+~void change_scale(float scale_factor)
+~void reset_scale()
+}
+
+class World {
+#float _time_step
+#float _time
+#QColor _border_color
+#bool _wraps_around
+#QVector2D _size
+#QVector<QSharedPointer<Entity>> _agents
+
++void render()
++bool add_entity(QString super_type, QString type, ...)
++get_friction(QVector2D position)
++void update()
++bool enable_wrap_around()
++bool disable_wrap_around()
++bool toggle_wrap_around()
+~void message(QString)
+~void scale_change(float)
+~void scale_reset()
+#void tick()
+#void tock()
+}
+note top: should probably rename tick and tock
+
+abstract class Entity {
++{static} QString super_type_string
++{static} QString type_string
+
+#int _id
+#QVector2D _pos
+#QVector2D _vel
+#QVector2D _acc
+#float _vel_angle
+#float _mass
+#float _max_force
+#float _linear_vel_friction_coef
+#QColor _color
+#float _life
+#QVector2D _size
+#QList<const Entity*>* _neighbours
+#QList<constEntity*>* _visible_neighbours
+
++{abstract} void decide_acceleration()
++World* parent_world()
++void update_neighbourhood()
++QVector2D get_friction_force()
++void apply_friction_to_acceleration()
++void update()
++void update_scene_pos()
+}
+
+abstract class LivingEntity {
++{static} QString super_type_string
+#QPolygonF* _vision
+#bool _show_vision
+
++void update_neighbourhood()
++QRectF boundingRect()
++bool is_visible(const QPointF &world_pos)
++void decide_acceleration()
++void toggle_show_vision()
++void disable_show_vision()
++void enable_show_vision()
+}
+note top of LivingEntity : This _vision is not properly since Ant overwrites\nthis with RoleAnt::vision
+
+abstract class InertEntity {
++{static} QString super_type_string
++void decide_acceleration()
+}
+
+class Ant {
++{static} QString type_string
+#RoleAnt* _current_role
+
++void paint(...)
++QRectF boundingRect()
++void decide_acceleration()
++void set_role(QString role_name)
++const RoleAnt* role()
++bool is_visible(const QPointF &world_pos)
+}
+
+class Food
+
+abstract class MovementStrategy << decorator >> {
+#QVector2D _applied_force
+
++{abstract} void compute_force(Ant* context)
++void apply_force(Ant* context)
+}
+
+class MovementStrategyBase {
++void compute_force(Ant* context)
+}
+
+abstract class MovementStrategyDecorator {
+#MovementStrategy* _wrappee
+
++void compute_force(Ant* context)
+}
+
+class MovementStrategyCohesion {
+#float _coef
+
++void compute_force(Ant* context)
+}
+
+class MovementStrategySeparation {
+#float _coef
+
++void compute_force(Ant* context)
+}
+
+class MovementStrategyAlignment {
+#float _coef
+
++void compute_force(Ant* context)
+}
+
+abstract class RoleAnt << State >> {
++{static} void register_name(QString name, RoleAnt* concrete_instance)
++{static} RoleAnt* get(QString name)
++{static} RoleAnt* instance()
+-{static} RoleAnt* _instance
+-{static} QHash<QString, RoleAnt> _registry
+
+#{static} RoleAnt* lookup(QString name)
+#QColor _role_color
+#QPolygonF _role_vision
+#MovementStrategy* _role_move_strategy
+
++abstract void decide_acceleration(Ant* context)
++void set_role(Ant* context, QString name)
++const QColor color()
++const QPolygonF vision()
+}
+
+class RoleAntExplorer << Singleton >> {
+#{static} RoleAntExplorer* _instance
+
++{static} RoleAnt* instance()
++void decide_acceleration(Ant* context)
+#RoleAntExplorer()
+}
+
+class RoleAntWorker <<Singleton >> {
+#{static} RoleAntWorker* _instance
+
++{static} RoleAnt* instance()
++void decide_acceleration(Ant* context)
+#RoleAntWorker()
+}
+
+class EntityFactory << Factory method >> {
++{static} Entity* make_entity(QString super_type, QString type, ...)
+}
+note top of EntityFactory : Probably don't need inheritance here
+class LivingEntityFactory {
++{static} make_entity(QString type, ...)
+}
+
+class InertEntityFactory {
++{static} make_entity(QString type, ...)
+}   
+
+QMainWindow <|-- MainWindow
+MainWindow --> "1" WorldView
+
+QGraphicsView <|-- WorldView
+
+QGraphicsScene <|-- World
+
+QGraphicsItem <|-- Entity
+
+WorldView --> "1" World : events
+World --> WorldView : signals
+
+World --> "0..*" Entity : update()
+Entity --> World : items()
+World --> EntityFactory : add_entity()
+
+EntityFactory <|-- LivingEntityFactory
+EntityFactory <|-- InertEntityFactory
+
+EntityFactory --> LivingEntityFactory
+EntityFactory --> InertEntityFactory
+
+Ant <-- LivingEntityFactory
+Food <-- InertEntityFactory
+
+Entity <|-- LivingEntity
+LivingEntity <|-- Ant
+
+Entity <|-- InertEntity
+InertEntity <|-- Food
+
+Ant --> "1" RoleAnt
+RoleAnt <|-- RoleAntWorker
+RoleAnt <|-- RoleAntExplorer
+
+RoleAnt *-- "1" MovementStrategy
+MovementStrategy <|-- MovementStrategyBase
+MovementStrategy <|-- MovementStrategyDecorator
+MovementStrategyDecorator <|-- MovementStrategyCohesion
+MovementStrategyDecorator <|-- MovementStrategySeparation
+MovementStrategyDecorator <|-- MovementStrategyAlignment
+
+MovementStrategyDecorator o-- MovementStrategy : component
+
+@enduml

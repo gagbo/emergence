@@ -32,7 +32,7 @@ class MovementStrategyDecorator : public MovementStrategy {
 
     MovementStrategyDecorator(MovementStrategy* wrappee) : _wrappee(wrappee) {}
 
-    void compute_force(Ant* context) override;
+    virtual void compute_force(Ant* context) override;
 
  protected:
     MovementStrategy* _wrappee{nullptr};

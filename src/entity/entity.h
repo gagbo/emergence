@@ -162,6 +162,7 @@ class Entity : public QGraphicsItem {
     QList<const Entity*> *_visible_neighbours{
         new QList<const Entity*>};
 
+    // TODO : check if still necessary with the static
     QString _super_type{""};
     QString _type{""};
 };
