@@ -22,9 +22,19 @@
 
 void
 MovementStrategyBase::compute_force(Ant* context) {
-    if (_applied_force.lengthSquared() / context->max_force() < 1e-1) {
-        _applied_force *= 0;
+    float context_mass = context->mass();
+    float context_max_force = context->max_force();
+    float force_length = context_mass * context->acceleration().length();
+    // Avoid small shakes by thresholding the force
+    if (force_length / context_max_force < 1e-5) {
+        context->set_acceleration(QVector2D(0,0));
         return;
     }
-    _applied_force *= context->max_force() / _applied_force.length();
+
+    // Cap Force by max_force
+    if (force_length > context_max_force) {
+        context->set_acceleration(context->acceleration().normalized() *
+                                  context_max_force / context_mass);
+        return;
+    }
 }

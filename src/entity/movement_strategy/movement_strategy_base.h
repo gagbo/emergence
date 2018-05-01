@@ -23,6 +23,16 @@
 #include "entity/ant/ant.h"
 #include "movement_strategy.h"
 
+//! Only "standalone" base class of the Decorator
+/*! This class is meant to be the only concrete subclass of MovementStrategy
+ * This way, code should not compile if a Strategy is defined where this Base strategy is not effectively the last layer
+ * As the forced last layer, we can give it more responsibilities :
+ *    - It is (optionnally) responsible to cancel out too small forces
+ *    - It also can cap the force so it doesn't go beyond context->max_force()
+ *
+ * The optionnal responsibility of cancelling out small forces probably mean
+ * there should be another MovementStrategyBase that does the cancel
+ */
 class MovementStrategyBase : public MovementStrategy {
  public:
     MovementStrategyBase() : MovementStrategy() {}

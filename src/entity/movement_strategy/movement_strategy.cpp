@@ -24,5 +24,4 @@
 void
 MovementStrategy::apply_force(Ant* context) {
     compute_force(context);
-    context->set_acceleration(_applied_force / context->mass());
 }

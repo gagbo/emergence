@@ -24,16 +24,23 @@
 void
 MovementStrategyCohesion::compute_force(Ant* context) {
     QVector2D mean_position(0, 0);
+    QVector2D target_velocity(0, 0);
+    QVector2D target_acceleration(0, 0);
+    float dt = context->time_step();
+
+    // Compute the mean position
     int entity_count = context->neighbours()->size();
     for (auto&& item : *context->neighbours()) {
         mean_position += QVector2D(item->pos());
     }
     mean_position /= entity_count;
-    QVector2D target_delta_pos = mean_position - QVector2D(context->pos());
-    _applied_force += target_delta_pos.normalized() *
-                      _coef / context->max_force();
 
-    // TODO : detect if context would reach objective in 1 time step, so it can slow down
+    // Compute the Acceleration necessary to get there in one step
+    target_velocity = (mean_position - QVector2D(context->pos())) / dt;
+    target_acceleration = (target_velocity - context->velocity()) / dt;
+
+    // Add the equivalent acceleration
+    context->set_acceleration(context->acceleration() + target_acceleration);
 
     _wrappee->compute_force(context);
 }

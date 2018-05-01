@@ -25,14 +25,11 @@ class Ant;
 
 class MovementStrategy {
  public:
-    MovementStrategy(){}
+    MovementStrategy() {}
     virtual void compute_force(Ant* context) = 0;
 
-    virtual ~MovementStrategy(){}
+    virtual ~MovementStrategy() {}
 
     void apply_force(Ant* context);
-
- protected:
-    QVector2D _applied_force{0, 0};
 };
 #endif  // _ENTITY_MOVEMENT_STRATEGY_MOVEMENT_STRATEGY_H_

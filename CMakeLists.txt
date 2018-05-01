@@ -12,13 +12,13 @@ set (CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install")
 
 set (BUILD_SHARED_LIBS OFF)
 
-set (CMAKE_CXX_FLAGS "-O2 -pipe \
--Wall -Wextra -D_FORTIFY_SOURCE=2 -fexceptions")
-set (CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG")
-set (CMAKE_CXX_FLAGS_MINSIZEREL "-DNDEBUG")
-set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-DNDEBUG")
-set (CMAKE_CXX_FLAGS_DEBUG "-g -fsanitize=address -fno-omit-frame-pointer")
-set (CMAKE_CXX_FLAGS_COVERAGE "-g -fprofile-arcs -ftest-coverage")
+set (CMAKE_CXX_FLAGS "-pipe \
+-Wall -Wextra -fexceptions")
+set (CMAKE_CXX_FLAGS_RELEASE "-O3 -D_FORTIFY_SOURCE=3 -DNDEBUG")
+set (CMAKE_CXX_FLAGS_MINSIZEREL "-Os -D_FORTIFY_SOURCE=2 -DNDEBUG")
+set (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -D_FORTIFY_SOURCE=2 -g -DNDEBUG")
+set (CMAKE_CXX_FLAGS_DEBUG "-O0 -g -fsanitize=address -fno-omit-frame-pointer")
+set (CMAKE_CXX_FLAGS_COVERAGE "-O0 -g -fprofile-arcs -ftest-coverage")
 set (CMAKE_CXX_LINKER_FLAGS_DEBUG "-lasan")
 set (CMAKE_CXX_LINKER_FLAGS_COVERAGE "-fprofile-arcs -ftest-coverage")
 

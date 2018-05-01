@@ -23,7 +23,10 @@
 #include <QGraphicsView>
 #include <QPainter>
 
-World::World() { setItemIndexMethod(QGraphicsScene::BspTreeIndex); }
+World::World() {
+    setItemIndexMethod(QGraphicsScene::BspTreeIndex);
+    setSceneRect(QRectF());
+}
 
 World::~World() { _agents.clear(); }
 

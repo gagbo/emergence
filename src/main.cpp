@@ -48,7 +48,7 @@ main(int argc, char* argv[]) {
     parser.process(app);
 
     World basic_world;
-    basic_world.set_time_step(0.1);
+    basic_world.set_time_step(1.0f/60.0f);
     basic_world.disable_wrap_around();
     
     // Small test code of the World API. This will be moved after LivingEntities
@@ -72,7 +72,7 @@ main(int argc, char* argv[]) {
     }
 
     try {
-        basic_world.add_entity("living", "ant", QVector2D(-100, 28));
+        basic_world.add_entity("living", "ant", QVector2D(-300, 208));
     } catch (FactoryFailure& e) {
         qInfo() << e.qwhat();
     }

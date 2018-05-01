@@ -25,6 +25,8 @@
 
 #include "entity.h"
 
+#define LOW_SPEED_THRESHOLD (1e-2)
+
 QString Entity::super_type_string = "Undefined";
 QString Entity::type_string = "Undefined";
 
@@ -49,8 +51,8 @@ Entity::Entity(const Entity &other) {
     _size = other._size;
     _super_type = other._super_type;
     _type = other._type;
-    _neighbours = new QList<const Entity*>;
-    _visible_neighbours = new QList<const Entity*>;
+    _neighbours = new QList<const Entity *>;
+    _visible_neighbours = new QList<const Entity *>;
 }
 
 Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {
@@ -123,12 +125,12 @@ Entity::size() const {
     return _size;
 }
 
-QList<const Entity*> *
+QList<const Entity *> *
 Entity::neighbours() const {
     return _neighbours;
 }
 
-QList<const Entity*> *
+QList<const Entity *> *
 Entity::visible_neighbours() const {
     return _visible_neighbours;
 }
@@ -149,7 +151,8 @@ Entity::get_friction_force() {
     linear_friction_force.normalize();
     float solid_friction = parent_world()->get_friction(_pos);
     linear_friction_force *= -1 * solid_friction;
-    if (linear_friction_force.lengthSquared() > _mass * _mass * _acc.lengthSquared()) {
+    if (linear_friction_force.lengthSquared() >
+        _mass * _mass * _acc.lengthSquared()) {
         return -1 * _mass * _acc;
     }
 
@@ -163,10 +166,15 @@ Entity::parent_world() const {
     return dynamic_cast<World *>(scene());
 }
 
+float
+Entity::time_step() const {
+    return parent_world()->time_step();
+}
+
 void
 Entity::update() {
-    _vel += _acc * parent_world()->time_step();
-    _pos += _vel * parent_world()->time_step();
+    _vel += _acc * time_step();
+    _pos += _vel * time_step();
     update_scene_pos();
 }
 
@@ -188,18 +196,20 @@ Entity::advance(int phase) {
 
 void
 Entity::update_neighbourhood() {
-   _visible_neighbours->clear();
-   _neighbours->clear();
+    _visible_neighbours->clear();
+    _neighbours->clear();
 
-   for (auto&& item : parent_world()->items()){
-       _neighbours->append(dynamic_cast<const Entity*>(item));
-   }
+    for (auto &&item : parent_world()->items()) {
+        _neighbours->append(dynamic_cast<const Entity *>(item));
+    }
 }
 
 void
 Entity::update_scene_pos() {
-    float vel_angle = 180 - qRadiansToDegrees(qAtan2(_vel.x(), _vel.y()));
-    setRotation(vel_angle);
+    if (_vel.lengthSquared() > LOW_SPEED_THRESHOLD * LOW_SPEED_THRESHOLD) {
+        float vel_angle = 180 - qRadiansToDegrees(qAtan2(_vel.x(), _vel.y()));
+        setRotation(vel_angle);
+    }
     setPos(_pos.x(), _pos.y());
 }
 

@@ -63,6 +63,9 @@ class Entity : public QGraphicsItem {
     //! Get a pointer to parent World
     World *parent_world() const;
 
+    //! Obtain the time step from World
+    float time_step() const;
+
     //! Override called by World to update the entity
     void advance(int phase) override;
 
@@ -151,7 +154,7 @@ class Entity : public QGraphicsItem {
     QVector2D _acc{0, 0};                //!< Acceleration
     float _vel_angle{0};                 //!< Current angle of the velocity
     float _mass{1};                      //!< Mass of the Entity
-    float _max_force{4};                 //!< Maximum force the
+    float _max_force{1};                 //!< Maximum force the
                                          //!< Entity can apply to move itself
     float _linear_vel_friction_coef{10};  //!< friction coefficient
                                          //!< for linear velocity
