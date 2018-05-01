@@ -25,7 +25,7 @@
 
 #include "entity.h"
 
-#define LOW_SPEED_THRESHOLD (1e-2)
+#define LOW_SPEED_THRESHOLD (1e-1)
 
 QString Entity::super_type_string = "Undefined";
 QString Entity::type_string = "Undefined";
