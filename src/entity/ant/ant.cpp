@@ -42,6 +42,7 @@ Ant::decide_acceleration() {
 void
 Ant::set_role(QString role_name) {
     _current_role = RoleAnt::get(role_name);
+    set_vision(_current_role->vision());
 }
 
 const RoleAnt*
@@ -71,26 +72,9 @@ Ant::paint(QPainter* painter, const QStyleOptionGraphicsItem* style_opt,
     painter->drawEllipse(pos_left_x, pos_eyes_y, eyes_size, eyes_size);
 
     // Vision
-    if (_show_vision && !_current_role->vision().isEmpty()) {
+    if (_show_vision && !vision().isEmpty()) {
         painter->setPen(Qt::lightGray);
         painter->setBrush(Qt::NoBrush);
-        painter->drawPolygon(_current_role->vision());
+        painter->drawPolygon(vision());
     }
-}
-
-bool
-Ant::is_visible(const QPointF& world_pos) const {
-    return _current_role->vision().containsPoint(mapFromScene(world_pos),
-                                                 Qt::OddEvenFill);
-}
-
-QRectF
-Ant::boundingRect() const {
-    if (!_current_role->vision().isEmpty()) {
-        // We add margins to the bounding Rect of Vision so it extends behind
-        // itself, theoretically covering the back of the Ant
-        return _current_role->vision().boundingRect().marginsAdded(QMarginsF(
-            0, 0, 0, _current_role->vision().boundingRect().height()));
-    }
-    return Entity::boundingRect();
 }

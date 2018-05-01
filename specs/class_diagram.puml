@@ -103,18 +103,20 @@ abstract class Entity {
 
 abstract class LivingEntity {
 +{static} QString super_type_string
-#QPolygonF* _vision
+#QSharedPointer<QPolygonF> _vision
 #bool _show_vision
 
 +void update_neighbourhood()
 +QRectF boundingRect()
 +bool is_visible(const QPointF &world_pos)
 +void decide_acceleration()
++const QPolygonF& vision()
++void set_vision(QSharedPointer<QPolygonF> new_vision)
++void set_vision(QWeakPointer<QPolygonF> new_vision)
 +void toggle_show_vision()
 +void disable_show_vision()
 +void enable_show_vision()
 }
-note top of LivingEntity : This _vision is not properly since Ant overwrites\nthis with RoleAnt::vision
 
 abstract class InertEntity {
 +{static} QString super_type_string
@@ -130,12 +132,11 @@ class Ant {
 +void decide_acceleration()
 +void set_role(QString role_name)
 +const RoleAnt* role()
-+bool is_visible(const QPointF &world_pos)
 }
 
 class Food
 
-abstract class MovementStrategy << decorator >> {
+abstract class MovementStrategy << Decorator >> {
 #QVector2D _applied_force
 
 +{abstract} void compute_force(Ant* context)
@@ -179,13 +180,13 @@ abstract class RoleAnt << State >> {
 
 #{static} RoleAnt* lookup(QString name)
 #QColor _role_color
-#QPolygonF _role_vision
+#QSharedPointer<QPolygonF> _role_vision
 #MovementStrategy* _role_move_strategy
 
 +abstract void decide_acceleration(Ant* context)
 +void set_role(Ant* context, QString name)
 +const QColor color()
-+const QPolygonF vision()
++QWeakPointer<QPolygonF> vision()
 }
 
 class RoleAntExplorer << Singleton >> {
