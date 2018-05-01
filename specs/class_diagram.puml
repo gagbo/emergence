@@ -75,9 +75,6 @@ class World {
 note top: should probably rename tick and tock
 
 abstract class Entity {
-+{static} QString super_type_string
-+{static} QString type_string
-
 #int _id
 #QVector2D _pos
 #QVector2D _vel
@@ -99,10 +96,11 @@ abstract class Entity {
 +void apply_friction_to_acceleration()
 +void update()
 +void update_scene_pos()
++QString type_name()
++QString super_type_name()
 }
 
 abstract class LivingEntity {
-+{static} QString super_type_string
 #QSharedPointer<QPolygonF> _vision
 #bool _show_vision
 
@@ -119,12 +117,10 @@ abstract class LivingEntity {
 }
 
 abstract class InertEntity {
-+{static} QString super_type_string
 +void decide_acceleration()
 }
 
 class Ant {
-+{static} QString type_string
 #RoleAnt* _current_role
 
 +void paint(...)

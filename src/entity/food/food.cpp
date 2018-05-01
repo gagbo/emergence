@@ -20,11 +20,11 @@
 
 #include "food.h"
 
-QString Food::type_string = "Food";
+const static QString type_string_value = "Food";
 
-Food::Food() : InertEntity() { _type = type_string; }
+Food::Food() : InertEntity() { _type = type_string_value; }
 
 Food::Food(const QVector2D &position, const QVector2D &init_speed)
     : InertEntity(position, init_speed) {
-    _type = type_string;
+    _type = type_string_value;
 }

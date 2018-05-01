@@ -27,9 +27,6 @@
 
 #define LOW_SPEED_THRESHOLD (1e-1)
 
-QString Entity::super_type_string = "Undefined";
-QString Entity::type_string = "Undefined";
-
 Entity::~Entity() {
     _visible_neighbours->clear();
     _neighbours->clear();

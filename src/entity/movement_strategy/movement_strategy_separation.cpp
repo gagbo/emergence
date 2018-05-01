@@ -36,7 +36,7 @@ MovementStrategySeparation::compute_force(Ant* context) {
     // Compute the mean position
     int neighbours_that_matter = 0;
     for (auto&& item : *context->visible_neighbours()) {
-        if (item->super_type_string == "Inert") {
+        if (item->super_type_name() == "Inert") {
             continue;
         }
 

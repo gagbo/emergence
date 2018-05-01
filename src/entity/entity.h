@@ -29,8 +29,6 @@ class World;
 
 class Entity : public QGraphicsItem {
  public:
-    static QString super_type_string;
-    static QString type_string;
     /////////////// Constructors
 
     //! Construct a new Entity
@@ -166,7 +164,7 @@ class Entity : public QGraphicsItem {
         new QList<const Entity*>};
 
     // TODO : check if still necessary with the static
-    QString _super_type{""};
-    QString _type{""};
+    QString _super_type{"Undefined"};
+    QString _type{"Undefined"};
 };
 #endif  // _ENTITY_ENTITY_H_

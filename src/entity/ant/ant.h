@@ -30,8 +30,6 @@ class RoleAnt;
 
 class Ant : public LivingEntity {
  public:
-    static QString type_string;
-
     Ant();
 
     Ant(const QVector2D& position,

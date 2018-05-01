@@ -20,8 +20,8 @@
 
 #ifndef _ENTITY_FACTORY_ENTITYFACTORY_H_
 #define _ENTITY_FACTORY_ENTITYFACTORY_H_
-#include "entity/food/food.h"
 #include "entity/ant/ant.h"
+#include "entity/food/food.h"
 
 #include "entity/inert_entity.h"
 #include "entity/living_entity.h"
@@ -83,8 +83,7 @@ class InertEntityFactory {
     template <typename... Ts>
     static InertEntity*
     make_entity(QString type, Ts&&... params) {
-        if (QString::compare(type, Food::type_string, Qt::CaseInsensitive) ==
-            0) {
+        if (QString::compare(type, "Food", Qt::CaseInsensitive) == 0) {
             return new Food(std::forward<Ts>(params)...);
         } else {
             throw TypeUnknown();
@@ -113,27 +112,28 @@ class EntityFactory {
     template <typename... Ts>
     static Entity*
     make_entity(QString super_type, QString type, Ts&&... params) {
-        if (QString::compare(super_type, LivingEntity::super_type_string,
-                             Qt::CaseInsensitive) == 0) {
+        if (QString::compare(super_type, "Living", Qt::CaseInsensitive) == 0) {
             try {
                 return LivingEntityFactory::make_entity(
                     type, std::forward<Ts>(params)...);
             } catch (TypeUnknown& e) {
                 throw FactoryFailure("The type " + type + " is not in " +
-                                     super_type + " SuperType", super_type, type);
+                                         super_type + " SuperType",
+                                     super_type, type);
             }
-        } else if (QString::compare(super_type, InertEntity::super_type_string,
-                                    Qt::CaseInsensitive) == 0) {
+        } else if (QString::compare(super_type, "Inert", Qt::CaseInsensitive) ==
+                   0) {
             try {
                 return InertEntityFactory::make_entity(
                     type, std::forward<Ts>(params)...);
             } catch (TypeUnknown& e) {
                 throw FactoryFailure("The type " + type + " is not in " +
-                                     super_type + " SuperType", super_type, type);
+                                         super_type + " SuperType",
+                                     super_type, type);
             }
         } else {
-            throw FactoryFailure("The SuperType " + super_type +
-                                 " is unknown.", super_type, type);
+            throw FactoryFailure("The SuperType " + super_type + " is unknown.",
+                                 super_type, type);
         }
     }
 };

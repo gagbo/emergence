@@ -31,7 +31,7 @@ MovementStrategyAlignment::compute_force(Ant* context) {
     // Compute the mean position
     int entity_count = 0;
     for (auto&& item : *context->visible_neighbours()) {
-        if (item->super_type_string == "Inert") {
+        if (item->super_type_name() == "Inert") {
             continue;
         }
         mean_velocity += QVector2D(item->velocity());
