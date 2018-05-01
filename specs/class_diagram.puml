@@ -132,7 +132,7 @@ class Ant {
 
 class Food
 
-abstract class MovementStrategy << Decorator >> {
+abstract class MovementStrategy << (D,#2222CC) Decorator >> {
 #QVector2D _applied_force
 
 +{abstract} void compute_force(Ant* context)
@@ -143,25 +143,32 @@ class MovementStrategyBase {
     +void compute_force(Ant* context)
 }
 
-abstract class MovementStrategyDecorator {
+abstract class MovementStrategyDecorator << (D,#2222CC) Decorator >> {
 #MovementStrategy* _wrappee
 
 +void compute_force(Ant* context)
 }
 
-class MovementStrategyCohesion {
+class MovementStrategyCohesion << (D,#2222CC) Decorator >> {
     #float _coef
 
     +void compute_force(Ant* context)
 }
 
-class MovementStrategySeparation {
+class MovementStrategySeparation << (D,#2222CC) Decorator >> {
+    #float _coef
+    #float _exp
+
+    +void compute_force(Ant* context)
+}
+
+class MovementStrategyAlignment << (D,#2222CC) Decorator >> {
     #float _coef
 
     +void compute_force(Ant* context)
 }
 
-class MovementStrategyAlignment {
+class MovementStrategyAllAlign << (D,#2222CC) Decorator >> {
     #float _coef
 
     +void compute_force(Ant* context)
@@ -255,6 +262,7 @@ MovementStrategy <|-- MovementStrategyDecorator
 MovementStrategyDecorator <|-- MovementStrategyCohesion
 MovementStrategyDecorator <|-- MovementStrategySeparation
 MovementStrategyDecorator <|-- MovementStrategyAlignment
+MovementStrategyDecorator <|-- MovementStrategyAllAlign
 
 MovementStrategyDecorator o-- MovementStrategy : component
 
