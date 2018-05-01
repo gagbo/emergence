@@ -151,8 +151,10 @@ Entity::get_friction_force() {
     linear_friction_force.normalize();
     float solid_friction = parent_world()->get_friction(_pos);
     linear_friction_force *= -1 * solid_friction;
+    // If the solid friction is too strong, cancel velocity and acceleration
     if (linear_friction_force.lengthSquared() >
         _mass * _mass * _acc.lengthSquared()) {
+        _vel *= 0;
         return -1 * _mass * _acc;
     }
 
