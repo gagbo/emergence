@@ -31,7 +31,7 @@ RoleAntExplorer::RoleAntExplorer() : RoleAnt() {
     RoleAnt::register_name("Explorer", this);
     delete _role_move_strategy;
     _role_move_strategy = new MovementStrategyAlignment( 1,
-        new MovementStrategySeparation( 6,
+        new MovementStrategySeparation(4, 2,
         new MovementStrategyCohesion( 0.01,
         new MovementStrategyBase())));
 }
