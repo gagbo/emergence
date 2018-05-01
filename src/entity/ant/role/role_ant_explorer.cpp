@@ -20,6 +20,7 @@
 
 #include "role_ant_explorer.h"
 #include "entity/movement_strategy/movement_strategy_alignment.h"
+#include "entity/movement_strategy/movement_strategy_all_align.h"
 #include "entity/movement_strategy/movement_strategy_base.h"
 #include "entity/movement_strategy/movement_strategy_cohesion.h"
 #include "entity/movement_strategy/movement_strategy_separation.h"
@@ -30,7 +31,7 @@ RoleAntExplorer::RoleAntExplorer() : RoleAnt() {
     _role_color = Qt::yellow;
     RoleAnt::register_name("Explorer", this);
     delete _role_move_strategy;
-    _role_move_strategy = new MovementStrategyAlignment( 1,
+    _role_move_strategy = new MovementStrategyAllAlign( 1,
         new MovementStrategySeparation(4, 2,
         new MovementStrategyCohesion( 0.01,
         new MovementStrategyBase())));

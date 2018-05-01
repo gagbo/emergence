@@ -154,7 +154,7 @@ class Entity : public QGraphicsItem {
     float _mass{1};                      //!< Mass of the Entity
     float _max_force{10};                 //!< Maximum force the
                                          //!< Entity can apply to move itself
-    float _linear_vel_friction_coef{10};  //!< friction coefficient
+    float _linear_vel_friction_coef{1e-3};  //!< friction coefficient
                                          //!< for linear velocity
     QColor _color{200, 0, 0, 255};       //!< Color
     float _life{100};
