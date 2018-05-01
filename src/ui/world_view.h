@@ -45,12 +45,8 @@ class WorldView : public QGraphicsView {
 
  public slots:
     void change_scale(float scale_factor);
-    inline void
-    reset_scale() {
-        scale(1 / xy_scale, 1 / xy_scale);
-        xy_scale = 1.0;
-        return;
-    }
+    void reset_scale();
+    void scale_to_see_all_items();
 
  protected:
  private:

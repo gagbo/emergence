@@ -72,7 +72,8 @@ World::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         float y = event->scenePos().y();
         emit message(QString("Clicked at (%1,%2)").arg(x).arg(y));
     } else if (pressed_button == Qt::MiddleButton) {
-        emit scale_reset();
+        // emit scale_reset();
+        emit see_all_items();
     }
     return;
 }

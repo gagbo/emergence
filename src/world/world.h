@@ -89,6 +89,9 @@ class World : public QGraphicsScene {
     //! Emit a signal to reset the scale of the view to 1:1
     void scale_reset(void);
 
+    //! Emit a signal to ask a view to see all its items
+    void see_all_items(void);
+
  protected:
     float _time_step{DEFAULT_TIMESTEP};  //!< Time step of the physics engine
     QColor _border_color{DEFAULT_BORDER_COLOR};  //!< Color of the border to

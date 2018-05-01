@@ -39,6 +39,8 @@ WorldView::WorldView(World& shown_world) {
             SLOT(change_scale(float)));
     connect(get_scene(), SIGNAL(scale_reset(void)), this,
             SLOT(reset_scale(void)));
+    connect(get_scene(), SIGNAL(see_all_items(void)), this,
+            SLOT(scale_to_see_all_items(void)));
 }
 
 WorldView::~WorldView() {}
@@ -47,5 +49,20 @@ void
 WorldView::change_scale(float scale_factor) {
     xy_scale *= scale_factor;
     scale(scale_factor, scale_factor);
+    return;
+}
+
+void
+WorldView::reset_scale() {
+    scale(1 / xy_scale, 1 / xy_scale);
+    xy_scale = 1.0;
+    return;
+}
+
+void
+WorldView::scale_to_see_all_items() {
+    scale(1 / xy_scale, 1 / xy_scale);
+    xy_scale = 1.0;
+    setSceneRect(get_scene()->itemsBoundingRect());
     return;
 }
