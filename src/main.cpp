@@ -28,6 +28,8 @@
 #include "ui/mainwindow.h"
 #include "world/world.h"
 
+void set_up_testing_env(World& basic_world);
+
 int
 main(int argc, char* argv[]) {
     std::cout << argv[0] << " Version " << EMERGENCE_VERSION_MAJOR << "."
@@ -51,6 +53,23 @@ main(int argc, char* argv[]) {
     basic_world.set_time_step(1.0f/60.0f);
     basic_world.disable_wrap_around();
     
+    set_up_testing_env(basic_world);
+
+    MainWindow mainWin(basic_world);
+    mainWin.show();
+
+    // Timer to trigger update, disabled for now
+    QTimer timer;
+    QObject::connect(&timer, SIGNAL(timeout()), mainWin.get_view()->get_scene(),
+                     SLOT(advance()));
+    timer.start(mainWin.get_view()->get_scene()->time_step());
+
+    return app.exec();
+}
+
+void
+set_up_testing_env(World& basic_world)
+{
     // Small test code of the World API. This will be moved after LivingEntities
     // are developed
     try {
@@ -77,6 +96,42 @@ main(int argc, char* argv[]) {
         qInfo() << e.qwhat();
     }
 
+    try {
+        basic_world.add_entity("living", "ant", QVector2D(1000, 50));
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
+    }
+
+    try {
+        basic_world.add_entity("living", "ant", QVector2D(-500, -150));
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
+    }
+
+    try {
+        basic_world.add_entity("living", "ant", QVector2D(-2000, 300));
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
+    }
+
+    try {
+        basic_world.add_entity("living", "ant", QVector2D(-1, 2));
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
+    }
+
+    try {
+        basic_world.add_entity("living", "ant", QVector2D(-25, 0));
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
+    }
+
+    try {
+        basic_world.add_entity("living", "ant", QVector2D(5, -18));
+    } catch (FactoryFailure& e) {
+        qInfo() << e.qwhat();
+    }
+
     // TODO : Move this code to the (future) test for the Factory
     try {
         basic_world.add_entity("inert", "foofdasfed");
@@ -89,15 +144,5 @@ main(int argc, char* argv[]) {
     } catch (FactoryFailure& e) {
         qInfo() << e.qwhat();
     }
-
-    MainWindow mainWin(basic_world);
-    mainWin.show();
-
-    // Timer to trigger update, disabled for now
-    QTimer timer;
-    QObject::connect(&timer, SIGNAL(timeout()), mainWin.get_view()->get_scene(),
-                     SLOT(advance()));
-    timer.start(mainWin.get_view()->get_scene()->time_step());
-
-    return app.exec();
+    return;
 }

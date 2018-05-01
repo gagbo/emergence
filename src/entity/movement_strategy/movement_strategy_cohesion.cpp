@@ -38,6 +38,7 @@ MovementStrategyCohesion::compute_force(Ant* context) {
     // Compute the Acceleration necessary to get there in one step
     target_velocity = (mean_position - QVector2D(context->position())) / dt;
     target_acceleration = (target_velocity - context->velocity()) / dt;
+    target_acceleration *= _coef;
 
     // Add the equivalent acceleration
     context->set_acceleration(context->acceleration() + target_acceleration);

@@ -19,3 +19,38 @@
  */
 
 #include "movement_strategy_alignment.h"
+#include "entity/ant/ant.h"
+
+void
+MovementStrategyAlignment::compute_force(Ant* context) {
+    QVector2D mean_velocity(0, 0);
+    QVector2D target_velocity(0, 0);
+    QVector2D target_acceleration(0, 0);
+    float dt = context->time_step();
+
+    // Compute the mean position
+    int entity_count = 0;
+    for (auto&& item : *context->visible_neighbours()) {
+        if (item->super_type_string == "Inert") {
+            continue;
+        }
+        mean_velocity += QVector2D(item->velocity());
+        ++entity_count;
+    }
+    if (entity_count == 0) {
+        _wrappee->compute_force(context);
+        return;
+    }
+
+    mean_velocity /= entity_count;
+
+    // Compute the Acceleration necessary to get there in one step
+    target_velocity = mean_velocity;
+    target_acceleration = (target_velocity - context->velocity()) / dt;
+    target_acceleration *= _coef;
+
+    // Add the equivalent acceleration
+    context->set_acceleration(context->acceleration() + target_acceleration);
+
+    _wrappee->compute_force(context);
+}
