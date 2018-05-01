@@ -31,12 +31,12 @@ MovementStrategyCohesion::compute_force(Ant* context) {
     // Compute the mean position
     int entity_count = context->neighbours()->size();
     for (auto&& item : *context->neighbours()) {
-        mean_position += QVector2D(item->pos());
+        mean_position += QVector2D(item->position());
     }
     mean_position /= entity_count;
 
     // Compute the Acceleration necessary to get there in one step
-    target_velocity = (mean_position - QVector2D(context->pos())) / dt;
+    target_velocity = (mean_position - QVector2D(context->position())) / dt;
     target_acceleration = (target_velocity - context->velocity()) / dt;
 
     // Add the equivalent acceleration
