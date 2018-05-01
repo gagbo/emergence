@@ -38,34 +38,55 @@ class LivingEntity : public Entity {
     //! Override necessary because of _vision
     virtual QRectF boundingRect() const override;
 
-    QPolygonF vision() const;
+    inline void
+    set_vision(QSharedPointer<QPolygonF> new_vision) {
+        // operator= handles the decrement of older reference count
+        _vision = new_vision;
+    }
+    inline void
+    set_vision(QWeakPointer<QPolygonF> new_vision) {
+        set_vision(new_vision.toStrongRef());
+    }
+
+    //! Return a constant reference to the vision of LivingEntity
+    /*! _vision should be non-null when we call this (although it
+     * can point to an empty QPolygonF)
+     */
+    const QPolygonF &vision() const;
     //! Return true if this world_pos is visible by LivingEntity
     virtual bool is_visible(const QPointF &world_pos) const;
 
     virtual void decide_acceleration();
 
-    inline void toggle_show_vision() {
+    inline void
+    toggle_show_vision() {
         _show_vision = !_show_vision;
     }
-    inline void disable_show_vision() {
+    inline void
+    disable_show_vision() {
         _show_vision = false;
     }
-    inline void enable_show_vision() {
+    inline void
+    enable_show_vision() {
         _show_vision = true;
     }
 
-    virtual ~LivingEntity() {
-        if (_vision) {
-            delete _vision;
-        }
-    };
+    virtual ~LivingEntity() { _vision.clear(); }
 
  protected:
     //! Vision polygon in Item coord
     /*! We look forward in the -y direction
-     *  all Entities must be centered on (0,0) for _vision to work
+     * all Entities must be centered on (0,0) for _vision to work
+     *
+     * _vision should not be left null, it WILL break when we use the
+     * vision() getter in other functionnalities
+     *
+     * TODO : consider a defaut construction of _vision.
+     * Currently we prefer keeping returning a const reference to QPolygonF
+     * in vision(), to avoid copies. However we are not able to simply return
+     * an empty QPolygonF built on stack with this signature.
      */
-    QPolygonF *_vision{nullptr};
+    QSharedPointer<QPolygonF> _vision{};
 
     bool _show_vision{true};
 };

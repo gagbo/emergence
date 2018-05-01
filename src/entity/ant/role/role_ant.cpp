@@ -70,7 +70,6 @@ RoleAnt::color() const {
     return _role_color;
 }
 
-const QPolygonF
-RoleAnt::vision() const {
-    return _role_vision;
+QWeakPointer<QPolygonF> RoleAnt::vision() const {
+    return _role_vision.toWeakRef();
 }

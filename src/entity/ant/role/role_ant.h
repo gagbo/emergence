@@ -50,19 +50,20 @@ class RoleAnt {
     const QColor color() const;
 
     //! Return vision of the current State
-    const QPolygonF vision() const;
+    QWeakPointer<QPolygonF> vision() const;
 
     virtual ~RoleAnt() {
         if (_role_move_strategy) {
             delete _role_move_strategy;
         }
+        _role_vision.clear();
     }
 
  protected:
     static RoleAnt* lookup(QString name);
 
     QColor _role_color{Qt::lightGray};
-    QPolygonF _role_vision{QRectF(-30, 0, 60, -60)};
+    QSharedPointer<QPolygonF> _role_vision{new QPolygonF(QRectF(-30, 0, 60, -60))};
     MovementStrategy* _role_move_strategy{nullptr};
 
  private:
