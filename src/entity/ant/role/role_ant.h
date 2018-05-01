@@ -63,7 +63,7 @@ class RoleAnt {
     static RoleAnt* lookup(QString name);
 
     QColor _role_color{Qt::lightGray};
-    QSharedPointer<QPolygonF> _role_vision{new QPolygonF(QRectF(-40, 0, 80, -100))};
+    QSharedPointer<QPolygonF> _role_vision{new QPolygonF(QRectF(-100, 20, 200, -300))};
     MovementStrategy* _role_move_strategy{nullptr};
 
  private:

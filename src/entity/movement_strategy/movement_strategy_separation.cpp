@@ -22,6 +22,8 @@
 #include <QtMath>
 #include "entity/ant/ant.h"
 
+#define POTENTIAL_WALL_DISTANCE (3e1)
+
 void
 MovementStrategySeparation::compute_force(Ant* context) {
     QVector2D target_velocity(0, 0);
@@ -45,7 +47,8 @@ MovementStrategySeparation::compute_force(Ant* context) {
         to_rival = QVector2D(item->position()) - QVector2D(context->position());
         weighted_diff = -1 * to_rival;
         dist = weighted_diff.length();
-        weighted_diff /= qPow((dist + 1e-10), _coef);
+        weighted_diff /=
+            qPow(qMax(1e-4, (double) dist - POTENTIAL_WALL_DISTANCE), _coef);
         neighbours_that_matter++;
 
         target_velocity += weighted_diff;
@@ -56,9 +59,10 @@ MovementStrategySeparation::compute_force(Ant* context) {
         return;
     }
 
+    target_velocity /= neighbours_that_matter;
+
     // Compute the Acceleration necessary to get there in one step
     target_acceleration = (target_velocity - context->velocity()) / dt;
-    target_acceleration *= _coef;
 
     // Add the equivalent acceleration
     context->set_acceleration(context->acceleration() + target_acceleration);

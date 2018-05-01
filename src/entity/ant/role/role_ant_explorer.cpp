@@ -30,9 +30,9 @@ RoleAntExplorer::RoleAntExplorer() : RoleAnt() {
     _role_color = Qt::yellow;
     RoleAnt::register_name("Explorer", this);
     delete _role_move_strategy;
-    _role_move_strategy = new MovementStrategyAlignment( 0.3,
-        new MovementStrategySeparation( 3,
-        new MovementStrategyCohesion( 0.5,
+    _role_move_strategy = new MovementStrategyAlignment( 1,
+        new MovementStrategySeparation( 6,
+        new MovementStrategyCohesion( 0.01,
         new MovementStrategyBase())));
 }
 

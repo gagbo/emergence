@@ -177,6 +177,7 @@ void
 Entity::update() {
     _vel += _acc * time_step();
     _pos += _vel * time_step();
+    _acc *= 0;
     update_scene_pos();
 }
 
