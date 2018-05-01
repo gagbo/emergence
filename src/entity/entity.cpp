@@ -142,7 +142,7 @@ Entity::decide_acceleration() {
 
 QVector2D
 Entity::get_friction_force() {
-    if (_vel.lengthSquared() < 1e-2) {
+    if (_vel.lengthSquared() < LOW_SPEED_THRESHOLD * LOW_SPEED_THRESHOLD) {
         return QVector2D(0, 0);
     }
 
