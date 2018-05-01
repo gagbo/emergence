@@ -72,7 +72,7 @@ class World {
     #void tick()
     #void tock()
 }
-note top: should probably rename tick and tock
+note top: should probably rename tick and tock. Or delete,\nsince advance() handles the clock
 
 abstract class Entity {
 #int _id
@@ -185,7 +185,7 @@ abstract class RoleAnt << State >> {
 +QWeakPointer<QPolygonF> vision()
 }
 
-class RoleAntExplorer << Singleton >> {
+class RoleAntExplorer << (S,#FF7700) Singleton >> {
     #{static} RoleAntExplorer* _instance
 
     +{static} RoleAnt* instance()
@@ -193,7 +193,7 @@ class RoleAntExplorer << Singleton >> {
     #RoleAntExplorer()
 }
 
-class RoleAntWorker <<Singleton >> {
+class RoleAntWorker << (S,#FF7700) Singleton >> {
     #{static} RoleAntWorker* _instance
 
     +{static} RoleAnt* instance()
@@ -205,11 +205,12 @@ class EntityFactory << Factory method >> {
     +{static} Entity* make_entity(QString super_type, QString type, ...)
 }
 note top of EntityFactory : Probably don't need inheritance here
-class LivingEntityFactory {
+
+class LivingEntityFactory << Factory method >> {
     +{static} make_entity(QString type, ...)
 }
 
-class InertEntityFactory {
+class InertEntityFactory << Factory method >> {
     +{static} make_entity(QString type, ...)
 }   
 
@@ -225,7 +226,7 @@ QGraphicsItem <|-- Entity
 WorldView --> "1" World : events
 World --> WorldView : signals
 
-World --> "0..*" Entity : update()
+World --> "0..*" Entity : advance()
 Entity --> World : items()
 World --> EntityFactory : add_entity()
 
