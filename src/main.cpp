@@ -62,7 +62,7 @@ main(int argc, char* argv[]) {
     QTimer timer;
     QObject::connect(&timer, SIGNAL(timeout()), mainWin.get_view()->get_scene(),
                      SLOT(advance()));
-    timer.start(mainWin.get_view()->get_scene()->time_step());
+    timer.start((int) (1000.0 * mainWin.get_view()->get_scene()->time_step()));
 
     return app.exec();
 }
@@ -144,5 +144,4 @@ set_up_testing_env(World& basic_world)
     } catch (FactoryFailure& e) {
         qInfo() << e.qwhat();
     }
-    return;
 }
