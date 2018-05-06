@@ -83,6 +83,10 @@ class World : public QGraphicsScene {
 
     //! Toggle the _show_visions of all LivingEntity contained
     void toggle_all_visions();
+    //! Enable the _show_visions of all LivingEntity contained
+    void enable_all_visions();
+    //! Disable the _show_visions of all LivingEntity contained
+    void disable_all_visions();
 
  signals:
     //! Emit a message to be read and/or printed by MainWindow

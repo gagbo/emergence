@@ -26,6 +26,7 @@ class TestWorld : public QObject {
  private slots:
     void add_food(void);
     void add_ant(void);
+    void test_toggle_vision(void);
 };
 
 void
@@ -84,6 +85,23 @@ TestWorld::add_ant(void) {
                              FactoryFailure);
     QVERIFY_EXCEPTION_THROWN(test_instance.add_entity("living", "fdsafe"),
                              FactoryFailure);
+}
+
+void TestWorld::test_toggle_vision(void) {
+    // Data
+    World test_instance;
+
+    // Test case insensitivity and passing arguments
+    const Entity* ant = test_instance.add_entity("Living", "Ant");
+
+    test_instance.enable_all_visions();
+    QVERIFY(ant->show_vision() == true);
+    test_instance.disable_all_visions();
+    QVERIFY(ant->show_vision() == false);
+    test_instance.toggle_all_visions();
+    QVERIFY(ant->show_vision() == true);
+    test_instance.toggle_all_visions();
+    QVERIFY(ant->show_vision() == false);
 }
 
 QTEST_MAIN(TestWorld)

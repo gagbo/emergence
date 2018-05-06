@@ -160,6 +160,10 @@ class Entity : public QGraphicsItem {
         _show_vision = true;
         return _show_vision;
     }
+    inline bool
+    show_vision() const {
+        return _show_vision;
+    }
 
  protected:
     int _id{-1};                            //!< Global Entity Id

@@ -102,6 +102,22 @@ World::toggle_all_visions() {
     }
 }
 
+void
+World::enable_all_visions() {
+    for (auto &&item : items()) {
+        auto cast_item = dynamic_cast<Entity *>(item);
+        cast_item->enable_show_vision();
+    }
+}
+
+void
+World::disable_all_visions() {
+    for (auto &&item : items()) {
+        auto cast_item = dynamic_cast<Entity *>(item);
+        cast_item->disable_show_vision();
+    }
+}
+
 float
 World::get_friction(QVector2D position) {
     // TODO Make a proper law one day that really depends on a map
