@@ -38,6 +38,8 @@ MainWindow::MainWindow(World& app_world, qint32 win_wid, qint32 win_hei)
 
     connect(_main_view->get_scene(), SIGNAL(message(QString)), this,
             SLOT(showMessage(QString)));
+    connect(_main_view.data(), SIGNAL(key_handled(QString)), this,
+            SLOT(showMessage(QString)));
 }
 
 void

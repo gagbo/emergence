@@ -43,10 +43,16 @@ class WorldView : public QGraphicsView {
     // TODO : Should perfect forward params
     void add_entity(QString super_type, QString type);
 
+    void keyPressEvent(QKeyEvent* event) override;
+
  public slots:
     void change_scale(float scale_factor);
     void reset_scale();
     void scale_to_see_all_items();
+
+ signals:
+    //! Emit a message to be read and/or printed by MainWindow
+    void key_handled(QString);
 
  protected:
  private:
