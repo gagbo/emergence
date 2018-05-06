@@ -145,17 +145,20 @@ class Entity : public QGraphicsItem {
     //! Arbitrarily set size of entity
     void set_size(QVector2D new_size);
 
-    inline void
+    inline bool
     toggle_show_vision() {
         _show_vision = !_show_vision;
+        return _show_vision;
     }
-    inline void
+    inline bool
     disable_show_vision() {
         _show_vision = false;
+        return _show_vision;
     }
-    inline void
+    inline bool
     enable_show_vision() {
         _show_vision = true;
+        return _show_vision;
     }
 
  protected:
