@@ -22,9 +22,7 @@
 
 const static QString super_type_value = "Living";
 
-LivingEntity::LivingEntity() : Entity() {
-    _super_type = super_type_value;
-}
+LivingEntity::LivingEntity() : Entity() { _super_type = super_type_value; }
 
 LivingEntity::LivingEntity(const QVector2D &position,
                            const QVector2D &init_speed)
@@ -68,6 +66,7 @@ LivingEntity::boundingRect() const {
     return Entity::boundingRect();
 }
 
-const QPolygonF& LivingEntity::vision() const {
+const QPolygonF &
+LivingEntity::vision() const {
     return *_vision.data();
 }

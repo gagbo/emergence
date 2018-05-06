@@ -79,6 +79,9 @@ class World : public QGraphicsScene {
     float time_step() const;
     void set_time_step(float dt);
 
+    //! Toggle the _show_visions of all LivingEntity contained
+    void toggle_all_visions();
+
  signals:
     //! Emit a message to be read and/or printed by MainWindow
     void message(QString);

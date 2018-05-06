@@ -112,8 +112,8 @@ class Entity : public QGraphicsItem {
     QString type_name() const;
     QString super_type_name() const;
 
-    QList<const Entity*> *neighbours() const;
-    QList<const Entity*> *visible_neighbours() const;
+    QList<const Entity *> *neighbours() const;
+    QList<const Entity *> *visible_neighbours() const;
 
     //! Arbitrarily set position of entity
     void set_position(QVector2D new_pos);
@@ -145,26 +145,53 @@ class Entity : public QGraphicsItem {
     //! Arbitrarily set size of entity
     void set_size(QVector2D new_size);
 
+    inline void
+    toggle_show_vision() {
+        _show_vision = !_show_vision;
+    }
+    inline void
+    disable_show_vision() {
+        _show_vision = false;
+    }
+    inline void
+    enable_show_vision() {
+        _show_vision = true;
+    }
+
  protected:
-    int _id{-1};                         //!< Global Entity Id
-    QVector2D _pos{0, 0};                //!< Position
-    QVector2D _vel{0, 0};                //!< Velocity
-    QVector2D _acc{0, 0};                //!< Acceleration
-    float _vel_angle{0};                 //!< Current angle of the velocity
-    float _mass{1};                      //!< Mass of the Entity
-    float _max_force{10};                 //!< Maximum force the
-                                         //!< Entity can apply to move itself
+    int _id{-1};                            //!< Global Entity Id
+    QVector2D _pos{0, 0};                   //!< Position
+    QVector2D _vel{0, 0};                   //!< Velocity
+    QVector2D _acc{0, 0};                   //!< Acceleration
+    float _vel_angle{0};                    //!< Current angle of the velocity
+    float _mass{1};                         //!< Mass of the Entity
+    float _max_force{10};                   //!< Maximum force the
+                                            //!< Entity can apply to move itself
     float _linear_vel_friction_coef{1e-3};  //!< friction coefficient
-                                         //!< for linear velocity
-    QColor _color{200, 0, 0, 255};       //!< Color
+                                            //!< for linear velocity
+    QColor _color{200, 0, 0, 255};          //!< Color
     float _life{100};
     QVector2D _size{20, 20};
-    QList<const Entity*> *_neighbours{new QList<const Entity*>};
-    QList<const Entity*> *_visible_neighbours{
-        new QList<const Entity*>};
+    bool _show_vision{true};
+    QList<const Entity *> *_neighbours{new QList<const Entity *>};
+    QList<const Entity *> *_visible_neighbours{new QList<const Entity *>};
 
     // TODO : check if still necessary with the static
     QString _super_type{"Undefined"};
     QString _type{"Undefined"};
+
+    //! Vision polygon in Item coord
+    /*! We look forward in the -y direction
+     * all Entities must be centered on (0,0) for _vision to work
+     *
+     * _vision should not be left null, it WILL break when we use the
+     * vision() getter in other functionnalities
+     *
+     * TODO : consider a defaut construction of _vision.
+     * Currently we prefer keeping returning a const reference to QPolygonF
+     * in vision(), to avoid copies. However we are not able to simply return
+     * an empty QPolygonF built on stack with this signature.
+     */
+    QSharedPointer<QPolygonF> _vision{};
 };
 #endif  // _ENTITY_ENTITY_H_

@@ -45,26 +45,28 @@ WorldView::WorldView(World& shown_world) {
 
 WorldView::~WorldView() {}
 
-void WorldView::keyPressEvent(QKeyEvent* event)
-{
-   /* TODO : List of wished mappings
-    * - a should add an ant at random position within view
-    * - f should add a food at random position
-    * - v should toggle vision for all entities
-    */
+void
+WorldView::keyPressEvent(QKeyEvent* event) {
+    /* TODO : List of wished mappings
+     * - a should add an ant at random position within view
+     * - f should add a food at random position
+     * - v should toggle vision for all entities
+     */
 
     switch (event->key()) {
-    case Qt::Key_A:
-        emit key_handled("User pressed A");
-        break;
-    case Qt::Key_F:
-        emit key_handled("User pressed F");
-        break;
-    case Qt::Key_V:
-        emit key_handled("User pressed V");
-        break;
-    default:
-        emit key_handled("User pressed " + event->text() + " - NOT HANDLED");
+        case Qt::Key_A:
+            emit key_handled("User pressed A");
+            break;
+        case Qt::Key_F:
+            emit key_handled("User pressed F");
+            break;
+        case Qt::Key_V:
+            emit key_handled("User pressed V");
+            get_scene()->toggle_all_visions();
+            break;
+        default:
+            emit key_handled("User pressed " + event->text() +
+                             " - NOT HANDLED");
     }
 }
 

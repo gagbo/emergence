@@ -56,37 +56,7 @@ class LivingEntity : public Entity {
 
     virtual void decide_acceleration();
 
-    inline void
-    toggle_show_vision() {
-        _show_vision = !_show_vision;
-    }
-    inline void
-    disable_show_vision() {
-        _show_vision = false;
-    }
-    inline void
-    enable_show_vision() {
-        _show_vision = true;
-    }
-
     virtual ~LivingEntity() { _vision.clear(); }
-
- protected:
-    //! Vision polygon in Item coord
-    /*! We look forward in the -y direction
-     * all Entities must be centered on (0,0) for _vision to work
-     *
-     * _vision should not be left null, it WILL break when we use the
-     * vision() getter in other functionnalities
-     *
-     * TODO : consider a defaut construction of _vision.
-     * Currently we prefer keeping returning a const reference to QPolygonF
-     * in vision(), to avoid copies. However we are not able to simply return
-     * an empty QPolygonF built on stack with this signature.
-     */
-    QSharedPointer<QPolygonF> _vision{};
-
-    bool _show_vision{true};
 };
 
 #endif  // _ENTITY_LIVING_ENTITY_H_

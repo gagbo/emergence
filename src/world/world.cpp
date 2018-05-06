@@ -94,6 +94,14 @@ World::set_time_step(float dt) {
     _time_step = dt;
 }
 
+void
+World::toggle_all_visions() {
+    for (auto &&item : items()) {
+        auto cast_item = dynamic_cast<Entity *>(item);
+        cast_item->toggle_show_vision();
+    }
+}
+
 float
 World::get_friction(QVector2D position) {
     // TODO Make a proper law one day that really depends on a map

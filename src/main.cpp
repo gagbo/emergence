@@ -34,6 +34,9 @@ int
 main(int argc, char* argv[]) {
     std::cout << argv[0] << " Version " << EMERGENCE_VERSION_MAJOR << "."
               << EMERGENCE_VERSION_MINOR << std::endl;
+    std::cout << "\n"
+                 "*********** Usage ************\n"
+                 "Hit [V] to toggle the vision of Entities in the window\n";
 
     srand(static_cast<unsigned>(time(nullptr)));
 
@@ -50,9 +53,9 @@ main(int argc, char* argv[]) {
     parser.process(app);
 
     World basic_world;
-    basic_world.set_time_step(1.0f/60.0f);
+    basic_world.set_time_step(1.0f / 60.0f);
     basic_world.disable_wrap_around();
-    
+
     set_up_testing_env(basic_world);
 
     MainWindow mainWin(basic_world);
@@ -62,14 +65,13 @@ main(int argc, char* argv[]) {
     QTimer timer;
     QObject::connect(&timer, SIGNAL(timeout()), mainWin.get_view()->get_scene(),
                      SLOT(advance()));
-    timer.start((int) (1000.0 * mainWin.get_view()->get_scene()->time_step()));
+    timer.start((int)(1000.0 * mainWin.get_view()->get_scene()->time_step()));
 
     return app.exec();
 }
 
 void
-set_up_testing_env(World& basic_world)
-{
+set_up_testing_env(World& basic_world) {
     // Small test code of the World API. This will be moved after LivingEntities
     // are developed
     try {
