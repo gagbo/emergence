@@ -48,17 +48,19 @@ class World : public QGraphicsScene {
     void render();
 
     //! Add an entity to the World
+    /**
+     * How can we manage ownership ? The method should return a WeakPointer
+     */
     template <typename... Ts>
-    bool
+    const Entity*
     add_entity(QString super_type, QString type, Ts &&... params) {
         Entity *p_entity = EntityFactory::make_entity(
             super_type, type, std::forward<Ts>(params)...);
-        if (p_entity == nullptr) {
-            return false;
-        }
         addItem(p_entity);
+        p_entity->set_id(_next_id);
+        _next_id++;
         p_entity->update();
-        return true;
+        return p_entity;
     }
 
     //! Get the friction coefficient for a position in the world
@@ -105,6 +107,7 @@ class World : public QGraphicsScene {
     QVector2D _size{DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT};
     float _time{0};
     QVector<QSharedPointer<Entity>> _agents{};
+    int _next_id{0}; //!< Next id to assign to Entity
 
     //! Draw a border around the World rectangle if the world wraps around
     /*! This is an overloaded method, the second parameter is not used.
