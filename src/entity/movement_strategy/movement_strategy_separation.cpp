@@ -22,8 +22,6 @@
 #include <QtMath>
 #include "entity/ant/ant.h"
 
-#define MINIMUM_SEPARATION (3e1)
-
 void
 MovementStrategySeparation::compute_force(Ant* context) {
     QVector2D target_velocity(0, 0);
@@ -47,7 +45,7 @@ MovementStrategySeparation::compute_force(Ant* context) {
         to_rival = QVector2D(item->position()) - QVector2D(context->position());
         weighted_diff = -1 * to_rival;
         dist = weighted_diff.length();
-        if (dist < MINIMUM_SEPARATION) {
+        if (dist < _dist) {
             weighted_diff.normalize();
             weighted_diff /= qPow(dist, _exp);
             neighbours_that_matter++;

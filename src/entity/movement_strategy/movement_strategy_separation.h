@@ -24,15 +24,19 @@
 
 class MovementStrategySeparation : public MovementStrategyDecorator {
  public:
-    MovementStrategySeparation(float coef, int exp,
+    MovementStrategySeparation(float coef, float dist, int exp,
                                MovementStrategy* wrappee = nullptr)
-        : MovementStrategyDecorator(wrappee), _coef(coef), _exp(exp) {}
+        : MovementStrategyDecorator(wrappee),
+          _coef(coef),
+          _dist(dist),
+          _exp(exp) {}
     void compute_force(Ant* context) override;
 
-    ~MovementStrategySeparation(){}
+    ~MovementStrategySeparation() {}
 
  protected:
     float _coef;
+    float _dist;
     int _exp;
 };
 #endif  // _ENTITY_MOVEMENT_STRATEGY_MOVEMENT_STRATEGY_SEPARATION_H_
