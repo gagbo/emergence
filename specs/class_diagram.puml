@@ -47,6 +47,7 @@ class WorldView {
 
     +World* get_scene()
     +void add_entity(...)
+    +void keyPressEvent(QKeyEvent* event)
     ~void change_scale(float scale_factor)
     ~void reset_scale()
 }
@@ -66,6 +67,9 @@ class World {
     +bool enable_wrap_around()
     +bool disable_wrap_around()
     +bool toggle_wrap_around()
+    +void enable_all_visions()
+    +void disable_all_visions()
+    +void toggle_all_visions()
     ~void message(QString)
     ~void scale_change(float)
     ~void scale_reset()
@@ -83,6 +87,7 @@ abstract class Entity {
 #float _mass
 #float _max_force
 #float _linear_vel_friction_coef
+#bool _show_vision
 #QColor _color
 #float _life
 #QVector2D _size
@@ -94,6 +99,9 @@ abstract class Entity {
 +void update_neighbourhood()
 +QVector2D get_friction_force()
 +void apply_friction_to_acceleration()
++void toggle_show_vision()
++void disable_show_vision()
++void enable_show_vision()
 +void update()
 +void update_scene_pos()
 +QString type_name()
@@ -102,7 +110,7 @@ abstract class Entity {
 
 abstract class LivingEntity {
 #QSharedPointer<QPolygonF> _vision
-#bool _show_vision
+
 
 +void update_neighbourhood()
 +QRectF boundingRect()
@@ -111,9 +119,6 @@ abstract class LivingEntity {
 +const QPolygonF& vision()
 +void set_vision(QSharedPointer<QPolygonF> new_vision)
 +void set_vision(QWeakPointer<QPolygonF> new_vision)
-+void toggle_show_vision()
-+void disable_show_vision()
-+void enable_show_vision()
 }
 
 abstract class InertEntity {
@@ -157,6 +162,7 @@ class MovementStrategyCohesion << (D,#2222CC) Decorator >> {
 
 class MovementStrategySeparation << (D,#2222CC) Decorator >> {
     #float _coef
+    #float _dist
     #float _exp
 
     +void compute_force(Ant* context)
@@ -211,7 +217,6 @@ class RoleAntWorker << (S,#FF7700) Singleton >> {
 class EntityFactory << Factory method >> {
     +{static} Entity* make_entity(QString super_type, QString type, ...)
 }
-note top of EntityFactory : Probably don't need inheritance here
 
 class LivingEntityFactory << Factory method >> {
     +{static} make_entity(QString type, ...)
@@ -236,9 +241,6 @@ World --> WorldView : signals
 World --> "0..*" Entity : advance()
 Entity --> World : items()
 World --> EntityFactory : add_entity()
-
-EntityFactory <|-- LivingEntityFactory
-EntityFactory <|-- InertEntityFactory
 
 EntityFactory --> LivingEntityFactory
 EntityFactory --> InertEntityFactory
