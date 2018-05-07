@@ -133,17 +133,4 @@ set_up_testing_env(World& basic_world) {
     } catch (FactoryFailure& e) {
         qInfo() << e.qwhat();
     }
-
-    // TODO : Move this code to the (future) test for the Factory
-    try {
-        basic_world.add_entity("inert", "foofdasfed");
-    } catch (FactoryFailure& e) {
-        qInfo() << e.qwhat();
-    }
-
-    try {
-        basic_world.add_entity("oops", "food");
-    } catch (FactoryFailure& e) {
-        qInfo() << e.qwhat();
-    }
 }
