@@ -36,7 +36,12 @@ main(int argc, char* argv[]) {
               << EMERGENCE_VERSION_MINOR << std::endl;
     std::cout << "\n"
                  "*********** Usage ************\n"
-                 "Hit [V] to toggle the vision of Entities in the window\n";
+                 "Hit [V] to toggle the vision of Entities in the window\n"
+                 "Hit [D] to disable the vision of Entities in the window\n"
+                 "Hit [E] to enable the vision of Entities in the window\n"
+                 "Hit [A] to add an Ant in a random position within view\n"
+                 "Hit [F] to add Food in a random position within view\n"
+                 ;
 
     srand(static_cast<unsigned>(time(nullptr)));
 
