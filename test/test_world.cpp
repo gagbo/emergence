@@ -237,12 +237,18 @@ TestWorld::test_vision_wrap_around_data(void) {
     QTest::newRow("Point in other x quadrant, true")
         << QVector2D(640, 480) << QVector2D(315, 220)
         << QRectF(-50, -50, 100, 100) << QPointF(-319, 239) << true;
+    QTest::newRow("Point in other x quadrant, true -- 2")
+        << QVector2D(640, 480) << QVector2D(-315, 220)
+        << QRectF(-50, -50, 100, 100) << QPointF(319, 239) << true;
     QTest::newRow("Point in other x quadrant, false")
         << QVector2D(640, 480) << QVector2D(315, 220)
         << QRectF(-50, -50, 100, 100) << QPointF(-24, 239) << false;
     QTest::newRow("Point in other y quadrant, true")
         << QVector2D(640, 480) << QVector2D(315, 220)
         << QRectF(-50, -50, 100, 100) << QPointF(308.0, -236.7) << true;
+    QTest::newRow("Point in other y quadrant, true -- 2")
+        << QVector2D(640, 480) << QVector2D(315, -220)
+        << QRectF(-50, -50, 100, 100) << QPointF(308.0, 236.7) << true;
     QTest::newRow("Point in other y quadrant, false")
         << QVector2D(640, 480) << QVector2D(315, 220)
         << QRectF(-50, -50, 100, 100) << QPointF(308.0, -150.0) << false;
