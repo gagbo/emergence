@@ -181,7 +181,7 @@ void TestWorld::test_wrap_around(void) {
     test_instance.set_size(world_size);
     test_instance.enable_wrap_around();
     test_instance.fix_position_for_wrap_around(initial_pos);
-    QCOMPARE(initial_pos, expected_pos);
+    QVERIFY(qFuzzyCompare(initial_pos, expected_pos));
 }
 
 QTEST_MAIN(TestWorld)
