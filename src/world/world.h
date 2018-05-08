@@ -79,7 +79,7 @@ class World : public QGraphicsScene {
     bool toggle_wrap_around();
 
     //! Return the current status for wrap_around
-    inline bool wrap_around() const;
+    bool wrap_around() const;
 
     //! Sets arbitrarily the size of the World (useful only with _wraps_around)
     void set_size(QVector2D new_size);
