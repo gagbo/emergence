@@ -40,8 +40,7 @@ main(int argc, char* argv[]) {
                  "Hit [D] to disable the vision of Entities in the window\n"
                  "Hit [E] to enable the vision of Entities in the window\n"
                  "Hit [A] to add an Ant in a random position within view\n"
-                 "Hit [F] to add Food in a random position within view\n"
-                 ;
+                 "Hit [F] to add Food in a random position within view\n";
 
     srand(static_cast<unsigned>(time(nullptr)));
 
@@ -70,7 +69,8 @@ main(int argc, char* argv[]) {
     QTimer timer;
     QObject::connect(&timer, SIGNAL(timeout()), mainWin.get_view()->get_scene(),
                      SLOT(advance()));
-    timer.start((int)(1000.0 * mainWin.get_view()->get_scene()->time_step()));
+    timer.start(static_cast<int>(1000.0f *
+                                 mainWin.get_view()->get_scene()->time_step()));
 
     return app.exec();
 }

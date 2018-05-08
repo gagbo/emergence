@@ -59,10 +59,10 @@ WorldView::keyPressEvent(QKeyEvent* event) {
      * widget.
      */
 
-    float dx = QRandomGenerator::global()->bounded(sceneRect().width());
-    float dy = QRandomGenerator::global()->bounded(sceneRect().height());
-    float pos_x = sceneRect().x() + dx;
-    float pos_y = sceneRect().y() + dy;
+    double dx = QRandomGenerator::global()->bounded(sceneRect().width());
+    double dy = QRandomGenerator::global()->bounded(sceneRect().height());
+    double pos_x = sceneRect().x() + dx;
+    double pos_y = sceneRect().y() + dy;
 
     switch (event->key()) {
         case Qt::Key_A:
@@ -94,7 +94,7 @@ WorldView::keyPressEvent(QKeyEvent* event) {
 }
 
 void
-WorldView::change_scale(float scale_factor) {
+WorldView::change_scale(double scale_factor) {
     xy_scale *= scale_factor;
     scale(scale_factor, scale_factor);
     return;
