@@ -48,11 +48,11 @@ class World : public QGraphicsScene {
     void render();
 
     //! Add an entity to the World
-    /**
+    /** TODO : Manage ownership of return pointer
      * How can we manage ownership ? The method should return a WeakPointer
      */
     template <typename... Ts>
-    const Entity *
+    Entity *
     add_entity(QString super_type, QString type, Ts &&... params) {
         Entity *p_entity = EntityFactory::make_entity(
             super_type, type, std::forward<Ts>(params)...);
