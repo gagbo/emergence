@@ -166,7 +166,63 @@ void TestWorld::test_wrap_around_data(void) {
             << QVector2D(640, 480)
             << QVector2D(1049.2f, -899.0f)
             << QVector2D(-230.8f, 61.0f);
-    // TODO : Make the same tests but with Floating point world dimensions
+
+    QTest::newRow("Floating size -- No work")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-25, 200.3f)
+            << QVector2D(-25, 200.3f);
+    QTest::newRow("Floating size -- 1 pass x+")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(345.2f, 200.3f)
+            << QVector2D(-294.8f - 0.5f, 200.3f);
+    QTest::newRow("Floating size -- multiple passes x+")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(1049.2f, 200.3f)
+            << QVector2D(-230.8f - 1.0f, 200.3f);
+    QTest::newRow("Floating size -- 1 pass x-")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-600.0f, 200.3f)
+            << QVector2D(40.0f+0.5f, 200.3f);
+    QTest::newRow("Floating size -- multiple passes x-")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-1240.0f, 200.3f)
+            << QVector2D(40.0f+1.0f, 200.3f);
+    QTest::newRow("Floating size -- 1 pass y+")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-25.0f, 250.3f)
+            << QVector2D(-25.0f, -229.7f -0.5f);
+    QTest::newRow("Floating size -- multiple passes y+")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-25.0f, 899.0f)
+            << QVector2D(-25.0f, -61.0f - 1.0f);
+    QTest::newRow("Floating size -- 1 pass y-")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-25.0f, -490.3f)
+            << QVector2D(-25.0f, -10.3f + 0.5f);
+    QTest::newRow("Floating size -- multiple passes y-")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-25.0f, -899.0f)
+            << QVector2D(-25.0f, 61.0f + 1.0f);
+    QTest::newRow("Floating size -- 1 pass x+, y-")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(345.2f, -490.3f)
+            << QVector2D(-294.8f -0.5f, -10.3f + 0.5f);
+    QTest::newRow("Floating size -- 1 pass x-, y+")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-600.0f, 250.3f)
+            << QVector2D(40.0f + 0.5f, -229.7f -0.5f);
+    QTest::newRow("Floating size -- multiple passes x-, 1 pass y+")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-1240.0f, 250.3f)
+            << QVector2D(40.0f + 1.0f, -229.7f -0.5f);
+    QTest::newRow("Floating size -- 1 pass x-, multiple passes y+")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(-600.0f, 899.0f)
+            << QVector2D(40.0f + 0.5f, -61.0f - 1.0f);
+    QTest::newRow("Floating size -- multiple passes x+, multiple passes y-")
+            << QVector2D(640.5f, 480.5f)
+            << QVector2D(1049.2f, -899.0f)
+            << QVector2D(-230.8f -1.0f, 61.0f + 1.0f);
 }
 
 void TestWorld::test_wrap_around(void) {
