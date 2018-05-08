@@ -215,8 +215,32 @@ Entity::is_visible(const QPointF &world_pos) const {
         return false;
     }
 
-    // FIXME : Needs a fix when world wraps around
-    return vision().containsPoint(mapFromScene(world_pos), Qt::OddEvenFill);
+    if (!parent_world()->wrap_around()) {
+        return vision().containsPoint(mapFromScene(world_pos), Qt::OddEvenFill);
+    } else { /* Test all "fictive" positions around the borders, return true if
+                it exists */
+        QVector2D fictive_offset;
+        if (world_pos.x() < 0 && _pos.x() >= 0) {
+            fictive_offset += QVector2D(parent_world()->size().x(), 0);
+        }
+        if (world_pos.x() >= 0 && _pos.x() < 0) {
+            fictive_offset -= QVector2D(parent_world()->size().x(), 0);
+        }
+        if (world_pos.y() < 0 && _pos.y() >= 0) {
+            fictive_offset += QVector2D(0, parent_world()->size().y());
+        }
+        if (world_pos.y() >= 0 && _pos.y() < 0) {
+            fictive_offset -= QVector2D(0, parent_world()->size().y());
+        }
+
+        QPointF fictive_world_pos;
+        fictive_world_pos.setX(world_pos.x() +
+                               static_cast<double>(fictive_offset.x()));
+        fictive_world_pos.setY(world_pos.y() +
+                               static_cast<double>(fictive_offset.y()));
+        return vision().containsPoint(mapFromScene(fictive_world_pos),
+                                      Qt::OddEvenFill);
+    }
 }
 
 const QPolygonF &
