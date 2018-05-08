@@ -30,6 +30,7 @@
 Entity::~Entity() {
     _visible_neighbours->clear();
     _neighbours->clear();
+    _vision.clear();
 
     delete _visible_neighbours;
     delete _neighbours;
@@ -174,6 +175,7 @@ void
 Entity::update() {
     _vel += _acc * time_step();
     _pos += _vel * time_step();
+    parent_world()->fix_position_for_wrap_around(_pos);
     _acc *= 0;
     update_scene_pos();
 }
@@ -201,7 +203,49 @@ Entity::update_neighbourhood() {
 
     for (auto &&item : parent_world()->items()) {
         _neighbours->append(dynamic_cast<const Entity *>(item));
+        if (is_visible(item->pos())) {
+            _visible_neighbours->append(dynamic_cast<const Entity*>(item));
+        }
     }
+}
+
+bool
+Entity::is_visible(const QPointF &world_pos) const {
+    if (_vision.isNull()) {
+        return false;
+    }
+
+    if (!parent_world()->wrap_around()) {
+        return vision().containsPoint(mapFromScene(world_pos), Qt::OddEvenFill);
+    } else { /* Test all "fictive" positions around the borders, return true if
+                it exists */
+        QVector2D fictive_offset;
+        if (world_pos.x() < 0 && _pos.x() >= 0) {
+            fictive_offset += QVector2D(parent_world()->size().x(), 0);
+        }
+        if (world_pos.x() >= 0 && _pos.x() < 0) {
+            fictive_offset -= QVector2D(parent_world()->size().x(), 0);
+        }
+        if (world_pos.y() < 0 && _pos.y() >= 0) {
+            fictive_offset += QVector2D(0, parent_world()->size().y());
+        }
+        if (world_pos.y() >= 0 && _pos.y() < 0) {
+            fictive_offset -= QVector2D(0, parent_world()->size().y());
+        }
+
+        QPointF fictive_world_pos;
+        fictive_world_pos.setX(world_pos.x() +
+                               static_cast<double>(fictive_offset.x()));
+        fictive_world_pos.setY(world_pos.y() +
+                               static_cast<double>(fictive_offset.y()));
+        return vision().containsPoint(mapFromScene(fictive_world_pos),
+                                      Qt::OddEvenFill);
+    }
+}
+
+const QPolygonF &
+Entity::vision() const {
+    return *_vision.data();
 }
 
 void
@@ -215,6 +259,12 @@ Entity::update_scene_pos() {
 
 QRectF
 Entity::boundingRect() const {
+    if (!_vision.isNull() && _show_vision && !vision().isEmpty()) {
+        // We add margins to the bounding Rect of Vision so it extends behind
+        // itself, theoretically covering the back of the Ant
+        return _vision->boundingRect().marginsAdded(
+            QMarginsF(0, 0, 0, _vision->boundingRect().height()));
+    }
     return QRectF(-_size.x() / 2, -_size.y() / 2, _size.x(), _size.y());
 }
 

@@ -42,17 +42,17 @@ class World : public QGraphicsScene {
     World();
 
     //! Destructor
-    ~World();
+    ~World() override;
 
     //! Render the World for QGraphicsView
     void render();
 
     //! Add an entity to the World
-    /**
+    /** TODO : Manage ownership of return pointer
      * How can we manage ownership ? The method should return a WeakPointer
      */
     template <typename... Ts>
-    const Entity*
+    Entity *
     add_entity(QString super_type, QString type, Ts &&... params) {
         Entity *p_entity = EntityFactory::make_entity(
             super_type, type, std::forward<Ts>(params)...);
@@ -77,6 +77,24 @@ class World : public QGraphicsScene {
 
     //! Toggle wraps_around and return the new current value
     bool toggle_wrap_around();
+
+    //! Return the current status for wrap_around
+    bool wrap_around() const;
+
+    //! Sets arbitrarily the size of the World (useful only with _wraps_around)
+    void set_size(QVector2D new_size);
+
+    //! Return the current size of the World (useful only with _wraps_around)
+    QVector2D size() const;
+
+    /*!
+     * @brief fix_position_for_wrap_around Ensure that old_position is within
+     * the rectangle centered in (0;0) and with dimensions _size, ONLY if
+     * _wraps_around is set
+     * @param [in,out] old_position is the position to be modified in order to
+     * fit the requirement
+     */
+    void fix_position_for_wrap_around(QVector2D &old_position) const;
 
     float time_step() const;
     void set_time_step(float dt);
@@ -111,7 +129,7 @@ class World : public QGraphicsScene {
     QVector2D _size{DEFAULT_WORLD_WIDTH, DEFAULT_WORLD_HEIGHT};
     float _time{0};
     QVector<QSharedPointer<Entity>> _agents{};
-    int _next_id{0}; //!< Next id to assign to Entity
+    int _next_id{0};  //!< Next id to assign to Entity
 
     //! Draw a border around the World rectangle if the world wraps around
     /*! This is an overloaded method, the second parameter is not used.

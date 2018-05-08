@@ -34,39 +34,3 @@ void
 LivingEntity::decide_acceleration() {
     _acc = QVector2D(0.0f, 0.0f);
 }
-
-void
-LivingEntity::update_neighbourhood() {
-    Entity::update_neighbourhood();
-
-    for (auto &&item : *_neighbours) {
-        if (is_visible(item->pos())) {
-            _visible_neighbours->append(item);
-        }
-    }
-}
-
-bool
-LivingEntity::is_visible(const QPointF &world_pos) const {
-    if (_vision.isNull()) {
-        return false;
-    }
-
-    return vision().containsPoint(mapFromScene(world_pos), Qt::OddEvenFill);
-}
-
-QRectF
-LivingEntity::boundingRect() const {
-    if (_show_vision && !vision().isEmpty()) {
-        // We add margins to the bounding Rect of Vision so it extends behind
-        // itself, theoretically covering the back of the Ant
-        return _vision->boundingRect().marginsAdded(
-            QMarginsF(0, 0, 0, _vision->boundingRect().height()));
-    }
-    return Entity::boundingRect();
-}
-
-const QPolygonF &
-LivingEntity::vision() const {
-    return *_vision.data();
-}

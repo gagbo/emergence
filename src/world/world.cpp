@@ -39,6 +39,42 @@ bool
 World::toggle_wrap_around() {
     return (_wraps_around = !_wraps_around);
 }
+
+bool
+World::wrap_around() const {
+    return _wraps_around;
+}
+
+void
+World::set_size(QVector2D new_size) {
+    _size = new_size;
+}
+
+QVector2D
+World::size() const {
+    return _size;
+}
+
+void
+World::fix_position_for_wrap_around(QVector2D &old_position) const {
+    if (!_wraps_around) {
+        return;
+    }
+
+    while (old_position.x() < -_size.x() / 2) {
+        old_position.setX(old_position.x() + _size.x());
+    }
+    while (old_position.x() >= _size.x() / 2) {
+        old_position.setX(old_position.x() - _size.x());
+    }
+    while (old_position.y() < -_size.y() / 2) {
+        old_position.setY(old_position.y() + _size.y());
+    }
+    while (old_position.y() >= _size.y() / 2) {
+        old_position.setY(old_position.y() - _size.y());
+    }
+}
+
 bool
 World::disable_wrap_around() {
     return (_wraps_around = false);
@@ -51,6 +87,17 @@ World::enable_wrap_around() {
 void
 World::drawForeground(QPainter *painter, const QRectF &rect) {
     if (!_wraps_around) {
+        /* FIXME : The border does not disappear
+         * The border does not disappear when we disable the wrap_around after
+         * having enabled it before.
+         *
+         * This is because in this branch we make no
+         * effort to erase a former foreGround created to show the borders.
+         *
+         * Is it the responsibility of drawForeground to erase an old Foreground
+         * or should WorldView be aware and redraw background over the border at
+         * each update ?
+         */
         return;
     }
     (void)rect;  // We are not using the inherited parameter

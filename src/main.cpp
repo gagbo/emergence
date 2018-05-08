@@ -36,6 +36,7 @@ main(int argc, char* argv[]) {
               << EMERGENCE_VERSION_MINOR << std::endl;
     std::cout << "\n"
                  "*********** Usage ************\n"
+                 "Hit [W] to toggle finite/infinite World (wrapping around)\n"
                  "Hit [V] to toggle the vision of Entities in the window\n"
                  "Hit [D] to disable the vision of Entities in the window\n"
                  "Hit [E] to enable the vision of Entities in the window\n"

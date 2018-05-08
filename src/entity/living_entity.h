@@ -30,12 +30,6 @@ class LivingEntity : public Entity {
     LivingEntity(const QVector2D &position,
                  const QVector2D &init_speed = QVector2D(0, 0));
 
-    //! Override necessary because of _vision
-    void update_neighbourhood() override;
-
-    //! Override necessary because of _vision
-    virtual QRectF boundingRect() const override;
-
     inline void
     set_vision(QSharedPointer<QPolygonF> new_vision) {
         // operator= handles the decrement of older reference count
@@ -46,17 +40,9 @@ class LivingEntity : public Entity {
         set_vision(new_vision.toStrongRef());
     }
 
-    //! Return a constant reference to the vision of LivingEntity
-    /*! _vision should be non-null when we call this (although it
-     * can point to an empty QPolygonF)
-     */
-    const QPolygonF &vision() const;
-    //! Return true if this world_pos is visible by LivingEntity
-    virtual bool is_visible(const QPointF &world_pos) const;
+    virtual void decide_acceleration() override;
 
-    virtual void decide_acceleration();
-
-    virtual ~LivingEntity() { _vision.clear(); }
+    virtual ~LivingEntity() override {}
 };
 
 #endif  // _ENTITY_LIVING_ENTITY_H_
