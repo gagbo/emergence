@@ -46,12 +46,14 @@ LivingEntity::update_neighbourhood() {
     }
 }
 
+// TODO : This method should go up in Entity base class
 bool
 LivingEntity::is_visible(const QPointF &world_pos) const {
     if (_vision.isNull()) {
         return false;
     }
 
+    // FIXME : Needs a fix when world wraps around
     return vision().containsPoint(mapFromScene(world_pos), Qt::OddEvenFill);
 }
 

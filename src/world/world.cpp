@@ -39,6 +39,42 @@ bool
 World::toggle_wrap_around() {
     return (_wraps_around = !_wraps_around);
 }
+
+bool
+World::wrap_around() const {
+    return _wraps_around;
+}
+
+void
+World::set_size(QVector2D new_size) {
+    _size = new_size;
+}
+
+QVector2D
+World::size() const {
+    return _size;
+}
+
+void
+World::fix_position_for_wrap_around(QVector2D &old_position) const {
+    if (!_wraps_around) {
+        return;
+    }
+
+    while (old_position.x() < -_size.x() / 2) {
+        old_position[0] += _size.x();
+    }
+    while (old_position.x() >= _size.x() / 2) {
+        old_position[0] -= _size.x();
+    }
+    while (old_position.y() < -_size.y() / 2) {
+        old_position[1] += _size.y();
+    }
+    while (old_position.y() >= _size.y() / 2) {
+        old_position[1] -= _size.y();
+    }
+}
+
 bool
 World::disable_wrap_around() {
     return (_wraps_around = false);

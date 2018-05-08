@@ -27,6 +27,8 @@ class TestWorld : public QObject {
     void add_food(void);
     void add_ant(void);
     void test_toggle_vision(void);
+    void test_wrap_around(void);
+    void test_wrap_around_data(void);
 };
 
 void
@@ -38,18 +40,18 @@ TestWorld::add_food(void) {
     QVERIFY(test_instance.add_entity("Inert", "Food") != nullptr);
     QVERIFY(test_instance.add_entity("Inert", "Food", QVector2D(22, 35)) !=
             nullptr);
-    QVERIFY(test_instance.add_entity("Inert", "Food", QVector2D(-3.2, 21),
-                                     QVector2D(24.1, 1e-2)) != nullptr);
+    QVERIFY(test_instance.add_entity("Inert", "Food", QVector2D(-3.2f, 21),
+                                     QVector2D(24.1f, 1e-2f)) != nullptr);
     QVERIFY(test_instance.add_entity("inert", "food") != nullptr);
     QVERIFY(test_instance.add_entity("inert", "food", QVector2D(22, 35)) !=
             nullptr);
-    QVERIFY(test_instance.add_entity("inert", "food", QVector2D(-3.2, 21),
-                                     QVector2D(24.1, 1e-2)) != nullptr);
+    QVERIFY(test_instance.add_entity("inert", "food", QVector2D(-3.2f, 21),
+                                     QVector2D(24.1f, 1e-2f)) != nullptr);
     QVERIFY(test_instance.add_entity("InErt", "FooD") != nullptr);
     QVERIFY(test_instance.add_entity("InErt", "FooD", QVector2D(22, 35)) !=
             nullptr);
-    QVERIFY(test_instance.add_entity("InErt", "FooD", QVector2D(-3.2, 21),
-                                     QVector2D(24.1, 1e-2)) != nullptr);
+    QVERIFY(test_instance.add_entity("InErt", "FooD", QVector2D(-3.2f, 21),
+                                     QVector2D(24.1f, 1e-2f)) != nullptr);
 
     // Test exception in case of bad type and super type
     QVERIFY_EXCEPTION_THROWN(test_instance.add_entity("fdasdfas", "food"),
@@ -67,18 +69,18 @@ TestWorld::add_ant(void) {
     QVERIFY(test_instance.add_entity("Living", "Ant") != nullptr);
     QVERIFY(test_instance.add_entity("Living", "Ant", QVector2D(22, 35)) !=
             nullptr);
-    QVERIFY(test_instance.add_entity("Living", "Ant", QVector2D(-3.2, 21),
-                                     QVector2D(24.1, 1e-2)) != nullptr);
+    QVERIFY(test_instance.add_entity("Living", "Ant", QVector2D(-3.2f, 21),
+                                     QVector2D(24.1f, 1e-2f)) != nullptr);
     QVERIFY(test_instance.add_entity("living", "ant") != nullptr);
     QVERIFY(test_instance.add_entity("living", "ant", QVector2D(22, 35)) !=
             nullptr);
-    QVERIFY(test_instance.add_entity("living", "ant", QVector2D(-3.2, 21),
-                                     QVector2D(24.1, 1e-2)) != nullptr);
+    QVERIFY(test_instance.add_entity("living", "ant", QVector2D(-3.2f, 21),
+                                     QVector2D(24.1f, 1e-2f)) != nullptr);
     QVERIFY(test_instance.add_entity("liVinG", "aNt") != nullptr);
     QVERIFY(test_instance.add_entity("liVinG", "aNt", QVector2D(22, 35)) !=
             nullptr);
-    QVERIFY(test_instance.add_entity("liVinG", "aNt", QVector2D(-3.2, 21),
-                                     QVector2D(24.1, 1e-2)) != nullptr);
+    QVERIFY(test_instance.add_entity("liVinG", "aNt", QVector2D(-3.2f, 21),
+                                     QVector2D(24.1f, 1e-2f)) != nullptr);
 
     // Test exception in case of bad type and super type
     QVERIFY_EXCEPTION_THROWN(test_instance.add_entity("fdasdfas", "ant"),
@@ -87,11 +89,10 @@ TestWorld::add_ant(void) {
                              FactoryFailure);
 }
 
-void TestWorld::test_toggle_vision(void) {
+void
+TestWorld::test_toggle_vision(void) {
     // Data
     World test_instance;
-
-    // Test case insensitivity and passing arguments
     const Entity* ant = test_instance.add_entity("Living", "Ant");
 
     test_instance.enable_all_visions();
@@ -102,6 +103,85 @@ void TestWorld::test_toggle_vision(void) {
     QVERIFY(ant->show_vision() == true);
     test_instance.toggle_all_visions();
     QVERIFY(ant->show_vision() == false);
+}
+
+void TestWorld::test_wrap_around_data(void) {
+    QTest::addColumn<QVector2D>("world_size");
+    QTest::addColumn<QVector2D>("initial_pos");
+    QTest::addColumn<QVector2D>("expected_pos");
+
+    QTest::newRow("Integer  size -- No work")
+            << QVector2D(640, 480)
+            << QVector2D(-25, 200.3f)
+            << QVector2D(-25, 200.3f);
+    QTest::newRow("Integer  size -- 1 pass x+")
+            << QVector2D(640, 480)
+            << QVector2D(345.2f, 200.3f)
+            << QVector2D(-294.8f, 200.3f);
+    QTest::newRow("Integer  size -- multiple passes x+")
+            << QVector2D(640, 480)
+            << QVector2D(1049.2f, 200.3f)
+            << QVector2D(-230.8f, 200.3f);
+    QTest::newRow("Integer  size -- 1 pass x-")
+            << QVector2D(640, 480)
+            << QVector2D(-600.0f, 200.3f)
+            << QVector2D(40.0f, 200.3f);
+    QTest::newRow("Integer  size -- multiple passes x-")
+            << QVector2D(640, 480)
+            << QVector2D(-1240.0f, 200.3f)
+            << QVector2D(40.0f, 200.3f);
+    QTest::newRow("Integer  size -- 1 pass y+")
+            << QVector2D(640, 480)
+            << QVector2D(-25.0f, 250.3f)
+            << QVector2D(-25.0f, -229.7f);
+    QTest::newRow("Integer  size -- multiple passes y+")
+            << QVector2D(640, 480)
+            << QVector2D(-25.0f, 899.0f)
+            << QVector2D(-25.0f, -61.0f);
+    QTest::newRow("Integer  size -- 1 pass y-")
+            << QVector2D(640, 480)
+            << QVector2D(-25.0f, -490.3f)
+            << QVector2D(-25.0f, -10.3f);
+    QTest::newRow("Integer  size -- multiple passes y-")
+            << QVector2D(640, 480)
+            << QVector2D(-25.0f, -899.0f)
+            << QVector2D(-25.0f, 61.0f);
+    QTest::newRow("Integer  size -- 1 pass x+, y-")
+            << QVector2D(640, 480)
+            << QVector2D(345.2f, -490.3f)
+            << QVector2D(-294.8f, -10.3f);
+    QTest::newRow("Integer  size -- 1 pass x-, y+")
+            << QVector2D(640, 480)
+            << QVector2D(-600.0f, 250.3f)
+            << QVector2D(40.0f, -229.7f);
+    QTest::newRow("Integer  size -- multiple passes x-, 1 pass y+")
+            << QVector2D(640, 480)
+            << QVector2D(-1240.0f, 250.3f)
+            << QVector2D(40.0f, -229.7f);
+    QTest::newRow("Integer  size -- 1 pass x-, multiple passes y+")
+            << QVector2D(640, 480)
+            << QVector2D(-600.0f, 899.0f)
+            << QVector2D(40.0f, -61.0f);
+    QTest::newRow("Integer  size -- multiple passes x+, multiple passes y-")
+            << QVector2D(640, 480)
+            << QVector2D(1049.2f, -899.0f)
+            << QVector2D(-230.8f, 61.0f);
+    // TODO : Make the same tests but with Floating point world dimensions
+}
+
+void TestWorld::test_wrap_around(void) {
+    // Data
+    World test_instance;
+    QFETCH(QVector2D, world_size);
+    QFETCH(QVector2D, initial_pos);
+    QFETCH(QVector2D, expected_pos);
+
+
+    // Test
+    test_instance.set_size(world_size);
+    test_instance.enable_wrap_around();
+    test_instance.fix_position_for_wrap_around(initial_pos);
+    QCOMPARE(initial_pos, expected_pos);
 }
 
 QTEST_MAIN(TestWorld)

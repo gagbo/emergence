@@ -91,6 +91,10 @@ WorldView::keyPressEvent(QKeyEvent* event) {
             emit key_handled("(E) Enable vision drawing - Revert with D");
             get_scene()->enable_all_visions();
             break;
+        case Qt::Key_W:
+            emit key_handled("(W) Toggle World Wrap Around");
+            get_scene()->toggle_wrap_around();
+            break;
         default:
             emit key_handled("User pressed " + event->text() +
                              " - NOT HANDLED");

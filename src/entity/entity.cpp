@@ -174,6 +174,7 @@ void
 Entity::update() {
     _vel += _acc * time_step();
     _pos += _vel * time_step();
+    parent_world()->fix_position_for_wrap_around(_pos);
     _acc *= 0;
     update_scene_pos();
 }
