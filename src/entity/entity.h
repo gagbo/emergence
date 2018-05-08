@@ -45,7 +45,7 @@ class Entity : public QGraphicsItem {
            const QVector2D &init_speed = QVector2D(0, 0));
 
     /////////////// Destructor
-    virtual ~Entity();
+    virtual ~Entity() override;
 
     /////////////// Misc. Methods
 
@@ -145,6 +145,20 @@ class Entity : public QGraphicsItem {
     //! Arbitrarily set size of entity
     void set_size(QVector2D new_size);
 
+    //! Return a constant reference to the vision of Entity
+    /*! _vision should be non-null when we call this (although it
+     * can point to an empty QPolygonF)
+     */
+    const QPolygonF &vision() const;
+
+    /*!
+     * \brief is_visible return true if this world_pos is visible by Entity
+     * \param [in] world_pos the position in World coordinates
+     * \return true if the position is in _vision.
+     * Note : the method handled properly the cases where _vision points nowhere
+     */
+    virtual bool is_visible(const QPointF &world_pos) const;
+
     inline bool
     toggle_show_vision() {
         _show_vision = !_show_vision;
@@ -187,17 +201,17 @@ class Entity : public QGraphicsItem {
     QString _super_type{"Undefined"};
     QString _type{"Undefined"};
 
+    /* TODO : consider a defaut construction of _vision.
+     * Currently we prefer keeping returning a const reference to QPolygonF
+     * in vision(), to avoid copies. However we are not able to simply return
+     * an empty QPolygonF built on stack with this signature.
+     */
     //! Vision polygon in Item coord
     /*! We look forward in the -y direction
      * all Entities must be centered on (0,0) for _vision to work
      *
      * _vision should not be left null, it WILL break when we use the
      * vision() getter in other functionnalities
-     *
-     * TODO : consider a defaut construction of _vision.
-     * Currently we prefer keeping returning a const reference to QPolygonF
-     * in vision(), to avoid copies. However we are not able to simply return
-     * an empty QPolygonF built on stack with this signature.
      */
     QSharedPointer<QPolygonF> _vision{};
 };

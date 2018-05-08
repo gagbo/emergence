@@ -30,6 +30,7 @@
 Entity::~Entity() {
     _visible_neighbours->clear();
     _neighbours->clear();
+    _vision.clear();
 
     delete _visible_neighbours;
     delete _neighbours;
@@ -203,6 +204,21 @@ Entity::update_neighbourhood() {
     for (auto &&item : parent_world()->items()) {
         _neighbours->append(dynamic_cast<const Entity *>(item));
     }
+}
+
+bool
+Entity::is_visible(const QPointF &world_pos) const {
+    if (_vision.isNull()) {
+        return false;
+    }
+
+    // FIXME : Needs a fix when world wraps around
+    return vision().containsPoint(mapFromScene(world_pos), Qt::OddEvenFill);
+}
+
+const QPolygonF &
+Entity::vision() const {
+    return *_vision.data();
 }
 
 void
