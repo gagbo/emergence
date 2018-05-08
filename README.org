@@ -51,6 +51,10 @@ make install
 ./install/bin/emergence
 #+END_SRC
 
+Current mappings are printed on STDOUT when launching the simulation. (Menu
+is only eye candy and non-functional, use the keyboard and the mouse to
+interact)
+
 * Acknowledgements
 I would like to thank Jesus Alvarez (@demizer) for providing an easy to find
 specifications template.
