@@ -49,7 +49,7 @@ class Entity : public QGraphicsItem {
 
     /////////////// Misc. Methods
 
-    //! Give an approximate bounding rectangle for the Ant
+    //! Give an approximate bounding rectangle for the Entity
     virtual QRectF boundingRect() const override;
 
     //! Give the shape of the Entity for collision detection
@@ -150,6 +150,11 @@ class Entity : public QGraphicsItem {
      * can point to an empty QPolygonF)
      */
     const QPolygonF &vision() const;
+
+    void set_vision(const QSharedPointer<QPolygonF>& new_vision) {
+        _vision.clear();
+        _vision = QSharedPointer<QPolygonF>(new_vision);
+    }
 
     /*!
      * \brief is_visible return true if this world_pos is visible by Entity

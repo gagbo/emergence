@@ -203,6 +203,9 @@ Entity::update_neighbourhood() {
 
     for (auto &&item : parent_world()->items()) {
         _neighbours->append(dynamic_cast<const Entity *>(item));
+        if (is_visible(item->pos())) {
+            _visible_neighbours->append(dynamic_cast<const Entity*>(item));
+        }
     }
 }
 
@@ -232,6 +235,12 @@ Entity::update_scene_pos() {
 
 QRectF
 Entity::boundingRect() const {
+    if (!_vision.isNull() && _show_vision && !vision().isEmpty()) {
+        // We add margins to the bounding Rect of Vision so it extends behind
+        // itself, theoretically covering the back of the Ant
+        return _vision->boundingRect().marginsAdded(
+            QMarginsF(0, 0, 0, _vision->boundingRect().height()));
+    }
     return QRectF(-_size.x() / 2, -_size.y() / 2, _size.x(), _size.y());
 }
 

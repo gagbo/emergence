@@ -30,12 +30,6 @@ class LivingEntity : public Entity {
     LivingEntity(const QVector2D &position,
                  const QVector2D &init_speed = QVector2D(0, 0));
 
-    //! Override necessary because of _vision
-    void update_neighbourhood() override;
-
-    //! Override necessary because of _vision
-    virtual QRectF boundingRect() const override;
-
     inline void
     set_vision(QSharedPointer<QPolygonF> new_vision) {
         // operator= handles the decrement of older reference count
