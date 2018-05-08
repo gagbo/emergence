@@ -87,6 +87,17 @@ World::enable_wrap_around() {
 void
 World::drawForeground(QPainter *painter, const QRectF &rect) {
     if (!_wraps_around) {
+        /* FIXME : The border does not disappear
+         * The border does not disappear when we disable the wrap_around after
+         * having enabled it before.
+         *
+         * This is because in this branch we make no
+         * effort to erase a former foreGround created to show the borders.
+         *
+         * Is it the responsibility of drawForeground to erase an old Foreground
+         * or should WorldView be aware and redraw background over the border at
+         * each update ?
+         */
         return;
     }
     (void)rect;  // We are not using the inherited parameter
