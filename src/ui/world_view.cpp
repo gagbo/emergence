@@ -61,19 +61,23 @@ WorldView::keyPressEvent(QKeyEvent* event) {
 
     double dx = QRandomGenerator::global()->bounded(sceneRect().width());
     double dy = QRandomGenerator::global()->bounded(sceneRect().height());
-    double pos_x = sceneRect().x() + dx;
-    double pos_y = sceneRect().y() + dy;
+    double random_pos_x = sceneRect().x() + dx;
+    double random_pos_y = sceneRect().y() + dy;
 
     switch (event->key()) {
         case Qt::Key_A:
-            emit key_handled(
-                QString("Adding an Ant in (%1;%2)").arg(pos_x).arg(pos_y));
-            get_scene()->add_entity("Living", "Ant", QVector2D(pos_x, pos_y));
+            emit key_handled(QString("Adding an Ant in (%1;%2)")
+                                 .arg(random_pos_x)
+                                 .arg(random_pos_y));
+            get_scene()->add_entity("Living", "Ant",
+                                    QVector2D(random_pos_x, random_pos_y));
             break;
         case Qt::Key_F:
-            emit key_handled(
-                QString("Adding Food in (%1;%2)").arg(pos_x).arg(pos_y));
-            get_scene()->add_entity("Inert", "Food", QVector2D(pos_x, pos_y));
+            emit key_handled(QString("Adding Food in (%1;%2)")
+                                 .arg(random_pos_x)
+                                 .arg(random_pos_y));
+            get_scene()->add_entity("Inert", "Food",
+                                    QVector2D(random_pos_x, random_pos_y));
             break;
         case Qt::Key_V:
             emit key_handled("(V) Toggle vision drawing");
