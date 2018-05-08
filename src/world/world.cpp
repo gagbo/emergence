@@ -62,16 +62,16 @@ World::fix_position_for_wrap_around(QVector2D &old_position) const {
     }
 
     while (old_position.x() < -_size.x() / 2) {
-        old_position[0] += _size.x();
+        old_position.setX(old_position.x() + _size.x());
     }
     while (old_position.x() >= _size.x() / 2) {
-        old_position[0] -= _size.x();
+        old_position.setX(old_position.x() - _size.x());
     }
     while (old_position.y() < -_size.y() / 2) {
-        old_position[1] += _size.y();
+        old_position.setY(old_position.y() + _size.y());
     }
     while (old_position.y() >= _size.y() / 2) {
-        old_position[1] -= _size.y();
+        old_position.setY(old_position.y() - _size.y());
     }
 }
 
