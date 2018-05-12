@@ -94,7 +94,7 @@ abstract class Entity {
 #QList<const Entity*>* _neighbours
 #QList<constEntity*>* _visible_neighbours
 
-+{abstract} void decide_acceleration()
++{abstract} void decide_action()
 +World* parent_world()
 +void update_neighbourhood()
 +QVector2D get_friction_force()
@@ -115,14 +115,14 @@ abstract class LivingEntity {
 +void update_neighbourhood()
 +QRectF boundingRect()
 +bool is_visible(const QPointF &world_pos)
-+void decide_acceleration()
++void decide_action()
 +const QPolygonF& vision()
 +void set_vision(QSharedPointer<QPolygonF> new_vision)
 +void set_vision(QWeakPointer<QPolygonF> new_vision)
 }
 
 abstract class InertEntity {
-+void decide_acceleration()
++void decide_action()
 }
 
 class Ant {
@@ -130,7 +130,7 @@ class Ant {
 
     +void paint(...)
     +QRectF boundingRect()
-    +void decide_acceleration()
+    +void decide_action()
     +void set_role(QString role_name)
     +const RoleAnt* role()
 }
@@ -192,7 +192,7 @@ abstract class RoleAnt << State >> {
 #QSharedPointer<QPolygonF> _role_vision
 #MovementStrategy* _role_move_strategy
 
-+abstract void decide_acceleration(Ant* context)
++abstract void decide_action(Ant* context)
 +void set_role(Ant* context, QString name)
 +const QColor color()
 +QWeakPointer<QPolygonF> vision()
@@ -202,7 +202,7 @@ class RoleAntExplorer << (S,#FF7700) Singleton >> {
     #{static} RoleAntExplorer* _instance
 
     +{static} RoleAnt* instance()
-    +void decide_acceleration(Ant* context)
+    +void decide_action(Ant* context)
     #RoleAntExplorer()
 }
 
@@ -210,7 +210,7 @@ class RoleAntWorker << (S,#FF7700) Singleton >> {
     #{static} RoleAntWorker* _instance
 
     +{static} RoleAnt* instance()
-    +void decide_acceleration(Ant* context)
+    +void decide_action(Ant* context)
     #RoleAntWorker()
 }
 
