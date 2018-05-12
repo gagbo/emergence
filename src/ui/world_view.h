@@ -27,6 +27,7 @@
 #include <iostream>
 
 class QPaintEvent;
+class World;
 
 class WorldView : public QGraphicsView {
     Q_OBJECT
