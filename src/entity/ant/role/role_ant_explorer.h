@@ -31,7 +31,7 @@ class RoleAntExplorer : public RoleAnt {
 
     //! TODO : This computation needs to take the VelocityStrategy decorators
     //! into account
-    void decide_acceleration(Ant* context) override;
+    void decide_action(Ant* context) override;
 
  protected:
     RoleAntExplorer();

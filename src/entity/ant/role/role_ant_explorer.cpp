@@ -38,7 +38,7 @@ RoleAntExplorer::RoleAntExplorer() : RoleAnt() {
 }
 
 void
-RoleAntExplorer::decide_acceleration(Ant* context) {
+RoleAntExplorer::decide_action(Ant* context) {
     _role_move_strategy->apply_force(context);
 }
 

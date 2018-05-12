@@ -40,7 +40,7 @@ class LivingEntity : public Entity {
         set_vision(new_vision.toStrongRef());
     }
 
-    virtual void decide_acceleration() override;
+    virtual void decide_action() override;
 
     virtual ~LivingEntity() override {}
 };

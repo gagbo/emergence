@@ -31,7 +31,7 @@ InertEntity::InertEntity(const QVector2D &position, const QVector2D &init_speed)
 }
 
 void
-InertEntity::decide_acceleration() {
+InertEntity::decide_action() {
     _acc = QVector2D(0, 0);
     return;
 }

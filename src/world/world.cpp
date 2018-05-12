@@ -105,8 +105,8 @@ void
 World::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     Qt::MouseButton pressed_button = event->button();
     if (pressed_button == Qt::LeftButton) {
-        float x = event->scenePos().x();
-        float y = event->scenePos().y();
+        double x = event->scenePos().x();
+        double y = event->scenePos().y();
         emit message(QString("Clicked at (%1,%2)").arg(x).arg(y));
     } else if (pressed_button == Qt::MiddleButton) {
         // emit scale_reset();

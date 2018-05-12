@@ -28,7 +28,7 @@ RoleAntWorker::RoleAntWorker() {
 }
 
 void
-RoleAntWorker::decide_acceleration(Ant* context) {
+RoleAntWorker::decide_action(Ant* context) {
     context->set_acceleration(QVector2D(0, 0));
 }
 

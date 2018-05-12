@@ -134,7 +134,7 @@ Entity::visible_neighbours() const {
 }
 
 void
-Entity::decide_acceleration() {
+Entity::decide_action() {
     _acc = QVector2D(0, 0);
 }
 
@@ -189,7 +189,7 @@ void
 Entity::advance(int phase) {
     if (phase == 0) {
         update_neighbourhood();
-        decide_acceleration();
+        decide_action();
         apply_friction_to_acceleration();
         return;
     }

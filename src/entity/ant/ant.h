@@ -40,7 +40,7 @@ class Ant : public LivingEntity {
                        QWidget* widget) override;
 
     //! Computation delegated to RoleAnt state
-    void decide_acceleration();
+    void decide_action();
 
     //! Change the Role of an Ant
     void set_role(QString role_name);

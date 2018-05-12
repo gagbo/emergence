@@ -76,7 +76,7 @@ class Entity : public QGraphicsItem {
     virtual void update_neighbourhood();
 
     //! Set the acceleration according to the surrounding of the Entity
-    virtual void decide_acceleration();
+    virtual void decide_action();
 
     //! Computes the friction force the Entity undergoes given position,
     //! velocity.

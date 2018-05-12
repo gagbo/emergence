@@ -39,9 +39,8 @@ class RoleAnt {
     //! Pure virtual method to get the Singleton
     static RoleAnt* instance();
 
-    //! TODO : This computation needs to take the VelocityStrategy decorators
-    //! into account
-    virtual void decide_acceleration(Ant* context) = 0;
+    //! Decide the acceleration context should have
+    virtual void decide_action(Ant* context) = 0;
 
     //! Go to next role, registered by name
     void set_role(Ant* context, QString name);

@@ -20,6 +20,7 @@
 
 #include "ant.h"
 #include <QPainter>
+#include <QtMath>
 
 const static QString type_string_value = "Ant";
 
@@ -37,8 +38,8 @@ Ant::Ant(const QVector2D& position, const QVector2D& init_speed)
 }
 
 void
-Ant::decide_acceleration() {
-    _current_role->decide_acceleration(this);
+Ant::decide_action() {
+    _current_role->decide_action(this);
 }
 
 void
@@ -67,8 +68,8 @@ Ant::paint(QPainter* painter, const QStyleOptionGraphicsItem* style_opt,
 
     // Eyes
     int eyes_size = 3;
-    int pos_left_x = -_size.x() / 5;
-    int pos_eyes_y = -_size.y() + 2 * eyes_size;
+    int pos_left_x = qFloor(-_size.x() / 5);
+    int pos_eyes_y = qFloor(-_size.y() + 2 * eyes_size);
     painter->setBrush(Qt::white);
     painter->drawEllipse(-pos_left_x, pos_eyes_y, eyes_size, eyes_size);
     painter->drawEllipse(pos_left_x, pos_eyes_y, eyes_size, eyes_size);

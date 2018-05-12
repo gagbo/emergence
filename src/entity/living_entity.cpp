@@ -31,6 +31,6 @@ LivingEntity::LivingEntity(const QVector2D &position,
 }
 
 void
-LivingEntity::decide_acceleration() {
+LivingEntity::decide_action() {
     _acc = QVector2D(0.0f, 0.0f);
 }
