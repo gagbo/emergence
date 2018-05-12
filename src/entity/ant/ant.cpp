@@ -26,14 +26,14 @@ const static QString type_string_value = "Ant";
 
 Ant::Ant() : LivingEntity() {
     _type = type_string_value;
-    set_role("Explorer");
+    set_role("Worker");
     _color = Qt::darkBlue;
 }
 
 Ant::Ant(const QVector2D& position, const QVector2D& init_speed)
     : LivingEntity(position, init_speed) {
     _type = type_string_value;
-    set_role("Explorer");
+    set_role("Worker");
     _color = Qt::darkBlue;
 }
 

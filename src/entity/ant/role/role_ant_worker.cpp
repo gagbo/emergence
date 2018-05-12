@@ -19,17 +19,32 @@
  */
 
 #include "role_ant_worker.h"
+#include "entity/movement_strategy/movement_strategy_alignment.h"
+#include "entity/movement_strategy/movement_strategy_all_align.h"
+#include "entity/movement_strategy/movement_strategy_base.h"
+#include "entity/movement_strategy/movement_strategy_cohesion.h"
+#include "entity/movement_strategy/movement_strategy_separation.h"
 
 RoleAntWorker* RoleAntWorker::_instance = nullptr;
 
 RoleAntWorker::RoleAntWorker() {
     _role_color = Qt::darkBlue;
     RoleAnt::register_name("Worker", this);
+    delete _role_move_strategy;
+    _role_move_strategy = new MovementStrategyAlignment( 1,
+        new MovementStrategySeparation(10, 50, 2,
+        new MovementStrategyCohesion( 0.01f,
+        new MovementStrategyBase())));
 }
 
 void
 RoleAntWorker::decide_action(Ant* context) {
-    context->set_acceleration(QVector2D(0, 0));
+    _role_move_strategy->apply_force(context);
+
+    // Change roles if there are too many neighbours
+    if (context->visible_neighbours()->length() > 6){
+       context->set_role("Explorer");
+    }
 }
 
 RoleAnt*

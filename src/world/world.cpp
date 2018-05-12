@@ -159,5 +159,5 @@ float
 World::get_friction(QVector2D position) {
     // TODO Make a proper law one day that really depends on a map
     (void)position;
-    return 2.0e-10;
+    return 2.0e-10f;
 }

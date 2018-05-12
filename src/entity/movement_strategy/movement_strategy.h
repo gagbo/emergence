@@ -23,6 +23,12 @@
 #include <QVector2D>
 class Ant;
 
+/** TODO : add more MovementStrategy
+ * Some ideas :
+ * - MovementStrategyMaintainSpeed
+ * - MovementStrategyNearestFood
+ * - MovementStrategyIsolation
+ */
 class MovementStrategy {
  public:
     MovementStrategy() {}
