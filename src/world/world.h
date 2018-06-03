@@ -24,6 +24,7 @@
 #include <QGraphicsScene>
 #include <QVector2D>
 #include "entity/factory/entity_factory.h"
+#include "entity/prototype_mgmt/entity_prototypes_manager.h"
 
 #define DEFAULT_TIMESTEP 0.5
 #define DEFAULT_BORDER_COLOR "limegreen"
@@ -130,6 +131,9 @@ class World : public QGraphicsScene {
     float _time{0};
     QVector<QSharedPointer<Entity>> _agents{};
     int _next_id{0};  //!< Next id to assign to Entity
+
+    //! Prototypes manager
+    EntityPrototypesManager prototypes_dict;
 
     //! Draw a border around the World rectangle if the world wraps around
     /*! This is an overloaded method, the second parameter is not used.

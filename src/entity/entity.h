@@ -47,6 +47,14 @@ class Entity : public QGraphicsItem {
     /////////////// Destructor
     virtual ~Entity() override;
 
+    /////////////// Prototype pattern
+
+    /*!
+     * \brief clone returns a clone of the current entity
+     * \return an allocated pointer to a clone of this.
+     */
+    virtual Entity* clone();
+
     /////////////// Misc. Methods
 
     //! Give an approximate bounding rectangle for the Entity

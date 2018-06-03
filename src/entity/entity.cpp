@@ -53,6 +53,10 @@ Entity::Entity(const Entity &other) {
     _visible_neighbours = new QList<const Entity *>;
 }
 
+Entity* Entity::clone() {
+    return new Entity(*this);
+}
+
 Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {
     _pos = position;
     _vel = init_speed;

@@ -1,6 +1,7 @@
 add_library (${PROJECT_NAME}_entity entity.cpp inert_entity.cpp living_entity.cpp)
 
 add_subdirectory (factory)
+add_subdirectory (prototype_mgmt)
 
 add_subdirectory (movement_strategy)
 
