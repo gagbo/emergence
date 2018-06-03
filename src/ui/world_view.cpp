@@ -102,7 +102,7 @@ WorldView::keyPressEvent(QKeyEvent* event) {
 }
 
 void
-WorldView::change_scale(double scale_factor) {
+WorldView::change_scale(float scale_factor) {
     xy_scale *= scale_factor;
     scale(scale_factor, scale_factor);
     return;

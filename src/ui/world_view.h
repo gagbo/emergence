@@ -47,7 +47,7 @@ class WorldView : public QGraphicsView {
     void keyPressEvent(QKeyEvent* event) override;
 
  public slots:
-    void change_scale(double scale_factor);
+    void change_scale(float scale_factor);
     void reset_scale();
     void scale_to_see_all_items();
 
