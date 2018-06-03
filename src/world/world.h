@@ -23,6 +23,7 @@
 
 #include <QGraphicsScene>
 #include <QVector2D>
+#include <string>
 #include "entity/factory/entity_factory.h"
 #include "entity/prototype_mgmt/entity_prototypes_manager.h"
 
@@ -63,6 +64,8 @@ class World : public QGraphicsScene {
         p_entity->update();
         return p_entity;
     }
+
+    Entity * add_prototype_entity(std::string prototype_name);
 
     //! Get the friction coefficient for a position in the world
     float get_friction(QVector2D position);

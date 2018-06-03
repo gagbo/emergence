@@ -54,6 +54,11 @@ Entity::Entity(const Entity &other) {
 }
 
 Entity* Entity::clone() {
+  /* TODO : Separate allocation from assignments
+   * This way, InertEntity::clone and LivingEntity::clone etc. are able to
+   * properly instantiate a Derived class and then call the assignment function
+   * in order to return the proper clones
+   */
     return new Entity(*this);
 }
 

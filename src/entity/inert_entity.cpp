@@ -35,3 +35,12 @@ InertEntity::decide_action() {
     _acc = QVector2D(0, 0);
     return;
 }
+
+Entity *
+InertEntity::clone() {
+    /* FIXME : Entity::clone is not enough
+     * if we return only Entity::clone then all the InertEntity properties are
+     * wrong
+     */
+    return Entity::clone();
+}

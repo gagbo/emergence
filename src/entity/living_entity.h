@@ -40,6 +40,8 @@ class LivingEntity : public Entity {
         set_vision(new_vision.toStrongRef());
     }
 
+    virtual Entity *clone() override;
+
     virtual void decide_action() override;
 
     virtual ~LivingEntity() override {}

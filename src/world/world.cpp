@@ -161,3 +161,14 @@ World::get_friction(QVector2D position) {
     (void)position;
     return 2.0e-10f;
 }
+
+Entity *
+World::add_prototype_entity(std::string prototype_name) {
+    auto spt_entity = prototypes_dict.get(prototype_name).lock();
+    Entity *p_entity = spt_entity->clone();
+    addItem(p_entity);
+    p_entity->set_id(_next_id);
+    ++_next_id;
+    p_entity->update();
+    return p_entity;
+}

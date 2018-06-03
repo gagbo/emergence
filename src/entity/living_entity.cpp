@@ -34,3 +34,12 @@ void
 LivingEntity::decide_action() {
     _acc = QVector2D(0.0f, 0.0f);
 }
+
+Entity *
+LivingEntity::clone() {
+    /* FIXME : Entity::clone is not enough
+     * if we return only Entity::clone then all the LivingEntity properties are
+     * wrong
+     */
+    return Entity::clone();
+}

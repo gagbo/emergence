@@ -87,6 +87,12 @@ set_up_testing_env(World& basic_world) {
     }
 
     try {
+        basic_world.add_prototype_entity("indsafesf");
+    } catch (PrototypeNotFound& e) {
+        qInfo() << e.qwhat();
+    }
+
+    try {
         basic_world.add_entity("inert", "food", QVector2D(25, 90));
     } catch (FactoryFailure& e) {
         qInfo() << e.qwhat();

@@ -31,6 +31,7 @@ class InertEntity : public Entity {
     InertEntity(const QVector2D &position,
                 const QVector2D &init_speed = QVector2D(0, 0));
     virtual void decide_action();
+    virtual Entity *clone() override;
 
     virtual ~InertEntity(){};
 };
