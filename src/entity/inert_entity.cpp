@@ -20,7 +20,6 @@
 
 #include "inert_entity.h"
 
-
 const static QString super_type_value = "Inert";
 
 InertEntity::InertEntity() : Entity() { _super_type = super_type_value; }

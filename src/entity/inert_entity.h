@@ -30,7 +30,8 @@ class InertEntity : public Entity {
     //! Construct a new Ant at position with inital velocity
     InertEntity(const QVector2D &position,
                 const QVector2D &init_speed = QVector2D(0, 0));
-    virtual void decide_action();
+    virtual void decide_action() override;
+
     virtual Entity *clone() override;
 
     virtual ~InertEntity(){};
