@@ -44,6 +44,12 @@ class EntityPrototypesManager {
      */
     void register_name(std::string name, std::unique_ptr<Entity> prototype);
 
+    /*!
+     * \brief fill_register_with_default fills the _registry with default
+     * prototypes
+     */
+    void fill_register_with_default();
+
     //! Return a pointer to a subclassed Singleton Role
     const std::weak_ptr<Entity> get(std::string name = "Default") const;
 

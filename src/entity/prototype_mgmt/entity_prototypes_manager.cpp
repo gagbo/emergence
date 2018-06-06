@@ -19,10 +19,19 @@
  */
 
 #include "entity_prototypes_manager.h"
+#include "entity/ant/ant.h"
+#include "entity/food/food.h"
 
-EntityPrototypesManager::EntityPrototypesManager() {}
+EntityPrototypesManager::EntityPrototypesManager() {
+    fill_register_with_default();
+}
 
-EntityPrototypesManager::~EntityPrototypesManager() { _registry.clear(); }
+EntityPrototypesManager::~EntityPrototypesManager() {
+    /* FIXME : Memory leak
+     * calling _registry.clear() is not enough to properly clear the memory
+     */
+    _registry.clear();
+}
 
 void
 EntityPrototypesManager::register_name(std::string name,
@@ -38,5 +47,20 @@ EntityPrototypesManager::get(std::string name) const {
         throw PrototypeNotFound(QString(name.c_str()));
     }
 
+    /* FIXME : This return prevents the inheritance of clone()
+     * The item returned by get will only call Entity::clone() when we call
+     * it->second.lock()->clone. This means that all the derived class
+     * properties are lost and that the function is useless as is.
+     */
     return it->second;
+}
+void EntityPrototypesManager::fill_register_with_default() {
+    std::unique_ptr<Ant> p_worker = std::make_unique<Ant>();
+    p_worker->set_role("worker");
+    std::unique_ptr<Ant> p_explorer = std::make_unique<Ant>();
+    p_explorer->set_role("explorer");
+    std::unique_ptr<Food> p_food = std::make_unique<Food>();
+    register_name("ant_worker", std::move(p_worker));
+    register_name("ant_explorer", std::move(p_explorer));
+    register_name("food", std::move(p_food));
 }
