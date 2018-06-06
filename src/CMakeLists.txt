@@ -17,6 +17,7 @@ add_subdirectory (entity)
 
 add_executable (emergence main.cpp)
 target_link_libraries (emergence ${PROJECT_NAME}_ui)
+target_link_libraries (emergence ${PROJECT_NAME}_food ${PROJECT_NAME}_ant)
 target_link_libraries (emergence Qt5::Widgets)
 
 install (TARGETS emergence DESTINATION bin)
