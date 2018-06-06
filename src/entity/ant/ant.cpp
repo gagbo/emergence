@@ -81,3 +81,11 @@ Ant::paint(QPainter* painter, const QStyleOptionGraphicsItem* style_opt,
         painter->drawPolygon(vision());
     }
 }
+
+Entity* Ant::clone() {
+    auto result = new Ant();
+    result->_current_role = this->_current_role;
+    result->set_vision(_current_role->vision());
+
+    return result;
+}

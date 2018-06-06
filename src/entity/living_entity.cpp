@@ -37,9 +37,11 @@ LivingEntity::decide_action() {
 
 Entity *
 LivingEntity::clone() {
-    /* FIXME : Entity::clone is not enough
-     * if we return only Entity::clone then all the LivingEntity properties are
-     * wrong
-     */
-    return Entity::clone();
+    auto result = new LivingEntity();
+    result->copy_living_characteristics(*this);
+    return result;
+}
+
+void LivingEntity::copy_living_characteristics(const LivingEntity& other) {
+    copy_characteristics(other);
 }

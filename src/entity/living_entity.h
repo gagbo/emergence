@@ -42,6 +42,8 @@ class LivingEntity : public Entity {
 
     virtual Entity *clone() override;
 
+    void copy_living_characteristics(const LivingEntity& other);
+
     virtual void decide_action() override;
 
     virtual ~LivingEntity() override {}

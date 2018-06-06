@@ -36,6 +36,25 @@ Entity::~Entity() {
     delete _neighbours;
 }
 
+void
+Entity::copy_characteristics(const Entity& other) {
+    _id = other._id;
+    _pos = other._pos;
+    _vel = other._vel;
+    _acc = other._acc;
+    _vel_angle = other._vel_angle;
+    _mass = other._mass;
+    _max_force = other._max_force;
+    _color = other._color;
+    _life = other._life;
+    _size = other._size;
+    _super_type = other._super_type;
+    _type = other._type;
+    _neighbours = new QList<const Entity *>;
+    _visible_neighbours = new QList<const Entity *>;
+    _vision = other._vision;
+}
+
 Entity::Entity(const Entity &other) {
     _id = other._id;
     _pos = other._pos;
@@ -51,15 +70,12 @@ Entity::Entity(const Entity &other) {
     _type = other._type;
     _neighbours = new QList<const Entity *>;
     _visible_neighbours = new QList<const Entity *>;
+    _vision = other._vision;
 }
 
 Entity* Entity::clone() {
-  /* TODO : Separate allocation from assignments
-   * This way, InertEntity::clone and LivingEntity::clone etc. are able to
-   * properly instantiate a Derived class and then call the assignment function
-   * in order to return the proper clones
-   */
-    return new Entity(*this);
+    auto result = new Entity(*this);
+    return result;
 }
 
 Entity::Entity(const QVector2D &position, const QVector2D &init_speed) {

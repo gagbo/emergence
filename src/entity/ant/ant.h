@@ -48,6 +48,8 @@ class Ant : public LivingEntity {
     //! See the current role of Ant
     const RoleAnt* role() const;
 
+    virtual Entity* clone() override;
+
  protected:
     RoleAnt* _current_role{nullptr};
 };

@@ -37,6 +37,9 @@ class Entity : public QGraphicsItem {
     //! Copy Constructor
     Entity(const Entity &other);
 
+    //! Copy the relevant characteristics for a clone
+    void copy_characteristics(const Entity& other);
+
     //! Default move Constructor
     Entity(Entity &&other) = default;
 

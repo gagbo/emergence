@@ -37,9 +37,11 @@ InertEntity::decide_action() {
 
 Entity *
 InertEntity::clone() {
-    /* FIXME : Entity::clone is not enough
-     * if we return only Entity::clone then all the InertEntity properties are
-     * wrong
-     */
-    return Entity::clone();
+    auto result = new InertEntity();
+    result->copy_inert_characteristics(*this);
+    return result;
+}
+
+void InertEntity::copy_inert_characteristics(const InertEntity& other) {
+    copy_characteristics(other);
 }
