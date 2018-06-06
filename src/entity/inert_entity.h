@@ -34,8 +34,9 @@ class InertEntity : public Entity {
 
     virtual Entity *clone() override;
 
-    virtual ~InertEntity(){};
     void copy_inert_characteristics(const InertEntity& other);
+
+    virtual ~InertEntity() override{}
 };
 
 #endif  // _ENTITY_INERT_ENTITY_H_
